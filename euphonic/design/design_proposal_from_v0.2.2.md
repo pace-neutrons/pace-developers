@@ -55,6 +55,7 @@ dictionaries, named tuples or classes.
 |Dictionary|- Easy to make<br>- Easy to serialise<br>- All associated data can be contained in the dict, can just pass it to plotting/serialising functions|-Accessing data via keys clashes syntactically with class attribute access (`dict['a']` vs. `obj.a`)<br>- Have to access (serialisation) functions from other parts of the package e.g. `euphonic.serialise.dump_dos(dos)`<br>- Mutable|
 |Named tuple|- Easy to make<br>- All associated data contained in tuple<br>- Attribute access (`obj.a`)<br>- It's obvious from the named tuple 'type' what the object is supposed to contain<br>- Can be upgraded to class later<br>- Immutable|- Have to access (serialisation) functions from other parts of the package e.g. `euphonic.serialise.dump_dos(dos)`<br>- Immutable, must make a copy to change anything|
 |Class|- Can contain all associated data in class<br>- Can manage attribute access via properties<br>- Can have serialisation, plotting class methods (e.g. `dos.plot(), dos.to_hdf5()`)|- May be unnecessarily complex<br>- Adds (more) maintenance overhead<br>- Not very Pythonic|
+|Python Dataclasses|- Can contain all associated data<br>- Can have serialisation, plotting methods<br>- Built in type hinting (but no hinting exists for Numpy arrays yet without adding extra dependencies). Also it appears typing is not actually enforced<br>- Less boilerplate than plain classes|- May be unnecessarily complex<br>- Quite new (Python 3.7)<br>|
 
 Named tuples seem like a good option, the following is an (simplified)
 example creating a named tuple for a crystal structure factor:
@@ -69,7 +70,25 @@ example creating a named tuple for a crystal structure factor:
 CrystalStructureFactor(qpts=[[0.0, 0.0, 0.0], [0.0, 0.0, 0.5]], sf=[[0.1, 0.5, 0.3], [0.2, 0.4, 0.6]], frequencies=[[0.0, 0.0, 0.0], [5.0, 10.0, 15.0]])
 ```
 
+**Units in Data containers**
+
+There needs to be some consideration on how to handle units in data containers.
+If classes or dataclasses are chosen they could be handled the same as in the
+`PhononData` class, having a private attribute in atomic units wrapped in a pint
+`Quantity`, but is this too complex and possibly resulting in duplicated code?
+
+If named tuples are chosen we could have frequencies just stored as a pint
+`Quantity`, but internally we'd need to remember to convert to atomic units and
+back to a plain Numpy array before doing any calculations. This doesn't seem so
+bad. This method could also work for classes or dataclasses for simplicity.
+
+Another option would be store frequencies as a plain Numpy array, and have
+another attribute (e.g. `e_units`) describing what units these are in. This is
+more portable as it doesnt rely on pint, but might be ugly, and clashes with
+`PhononData`'s style of presenting frequencies as quantities.
+
 # Decisions to be made
 * Finalise names of objects/functions
 * Decide on type of data containers (Numpy array, dict, named tuple, class)
 * Decide what attributes each data container should have
+* Decide how to handle units in data containers
