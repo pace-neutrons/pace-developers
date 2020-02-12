@@ -10,30 +10,30 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	https://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbf{p}]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D
-[\mathbf{p}_0]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D_0
-[\mathbf{x}]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bx%7D
-[\mathbf{Q}]: https://latex.codecogs.com/png.download?%5Cmathbf%7BQ%7D
-[E]: https://latex.codecogs.com/png.download?E
-[\omega]: https://latex.codecogs.com/png.download?%5Comega
-[\mathbb{Q}]: https://latex.codecogs.com/png.download?%5Cmathbb%7BQ%7D
-[\mathbb{Q}_i]: https://latex.codecogs.com/png.download?%5Cmathbb%7BQ%7D_i
-[S_i(\mathbb{Q}_i)]: https://latex.codecogs.com/png.download?S_i%28%5Cmathbb%7BQ%7D_i%29
-[S(\mathbb{Q})]: https://latex.codecogs.com/png.download?S%28%5Cmathbb%7BQ%7D%29
-[S(\mathbb{Q};\mathbf{p})]: https://latex.codecogs.com/png.download?S%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29
-[r(\mathbf{p})]: https://latex.codecogs.com/png.download?r%28%5Cmathbf%7Bp%7D%29
-[f(\mathbf{p})]: https://latex.codecogs.com/png.download?f%28%5Cmathbf%7Bp%7D%29
-[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: https://latex.codecogs.com/png.download?S%28%5Cmathbf%7BQ%7D%2C%20E%29%20%5Cpropto%20%5Cfrac%7B%5Cpartial%5E2%20%5Csigma%7D%7B%5Cpartial%20%5Cmathbf%7BQ%7D%20%5Cpartial%20E%7D
-[\mathbb{Q} \equiv (\mathb{Q},E)]:https://latex.codecogs.com/png.download?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
-[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: https://latex.codecogs.com/png.download?r%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Csum_i%20%5Cleft%7C%20%5Cfrac%7BS_i%28%5Cmathbb%7BQ%7D_i%29%20-%20S%28%5Cmathbb%7BQ%7D_i%3B%20%5Cmathbf%7Bp%7D%29%7D%7Bw_i%7D%20%5Cright%7C%5E2
-[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: https://latex.codecogs.com/png.download?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5B%20%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_1%7D%5C%2C%5Cldots%5C%2C%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_n%7D%20%5Cright%5D
-[\mathbf{J}(\mathbf{p})]: https://latex.codecogs.com/png.download?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29
-[f_i(\mathbf{p})]: https://latex.codecogs.com/png.download?f_i%28%5Cmathbf%7Bp%7D%29
-[\mathbf{J}_i(\mathbf{p})]: https://latex.codecogs.com/png.download?%5Cmathbf%7BJ%7D_i%28%5Cmathbf%7Bp%7D%29
-[m]: https://latex.codecogs.com/png.download?m
-[m,n,o,\ldots,p]: https://latex.codecogs.com/png.download?%5C%5Bm%2Cn%2Co%2C%5Cldots%2Cp%5C%5D
-[N]: https://latex.codecogs.com/png.download?N
-[p_3 = 1 - p_2]: https://latex.codecogs.com/png.download?p_3%20%3D%201%20-%20p_2
+[\mathbf{p}]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D
+[\mathbf{p}_0]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_0
+[\mathbf{x}]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bx%7D
+[\mathbf{Q}]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
+[E]: https://latex.codecogs.com/svg.latex?E
+[\omega]: https://latex.codecogs.com/svg.latex?%5Comega
+[\mathbb{Q}]: https://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
+[\mathbb{Q}_i]: https://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_i
+[S_i(\mathbb{Q}_i)]: https://latex.codecogs.com/svg.latex?S_i%28%5Cmathbb%7BQ%7D_i%29
+[S(\mathbb{Q})]: https://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
+[S(\mathbb{Q};\mathbf{p})]: https://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29
+[r(\mathbf{p})]: https://latex.codecogs.com/svg.latex?r%28%5Cmathbf%7Bp%7D%29
+[f(\mathbf{p})]: https://latex.codecogs.com/svg.latex?f%28%5Cmathbf%7Bp%7D%29
+[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: https://latex.codecogs.com/svg.latex?S%28%5Cmathbf%7BQ%7D%2C%20E%29%20%5Cpropto%20%5Cfrac%7B%5Cpartial%5E2%20%5Csigma%7D%7B%5Cpartial%20%5Cmathbf%7BQ%7D%20%5Cpartial%20E%7D
+[\mathbb{Q} \equiv (\mathb{Q},E)]:https://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
+[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: https://latex.codecogs.com/svg.latex?r%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Csum_i%20%5Cleft%7C%20%5Cfrac%7BS_i%28%5Cmathbb%7BQ%7D_i%29%20-%20S%28%5Cmathbb%7BQ%7D_i%3B%20%5Cmathbf%7Bp%7D%29%7D%7Bw_i%7D%20%5Cright%7C%5E2
+[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5B%20%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_1%7D%5C%2C%5Cldots%5C%2C%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_n%7D%20%5Cright%5D
+[\mathbf{J}(\mathbf{p})]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29
+[f_i(\mathbf{p})]: https://latex.codecogs.com/svg.latex?f_i%28%5Cmathbf%7Bp%7D%29
+[\mathbf{J}_i(\mathbf{p})]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D_i%28%5Cmathbf%7Bp%7D%29
+[m]: https://latex.codecogs.com/svg.latex?m
+[m,n,o,\ldots,p]: https://latex.codecogs.com/svg.latex?%5C%5Bm%2Cn%2Co%2C%5Cldots%2Cp%5C%5D
+[N]: https://latex.codecogs.com/svg.latex?N
+[p_3 = 1 - p_2]: https://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2
 
 # Overview
 
@@ -55,13 +55,13 @@ For a set of model parameters one can define a *weighted residual*
 
 ![r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]
 
-where the per-observation weights, ![w_i](https://latex.codecogs.com/png.download?w_i), could be constant or some function of the variance,
+where the per-observation weights, ![w_i](https://latex.codecogs.com/svg.latex?w_i), could be constant or some function of the variance,
 and the goal of any **Model Optimisation** scheme is then to find
-![\mathbf{p} \in \mathbb{R}^n](https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D%5Cin%5Cmathbb%7BR%7D%5En )
+![\mathbf{p} \in \mathbb{R}^n](https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D%5Cin%5Cmathbb%7BR%7D%5En )
 which minimises ![r(\mathbf{p})] or some other
-![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](https://latex.codecogs.com/png.download?f%28%5Cmathbf%7Bp%7D%29%3A%5Cmathbb%7BR%7D%5En%5Crightarrow%5Cmathbb%7BR%7D).
+![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](https://latex.codecogs.com/svg.latex?f%28%5Cmathbf%7Bp%7D%29%3A%5Cmathbb%7BR%7D%5En%5Crightarrow%5Cmathbb%7BR%7D).
 *Alternatively, the goal could be to find the ![\mathbf{p}] which maximises ![f(\mathbf{p})] but this is equivalent to minimising 
-![-f(\mathbf{p})](https://latex.codecogs.com/png.download?-f%28%5Cmathbf%7Bp%7D%29)
+![-f(\mathbf{p})](https://latex.codecogs.com/svg.latex?-f%28%5Cmathbf%7Bp%7D%29)
 and so is a simple extension.*
 
 # Context
@@ -75,13 +75,13 @@ to use a PACE-provided ![r(\mathbf{p})].
 Different **Model Optimisation** schemes may require additional information.
 Local-minima optimisers need an initial guess for the model parameters, ![\mathbf{p}_0].
 Global-minima optimisers may need lower- and upper-bounds in 
-![\mathbb{R}^n](https://latex.codecogs.com/png.download?%5Cmathbb%7BR%7D%5En) for ![\mathbf{p}].
+![\mathbb{R}^n](https://latex.codecogs.com/svg.latex?%5Cmathbb%7BR%7D%5En) for ![\mathbf{p}].
 
 ![\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]
 
 which depends on the user-provided scattering function, the measured data, and the choice of ![f(\mathbf{p})].
 Some optimisation algorithms require ![f_i(\mathbf{p})] and ![\mathbf{J}_i(\mathbf{p})] for each ![\mathbb{Q}_i], and perform the sum over
-![i](https://latex.codecogs.com/png.download?i) internally.
+![i](https://latex.codecogs.com/svg.latex?i) internally.
 
 Since PACE is responsible for ![S_i(\mathbb{Q}_i)] and ![r(\mathbf{p})] it must also calculate ![\mathbf{J}(\mathbf{p})] for arbitrary (user-provided) ![S(\mathbb{Q};\mathbf{p})].
 Doing so in a way which simplifies calculating the Jacobian for advanced users who provide their own ![f(\mathbf{p})]
@@ -144,7 +144,7 @@ of the Levenberg-Marquardt algorithm and interally constructs ![r(\mathbf{p})] a
 
 `multifit` has the ability to fix parameters and to bind select (overparametrised) model parameters with linear equalities,
 e.g.,
-![p_2 = 2p_1 - 1](https://latex.codecogs.com/png.download?p_2%20%3D%202p_1%20-1),
+![p_2 = 2p_1 - 1](https://latex.codecogs.com/svg.latex?p_2%20%3D%202p_1%20-1),
 both of which reduce the effective parameter space dimensionality and should be maintained.
 
 Another nice feature of the current implementation that should be retained is the ability to simultaneously
@@ -167,7 +167,7 @@ As a MATLAB value class `multifit` objects have immutable properties, so any met
 the syntax `obj = obj.method()` is a workaround to this issue.
 Note that the foreground and background functions have been provided independent initial parameter vectors
 these are combined into
-![\mathbf{p}_\text{fit}](https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D_%5Ctext%7Bfit%7D) as a cell array of vectors (?).
+![\mathbf{p}_\text{fit}](https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_%5Ctext%7Bfit%7D) as a cell array of vectors (?).
  
 # Proposed Solution
 
@@ -210,7 +210,7 @@ The `OptFunction` object must contain properties which are
 It must also contain methods for querying and updating all properties,
 though it might be prudent to not implement updating the user defined function,
 and a method to evaluate the function when given appropriate input,
-![(a,\ldots)](https://latex.codecogs.com/png.download?%28a%2C%5Cldots%29).
+![(a,\ldots)](https://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
 
 There should be two variants of the parameter vector accessors.
 The first should directly access the stored parameter while the second should
@@ -220,15 +220,15 @@ both free and independent.
 As an example, if there are ![N]
 parameters but the first parameter is fixed and
 the third parameter is bound to the second via 
-![p_3 = 1 - p_2](https://latex.codecogs.com/png.download?p_3%20%3D%201%20-%20p_2)
+![p_3 = 1 - p_2](https://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2)
 then the reduced query method should return 
-![{p_2, p_4, \ldots, p_N}](https://latex.codecogs.com/png.download?%5C%7Bp_2%2C%20p_4%2C%20%5Cldots%2C%20p_N%5C%7D)
+![{p_2, p_4, \ldots, p_N}](https://latex.codecogs.com/svg.latex?%5C%7Bp_2%2C%20p_4%2C%20%5Cldots%2C%20p_N%5C%7D)
 and the reduced update method should take a 
-![N-2](https://latex.codecogs.com/png.download?N-2)
+![N-2](https://latex.codecogs.com/svg.latex?N-2)
 length vector, 
-![\mathbf{d}](https://latex.codecogs.com/png.download?%5Cmathbf%7Bd%7D)
+![\mathbf{d}](https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bd%7D)
 and update the parameter vector to be
-![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D%20%3D%20%5C%7Bp_1%2C%20d_1%2C%201-d_1%2C%20d_2%2C%20%5Cldots%2C%20d_%7BN-2%7D%5C%7D)
+![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D%20%3D%20%5C%7Bp_1%2C%20d_1%2C%201-d_1%2C%20d_2%2C%20%5Cldots%2C%20d_%7BN-2%7D%5C%7D)
 
 
 One possible implementation of `OptFunction` is
@@ -249,16 +249,16 @@ and interacting with the optimisation engine requires a new class, `OptModel`.
 - foreground functions, ![F_j(a, \ldots; \mathbf{p}_j)]
 - background functions, ![B_k(a, \ldots; \mathbf{p}_k)]
 
-[M_i(a, \ldots; \mathbf{p}_i)]: https://latex.codecogs.com/png.download?M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29
-[F_j(a, \ldots; \mathbf{p}_j)]: https://latex.codecogs.com/png.download?F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29
-[B_k(a, \ldots; \mathbf{p}_k)]: https://latex.codecogs.com/png.download?B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29
-[\mathbf{p}_i]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D_i
-[\mathbf{p}_j]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D_j
-[\mathbf{p}_k]: https://latex.codecogs.com/png.download?%5Cmathbf%7Bp%7D_k
+[M_i(a, \ldots; \mathbf{p}_i)]: https://latex.codecogs.com/svg.latex?M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29
+[F_j(a, \ldots; \mathbf{p}_j)]: https://latex.codecogs.com/svg.latex?F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29
+[B_k(a, \ldots; \mathbf{p}_k)]: https://latex.codecogs.com/svg.latex?B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29
+[\mathbf{p}_i]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_i
+[\mathbf{p}_j]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_j
+[\mathbf{p}_k]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_k
 
 such that they collectively describe a real valued function
 
-![\rho(a, \ldots;\mathbf{p}) = \left\[\prod_i M_i(a, \ldots; \mathbf{p}_i)\right\] \times \left\[\sum_j F_j(a, \ldots; \mathbf{p}_j)\right\] + \sum_k B_k(a, \ldots; \mathbf{p}_k)](https://latex.codecogs.com/png.download?%5Crho%28a%2C%20%5Cldots%3B%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5C%5B%5Cprod_i%20M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29%5Cright%5C%5D%20%5Ctimes%20%5Cleft%5C%5B%5Csum_j%20F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29%5Cright%5C%5D%20+%20%5Csum_k%20B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29)
+![\rho(a, \ldots;\mathbf{p}) = \left\[\prod_i M_i(a, \ldots; \mathbf{p}_i)\right\] \times \left\[\sum_j F_j(a, \ldots; \mathbf{p}_j)\right\] + \sum_k B_k(a, \ldots; \mathbf{p}_k)](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%3B%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5C%5B%5Cprod_i%20M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29%5Cright%5C%5D%20%5Ctimes%20%5Cleft%5C%5B%5Csum_j%20F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29%5Cright%5C%5D%20+%20%5Csum_k%20B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29)
 
 which is consistent with the shape of the input,
 the parameter vector ![\mathbf{p}] is some combination of the individual functions'
@@ -266,13 +266,13 @@ the parameter vector ![\mathbf{p}] is some combination of the individual functio
 for which the object contains a bi-directional mapping,
 and the multiplication and addition are
 performed element-wise -- unless if all 
-![M_i](https://latex.codecogs.com/png.download?M_i) or all 
-![B_k](https://latex.codecogs.com/png.download?B_k) return scalar values then the multiplication or addition,
+![M_i](https://latex.codecogs.com/svg.latex?M_i) or all 
+![B_k](https://latex.codecogs.com/svg.latex?B_k) return scalar values then the multiplication or addition,
 respectively, can be performed using shape promotion rules.
 
 The distinction between scaling, foreground, and background functions is overkill for simple cases
 but will enable efficient handling of resolution effects (where only the 
-![F_j](https://latex.codecogs.com/png.download?F_j)
+![F_j](https://latex.codecogs.com/svg.latex?F_j)
 are convoluted with the instrumental resolution).
 
 The `OptModel` object must contain the following properties:
@@ -290,7 +290,7 @@ The `OptModel` object must contain the following properties:
 
 and must have methods which query and update its properties, plus:
 
-- simulate the composite model ![\rho(a, \ldots,\mathbf{p})](https://latex.codecogs.com/png.download?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29)
+- simulate the composite model ![\rho(a, \ldots,\mathbf{p})](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29)
 - calculate ![r(\mathbf{p})] or the user defined ![f(\mathbf{p})]
   - *possibly calculate vector ![f_i(\mathbf{p})] to support more back-ends* --
   	as this requires we store the result for each ![\mathbb{Q}_i] instead of accumulating
@@ -375,7 +375,7 @@ Then the get and set methods of an object can respect the status of the paramete
 Binding parameters *between* functions which apply to a single dataset can still be accomplished by the use of binding functions.
 The best solution to accomplish this task is unclear, but may consist of
 
-- a ![N \times 3](https://latex.codecogs.com/png.download?N%20%5Ctimes%203) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
+- a ![N \times 3](https://latex.codecogs.com/svg.latex?N%20%5Ctimes%203) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
 - a length-![N] cellarray of 3-vectors each with the function number, parameter number, and binding function number, and the same cellarray of binding functions as before
 - a length-![N] cellarray of length-3 cellarrays each consisting of `{function_no, parameter_no, binding_fun_handle}`
 - or a length-![N] array of binding objects containing the same information in a more-concrete form
@@ -396,7 +396,7 @@ Such bounding functions are flexible enough to cover any conceivable parameter s
 each `OptFunction` as anonymous functions.
 
 One option would be to combine the bounding functions with the binding functions cell array, and then index into
-that with a separate ![N \times 2](https://latex.codecogs.com/png.download?N%20%5Ctimes%202) array (or two length-![N] vectors), with `0` reserved to indicate no-bounding.
+that with a separate ![N \times 2](https://latex.codecogs.com/svg.latex?N%20%5Ctimes%202) array (or two length-![N] vectors), with `0` reserved to indicate no-bounding.
 
 In a hypothetical case where the first parameter is free and unbounded,
 the second parameter is free and bound to be between constant values `lower_value`&le;`p(2)`&le;`upper_value`,
