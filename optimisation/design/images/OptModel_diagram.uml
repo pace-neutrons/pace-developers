@@ -1,0 +1,67 @@
+@startuml
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class OptModel{
+- OptFunction[] multiplier
+- OptFunction[] foreground
+- OptFunction[] background
+- enum backend
+- char cost_function
+- global_binding
+==
+__ foreground __
++ get_foreground_functions()
++ set_foreground_functions(OptFunction[])
++ add_foreground_function(OptFunction)
++ get_foreground_parameters()
++ set_foreground_parameters()
++ get_foreground_free()
++ set_foreground_free()
++ get_foreground_fixed()
++ set_foreground_fixed()
++ get_foreground_binding()
++ set_foreground_binding()
+
+__ multiplier __
++ get_multiplier_functions()
++ set_multiplier_functions(OptFunction[])
++ add_multiplier_function(OptFunction)
++ get_multiplier_parameters()
++ set_multiplier_parameters()
++ get_multiplier_free()
++ set_multiplier_free()
++ get_multiplier_fixed()
++ set_multiplier_fixed()
++ get_multiplier_binding()
++ set_multiplier_binding()
+
+__ background __
++ get_background_functions()
++ set_background_functions(OptFunction[])
++ add_background_function(OptFunction)
++ get_background_parameters()
++ set_background_parameters()
++ get_background_free()
++ set_background_free()
++ get_background_fixed()
++ set_background_fixed()
++ get_background_binding()
++ set_background_binding()
+
+__ global __
++ get_parameters()
++ set_parameters()
++ get_binding()
++ set_binding()
++ get_independent()
++ set_independent()
++ evaluate()
++ operator()(a...,p)
++ optimise()
+}
+@enduml

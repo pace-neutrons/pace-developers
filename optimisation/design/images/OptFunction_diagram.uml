@@ -1,0 +1,36 @@
+@startuml
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class OptFunction{
+- int number_of_inputs
+- enum input_type
+- char function
+- vector parameters
+- vector parameter_status
+- vector parameter_lower_bounds
+- vector parameter_upper_bounds
+- vector parameter_functions
+- vector last_evaluation
++ get_number_of_inputs()
++ get_input_type()
++ get_function_name()
++ get_parameters()
++ set_parameters()
++ get_status()
++ set_status()
++ get_binding()
++ set_binding()
++ get_parameter_functions()
++ set_parameter_functions()
++ add_parameter_function()
++ get_independent()
++ set_independent()
++ evaluate()
++ operator()(a...,p)
+}
+@enduml
