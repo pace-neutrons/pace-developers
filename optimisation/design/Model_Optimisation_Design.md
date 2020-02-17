@@ -91,6 +91,7 @@ By providing the necessary glue to connect user-provided ![S(\mathbb{Q};\mathbf{
 the routine extraction of physically relevant parameters from measured inelastic neutron scattering data.
 
 ## Deliverables
+- New classes `OptModel` and `OptFunction`, detailed below
 - Callback function to calculate ![r(\mathbf{p})] for user-provided ![S(\mathbb{Q};\mathbf{p})].
 - Callback function to calculate ![\mathbf{J}(\mathbf{p})] for arbitrary ![f(\mathbf{p})]; including ![r(\mathbf{p})]
 - Framework for interfacing to one or more optimisation libraries implementing:
@@ -110,8 +111,6 @@ Users will need to provide parameter bounds in the form of linear or non-linear 
 depending on which optimisation back-end is to be used.   
 
 
-# Milestones
-**To be determined**
 
 # Existing Solution
 Users of `Horace` are able to optimise models with signatures of the form
@@ -291,6 +290,7 @@ respectively, can be performed using shape promotion rules.
 The distinction between scaling, foreground, and background functions is overkill for simple cases
 but will enable efficient handling of resolution effects (where only the 
 ![F_j](https://latex.codecogs.com/svg.latex?F_j)
+
 are convoluted with the instrumental resolution).
 
 The `OptModel` object must contain the following properties:
@@ -489,9 +489,21 @@ p_phonon_fit = opt.get_foreground_parameters(2);
 
 ```
 
+# Milestones
+1. Partial `OptFunction` class without fixed parameters or parameter bindings.
+2. Partial `OptModel` class without meta bindings or optimisation (only model simulation)
+3. Add parameter binding to `OptFunction`
+4. Add meta binding to `OptModel`
+5. Add optimisation for a single unbounded-parameter back-end to `OptModel`
+6. Add fixed parameters to `OptFunction`
+7. Add parameter bounds and additional optimisation back-ends to `OptModel`
+
+
 # Feedback
 Identifying a set of optimisation problems covering a range of difficulty that can be used for integration testing
 will be necessary to check the correctness and performance of our solution.
+
+It will be possible and necessary to test the features of `OptFunction` and `OptModel` objects introduced at each milestone.
 
 # Open Questions
 ## Model functions via the compiled MATLAB interface
@@ -505,7 +517,7 @@ function s = evaluate(obj, varargin)
 end
 ```
 
-If model optimisation is to be supported when running compiled MATLAB/Horace from Python this requires a way to call their Python functions.
+If model optimisation is to be supported when running compiled MATLAB/Horace from Python this requires a way to call user defined Python functions.
 
 - Can compiled MATLAB call pure Python functions?
 	+ How should such functions be provided to MATLAB? As `module.function` strings, memory addresses, etc.?
@@ -516,7 +528,7 @@ If model optimisation is to be supported when running compiled MATLAB/Horace fro
 Providing parameter bounds functions to `OptFunction` and `OptModel` objects that are part of the compiled MATLAB/Horace might prove problematic.
 
 - If MATLAB/Horace can directly call functions defined by the interactive Python interpreter then a user can easily pass Python lambda functions for the bounds functions, e.g., `lambda x: x[1]`.
-- If MATLAB/Horace has access to the builtin MATLAB function `str2func` a user could pass a string representation of a MATLAB-style anonymous function, e.g., `'@(x)x(2)`.
+- If MATLAB/Horace has access to the builtin MATLAB function `str2func` a user could pass a string representation of a MATLAB-style anonymous function, e.g., `'@(x)x(2)'`.
 - If MATLAB/Horace has access to MATLAB's Python interface it could use that to construct Python lambda functions from user provided strings, e.g., `'lambda x: x[1]'`
 
 Creating and calling a Python lambda function from within interactive MATLAB is possible:
@@ -544,8 +556,7 @@ The advantages and disadvantages of each potential language need to be assessed 
 | MATLAB   | **momentum**                                              |                                                            |
 |          | simple interface to `sqw` and rest of Horace              | running from Python of indeterminate difficulty            |
 | Python   | MATLAB interfaces to Python modules are relatively simple | running from Python might involve weird interpreter issues |
-| C++      | compiled &rarr; functionality constrained                 | increased distribution complexity                          |
-|          | limited functionality &rarr; fully testable               |                                                            |
+| C++      | compiled &rarr; functionality constrained &rarr; fully testable | increased distribution complexity                    |
 |          | Python interface via `pybind11` simple                    | MATLAB interface via `mex` less simple                     |
 
 
