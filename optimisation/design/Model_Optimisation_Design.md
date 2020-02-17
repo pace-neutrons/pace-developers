@@ -76,6 +76,7 @@ Different **Model Optimisation** schemes may require additional information.
 Local-minima optimisers need an initial guess for the model parameters, ![\mathbf{p}_0].
 Global-minima optimisers may need lower- and upper-bounds in 
 ![\mathbb{R}^n](https://latex.codecogs.com/svg.latex?%5Cmathbb%7BR%7D%5En) for ![\mathbf{p}].
+Most optimisers require the Jacobian of the function to be minimised, e.g.,
 
 ![\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]
 
@@ -98,7 +99,12 @@ the routine extraction of physically relevant parameters from measured inelastic
   + the Levenberg-Marquardt nonlinear least squares algorithm
   + a global optimiser, e.g., one or more of the algorithms in [NLopt](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/)
   + a derivative-free optimiser, e.g., [DFO-LS](https://github.com/numericalalgorithmsgroup/dfols)
-  + *Bayesian Inferrence* (?)
+  + *Bayesian Inferrence* 
+    - Approximating a ![f(\mathbf{p})] surface using:
+      + A tree of Parzen estimators (TPE) [HyperOpt](https://github.com/hyperopt/hyperopt)
+      + Gaussian processes [GPFlow](https://github.com/GPflow/GPflow)
+    - Generalised statistical modelling using a Markov-Chain Monte Carlo algorithm to calculate the integrals yielding the marginalized distributions [PyMC3](https://docs.pymc.io/)
+      
 
 ## Excluded
 There may be ways to automatically estimate ![\mathbf{p}_0] for arbitrary ![S(\mathbb{Q};\mathbf{p})]
@@ -433,7 +439,7 @@ the bounding functions specified might be of the form:
 ## Function applicability
 Sometimes multiple datasets will be fit concurrently with a mixture of global and dataset-specific parameters.
 In order to allow for 'local' parameters we can specify which functions apply to which datasets.
-The per-function-type applies cellarray should be the same length as the function-type vector and should have entries 
+The per-function-type `applies` cellarray should be the same length as the function-type vector and should have entries 
 
 | `applies{i}` | meaning |
 |--------------|---------|

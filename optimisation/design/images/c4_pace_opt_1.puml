@@ -16,7 +16,7 @@ Person(scientist,"Neutron Scattering User", "Student, Postdoc, Scientist")
 System(pace, "PACE", "Proper Analysis of Coherent Excitations")
 
 System_Ext(instrument, "Spectrometer","Run experiment")
-System_Ext(mantid, "MantidProject", "Reducuce data")
+System_Ext(mantid, "MantidProject", "Reduce data")
 System_Ext(filesystem,"File System")
 
 Rel(scientist, pace, "Uses", "MATLAB or Python")
