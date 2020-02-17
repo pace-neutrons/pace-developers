@@ -171,6 +171,24 @@ these are combined into
  
 # Proposed Solution
 
+A simplified overall context diagram for PACE shows that it will be used by researchers after their inelastic neutron scattering data has been reduced into some number of NXSPE files.
+
+![PACE context diagram][Context]
+
+A container diagram shows that PACE will provide both a MATLAB and Python interface for the researcher, both of which will be able to interact directly with Horace and an improved version of multifit.
+
+![PACE container diagram][Container]
+
+Looking at the components of Horace and the multifit replacement, here dubbed multiFit+, we see that Horace provides functionality to create and interact with `sqw` objects.
+multiFit+ will provide an interface to external modelling codes and external optimisation codes, will interact strongly with tobyfit, and will consist primarily of the new optimisation functionality detailed in this document.
+
+
+![PACE components diagram][Components]
+
+[Context]: images/C4_PACE_Opt_1_Context.png
+[Container]: images/C4_PACE_Opt_2_Containers.png
+[Components]: images/C4_PACE_Opt_3_Components.png
+
 ## Optimisation Function Object
 The minimum information required for a model to simulate a `sqw` object are the ![\mathbb{Q}_i] contained in the object
 and one or more model parameters.

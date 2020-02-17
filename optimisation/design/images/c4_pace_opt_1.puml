@@ -1,0 +1,28 @@
+@startuml C4_PACE_Opt_1_Context
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Context.puml
+
+LAYOUT_TOP_DOWN
+'LAYOUT_AS_SKETCH
+'LAYOUT_WITH_LEGEND
+hide stereotype
+legend right
+|=              |= Type |
+|<PERSON_BG_COLOR>      | person |
+|<SYSTEM_BG_COLOR>   | system |
+|<EXTERNAL_SYSTEM_BG_COLOR>      | external system |
+endlegend
+
+Person(scientist,"Neutron Scattering User", "Student, Postdoc, Scientist")
+System(pace, "PACE", "Proper Analysis of Coherent Excitations")
+
+System_Ext(instrument, "Spectrometer","Run experiment")
+System_Ext(mantid, "MantidProject", "Reducuce data")
+System_Ext(filesystem,"File System")
+
+Rel(scientist, pace, "Uses", "MATLAB or Python")
+
+Rel(scientist, instrument, "Sample")
+Rel(instrument, mantid, "Data")
+Rel(mantid,filesystem,"S(Q,E,...)")
+Rel(filesystem, pace, "*.nxspe")
+@enduml

@@ -1,0 +1,43 @@
+@startuml C4_PACE_Opt_3_Components
+' !includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+
+hide stereotype
+
+title Relational Component Diagram for OptModel in PACE
+
+
+ContainerDb(filesystem, "Storage","File System")
+
+System_Boundary(pace, "PACE"){
+    System_Boundary(pace_opt,"multiFit+"){
+        Container(opt,"OptModel","MATLAB","Fit model\n S(Q,E,...;p) or\nR{S(Q,E,...;p)}\nto data\n S(Q,E,...)")
+        Container(tobyfit,"tobyFit+","MATLAB","Instrument resolution")
+    }
+    System_Boundary(horace,"Horace"){
+        
+        Container(sqw,"sqw","MATLAB","Object for S(Q,E,...) data")
+        Container(gensqw,"gensqw","MATLAB/C++","Construct SQW objects from NXSPE files")
+        Container(cutsqw,"cutsqw","MATLAB/C++","Transform/bin SQW object")
+        
+    }
+}
+Container(model,"Models","MATLAB/Python/C++","Calculate S(Q,E,...) for parameters, p")
+Container(optimiser,"Optimiser","MATLAB/Python/C++","Optimise model parameters")
+
+Rel(gensqw,sqw,"create")
+Rel(cutsqw,sqw,"create")
+Rel_Back(cutsqw,sqw,"cut")
+
+Rel_Back(opt,model,"S(Q,E,...;p)")
+Rel_Back(opt,sqw,"S(Q,E,...)")
+Rel(opt,optimiser,"optimise p")
+Rel_Back(opt,tobyfit,"R{S(Q,E,...;p)}")
+Rel_Back(tobyfit,model,"S(Q,E,...;p)")
+Rel_Back(tobyfit,sqw,"Resolution parameters")
+
+Rel(filesystem, cutsqw, "sqw")
+Rel(filesystem, gensqw, "nxspe")
+Rel_Back(filesystem, sqw,"save")
+@enduml

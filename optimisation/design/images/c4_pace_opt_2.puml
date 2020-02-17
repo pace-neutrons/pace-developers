@@ -1,0 +1,45 @@
+@startuml C4_PACE_Opt_2_Containers
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+hide stereotype
+legend right
+|=              |= Type |
+|<PERSON_BG_COLOR>      | person |
+|<SYSTEM_BG_COLOR>   | system |
+|<EXTERNAL_SYSTEM_BG_COLOR>      | external system |
+endlegend
+
+Person(scientist,"Neutron Scattering User", "Student, Postdoc, Scientist")
+
+System_Boundary(pace, "PACE"){
+    System(horace,"Horace")
+    Container(python_interface,"Interface","Python")
+    Container(matlab_interface,"Interface","MATLAB")
+    Container(euphonic,"Euphonic","Python/C++","Phonons from force constants")
+    System(opt,"multiFit+")
+}
+Container(spinw,"SpinW","MATLAB/C++","Spinwaves from exchange constants")
+
+System_Ext(instrument, "Spectrometer","Run experiment")
+System_Ext(mantid, "MantidProject", "Reduce data")
+
+ContainerDb(filesystem, "Storage","File System")
+
+Rel(scientist, matlab_interface, "Uses", "MATLAB")
+Rel(scientist, python_interface, "Uses", "Python")
+
+Rel(python_interface, horace, "calls")
+Rel(python_interface, opt, "calls")
+
+Rel(matlab_interface, horace, "calls")
+Rel(matlab_interface, opt, "calls")
+
+Rel_Back(opt,horace,"Data")
+Rel_Back(opt,spinw,"Model")
+Rel_Back(opt,euphonic,"Model")
+
+Rel(scientist, instrument, "Sample")
+Rel(instrument, mantid, "Data")
+Rel(mantid, filesystem, "*.nxspe")
+Rel(filesystem, horace, "S(Q,E,...)")
+@enduml
