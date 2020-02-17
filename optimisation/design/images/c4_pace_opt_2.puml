@@ -19,6 +19,7 @@ System_Boundary(pace, "PACE"){
     System(opt,"multiFit+")
 }
 Container(spinw,"SpinW","MATLAB/C++","Spinwaves from exchange constants")
+Container(thirdparty, "3rd party / User code", "MATLAB/Python/Compiled library", "Arbitrary user model of scattering")
 
 System_Ext(instrument, "Spectrometer","Run experiment")
 System_Ext(mantid, "MantidProject", "Reduce data")
@@ -37,6 +38,7 @@ Rel(matlab_interface, opt, "calls")
 Rel_Back(opt,horace,"Data")
 Rel_Back(opt,spinw,"Model")
 Rel_Back(opt,euphonic,"Model")
+Rel_Back(opt,thirdparty,"Model")
 
 Rel(scientist, instrument, "Sample")
 Rel(instrument, mantid, "Data")
