@@ -1,4 +1,4 @@
-@startuml
+@startuml OptFunction_diagram
 
 skinparam class {
 BackgroundColor White
@@ -11,26 +11,30 @@ class OptFunction{
 - enum input_type
 - char function
 - vector parameters
+- vector parameter_names
 - vector parameter_status
-- vector parameter_lower_bounds
-- vector parameter_upper_bounds
 - vector parameter_functions
+- vector parameter_lower_limits
+- vector parameter_upper_limits
 - vector last_evaluation
 + get_number_of_inputs()
 + get_input_type()
 + get_function_name()
 + get_parameters()
 + set_parameters()
-+ get_status()
-+ set_status()
-+ get_binding()
-+ set_binding()
++ get_parameter_status()
++ set_parameter_status()
 + get_parameter_functions()
 + set_parameter_functions()
 + add_parameter_function()
 + get_independent()
 + set_independent()
-+ evaluate()
-+ operator()(a...,p)
++ get_lower_limits()
++ set_lower_limits()
++ get_upper_limits()
++ set_upper_limits()
++ get_independent_lower_limits()
++ get_independent_upper_limits()
++ evaluate(dataset)
 }
 @enduml
