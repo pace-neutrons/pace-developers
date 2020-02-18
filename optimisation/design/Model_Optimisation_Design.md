@@ -429,7 +429,7 @@ One way to accomplish this (in MATLAB-like languages) is for the `OptFunctionsAr
 
 In C++ or Python this might be better accomplished by holding a vector of vectors, e.g., `std::vector<std::vector<int>>` or `numpy.array([numpy.array([...]),...])`.
 
-The total number of all `applies` entries, e.g., `sum(arrayfun(@(x)numel(obj.applies(x)),1:numel(applies)))` + ``numel(datasets)*sum(cellarray(@(x)x==0,applies))`, should be equal to or greater than the number of datasets -- that is, each dataset must have at least one function which applies.
+The total number of all `applies` entries, e.g., `sum(arrayfun(@(x)numel(obj.applies(x)),1:numel(applies)))` + `numel(datasets)*sum(cellarray(@(x)x==0,applies))`, should be equal to or greater than the number of datasets -- that is, each dataset must have at least one function which applies.
 
 ### One possible implementation of `OptFunctionsArray`
 
