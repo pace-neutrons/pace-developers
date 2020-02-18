@@ -2,7 +2,7 @@
 
 # Current class hierarchy
 
-<img align="center" src="images/euphonic_classes_v0.2.2.png">
+<img align="center" src="images/01_euphonic_classes_v0.2.2.png">
 
 All Euphonic objects are based on a main `Data` superclass. This contains any
 methods that can apply to both vibrational or electronic data e.g. DOS
@@ -88,5 +88,5 @@ just get returned. What to do when we have different kinds of structure factor
 (coherent crystal/powder, incoherent)? It needs to be made more consistent
 - Class/attribute naming could be improved
 
-See [proposed design](design_proposal_from_v0.2.2.md)
+See [proposed design](02_design_discussion_v0.3.md)
 

@@ -1,4 +1,4 @@
-# Design proposal (from v0.2.2 ->)
+# Design proposal (from v0.2.2 -> v0.3)
 
 # Overview of data structures
 
@@ -27,7 +27,7 @@ output calculated data rather than storing it as an attribute. This means that
 any frequencies and will instead output a `PhononData` object from
 `calculate_fine_phonons`. See below image for an example:
 
-<img align="center" src="images/proposed_data_flow.png">
+<img align="center" src="images/02_proposed_data_flow.png">
 
 
 **Remove BandsData and Grace plotting**
