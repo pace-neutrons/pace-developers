@@ -1,5 +1,5 @@
 # PACE Model Optimisation
-**2020-02-12**
+**2020-02-18**
 
 <!---
 LaTeX equations used repeatedly can be defined as references, with format
@@ -215,32 +215,45 @@ Depending on the language in which `OptFunction` is defined this can be implemen
 
 The `OptFunction` object must contain properties which are
 
-- the user defined function;
-  as a string containing its name, a function handle, or a function pointer,
-  depending on implementation language
+- the user defined function
+	+ as a string containing its name, a function handle, or a function pointer,
+	depending on implementation language
 - the initial (or last used) parameter vector for the model
-- a vector describing which parameters are allowed to be changed
-  or, conversely, which parameters must not be changed;
-  this could be a logical vector the same size as the parameter vector or
-  a variable length vector with parameter indices depending on the implementation
-  language
-- a structure of some sort describing optional bindings between parameters;
-  with implementation again depending heavily on language.
-- if memory allows it *might* be desirable to store the last evaluation result
-  of the user defined function; this would be a zero-length numeric vector if
-  no prior evaluation was performed. 
+- a vector describing which parameters are allowed to be changed or, conversely, which parameters must not be changed
+	+ this could be a logical vector the same size as the parameter vector
+	+ a variable length vector with parameter indices
+	+ or something else depending on the implementation language
+- a structure of some sort describing optional bindings between parameters
+	+ for example, a number-of-parameters length vector of indices into an array of parameter binding functions
+	+ or some other implementation again depending heavily on language.
+- if memory allows it *might* be desirable to store the last evaluation result of the user defined function
+  	+ this would be a zero-length numeric vector if no prior evaluation was performed. 
 
-It must also contain methods for querying and updating all properties,
-though it might be prudent to not implement updating the user defined function,
-and a method to evaluate the function when given appropriate input,
-![(a,\ldots)](https://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
+Depending on details of the implementation language additional properties may be required
 
-There should be two variants of the parameter vector accessors.
-The first should directly access the stored parameter while the second should
-respect the status of the parameters, only returning or directly-updating those which are
-both free and independent.
+- the type of input the user defined function expects
+- the number of inputs the user defined function expects
+	
+In C++ both of these can be defined through appropriate usage of templates and the [Function objects library](https://en.cppreference.com/w/cpp/utility/functional).
+In Python the `inspect` module can be used to determine this information.
+In MATLAB it *may* be possible to obtain this information from a function definition through use of [partially-documented meta functions](http://undocumentedmatlab.com/articles/function-definition-meta-info) and, possibly, enforced of the usage of [Function Argument Validation](https://mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) but with so much uncertainty this should be left as a stretch goal.
 
-As an example, if there are ![N]
+The `OptFunction` object must  contain methods to:
+
+- evaluate the function when given appropriate input, e.g., ![(a,\ldots)](https://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
+- query all properties
+	+ There should be two variants of the parameter vector accessors.
+	The first should directly access the stored parameter while the second should
+	respect the status of the parameters, only returning or directly-updating those which are
+	both free and independent.
+- update all properties, with the exception of the user defined function which is *immutable*
+	+ The user defined function does not need to be truly immutable since a determined user can
+    find a way to redefine the function, instead we should try to enforce the concept that one
+    `OptFunction` object corresponds to a specific instance of one function -- since the parameters
+    for one function will generally not be applicable to a second function.
+
+
+As an example of the independent parameter access method, if there are ![N]
 parameters but the first parameter is fixed and
 the third parameter is bound to the second via 
 ![p_3 = 1 - p_2](https://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2)
@@ -253,87 +266,22 @@ length vector,
 and update the parameter vector to be
 ![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D%20%3D%20%5C%7Bp_1%2C%20d_1%2C%201-d_1%2C%20d_2%2C%20%5Cldots%2C%20d_%7BN-2%7D%5C%7D)
 
+### Calling the function inside `OptFunction`
+Each `OptFunction` object knows how many and of what type its containing function requires as input before its parameter vector.
+If the `OptFunction` `evaluate` method is called with the matching input then it should be passed along without modification.
+If, however, different input is provided `OptFunction.evaluate` should be able to construct the required input.
 
-One possible implementation of `OptFunction` is
+The use case that should be supported at minimum is that a function requires four numeric vectors as input but `OptFunction.evaluate` was provided with a `sqw` object. In this case `OptFunction.evaluate` should pull the vectors `h,k,l,E` from the `sqw` object for use by the internal function.
 
-![possible OptFunction diagram][OptFunction_diagram]
+Possible behaviour when numeric input is required but a `sqw` object is provided to `evaluate` might be
 
-[OptFunction_diagram]: images/OptFunction_diagram.png
-
-## Optimisation Model Object
-
-It is worthwhile to allow for a user defined ![S(\mathbb{Q};\mathbf{p})] to be constructed as the sum of a number
-of user defined functions held in `OptFunction`s. Keeping track of those `OptFunction` objects
-and interacting with the optimisation engine requires a new class, `OptModel`.
-
-`OptModel` should take any number of `OptFunction` objects, but ideally they should be separated into
-
-- multiplier functions, ![M_i(a, \ldots; \mathbf{p}_i)]
-- foreground functions, ![F_j(a, \ldots; \mathbf{p}_j)]
-- background functions, ![B_k(a, \ldots; \mathbf{p}_k)]
-
-[M_i(a, \ldots; \mathbf{p}_i)]: https://latex.codecogs.com/svg.latex?M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29
-[F_j(a, \ldots; \mathbf{p}_j)]: https://latex.codecogs.com/svg.latex?F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29
-[B_k(a, \ldots; \mathbf{p}_k)]: https://latex.codecogs.com/svg.latex?B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29
-[\mathbf{p}_i]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_i
-[\mathbf{p}_j]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_j
-[\mathbf{p}_k]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_k
-
-such that they collectively describe a real valued function
-
-![\rho(a, \ldots;\mathbf{p}) = \left\[\prod_i M_i(a, \ldots; \mathbf{p}_i)\right\] \times \left\[\sum_j F_j(a, \ldots; \mathbf{p}_j)\right\] + \sum_k B_k(a, \ldots; \mathbf{p}_k)](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%3B%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5C%5B%5Cprod_i%20M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29%5Cright%5C%5D%20%5Ctimes%20%5Cleft%5C%5B%5Csum_j%20F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29%5Cright%5C%5D%20+%20%5Csum_k%20B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29)
-
-which is consistent with the shape of the input,
-the parameter vector ![\mathbf{p}] is some combination of the individual functions'
-![\mathbf{p}_i], ![\mathbf{p}_j], and ![\mathbf{p}_k]
-for which the object contains a bi-directional mapping,
-and the multiplication and addition are
-performed element-wise -- unless if all 
-![M_i](https://latex.codecogs.com/svg.latex?M_i) or all 
-![B_k](https://latex.codecogs.com/svg.latex?B_k) return scalar values then the multiplication or addition,
-respectively, can be performed using shape promotion rules.
-
-The distinction between scaling, foreground, and background functions is overkill for simple cases
-but will enable efficient handling of resolution effects (where only the 
-![F_j](https://latex.codecogs.com/svg.latex?F_j)
-
-are convoluted with the instrumental resolution).
-
-The `OptModel` object must contain the following properties:
-
-- the multiplier, foreground, and background functions
-  + these could be stored in a single vector --
-    with a single `enum` vector or three separate vectors of indices into the functions vector indicating their types
-  + however it's probably simpler to store the different function types separately in three vectors
-- the function which evaluates the per ![\mathbb{Q}_i] parts of ![f(\mathbf{p})]
-  + some optimisers require ![f_i(\mathbf{p})] and ![\mathbf{J}_i(\mathbf{p})]
-  	so we must be able to calculate for each ![\mathbb{Q}_i] independently
-- which back-end is to be employed in the model optimisation -- an `enum` or similar, depending on the language
-- any inter-function parameter meta binding information
-- information indicating applicability of functions to datasets, when multiple datasets are fit simultaneously
-
-and must have methods which query and update its properties, plus:
-
-- simulate the composite model ![\rho(a, \ldots,\mathbf{p})](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29)
-- calculate ![r(\mathbf{p})] or the user defined ![f(\mathbf{p})]
-  - *possibly calculate vector ![f_i(\mathbf{p})] to support more back-ends* --
-  	as this requires we store the result for each ![\mathbb{Q}_i] instead of accumulating
-	the memory requirements will tend to be large.
-- estimate ![\mathbf{J}(\mathbf{p})], when required
-  - *possibly calculate the Jacobian in matrix form* which might require too much memory
-- collect the free and independent parameters from all `OptFunction`s into a single reduced parameter vector
-- distribute a reduced parameter vector to all `OptFunction`s while respecting the global parameter bindings
-- run the chosen optimisation back-end
-
-One possible implementation of the `OptModel` is
-
-![OptModel implementation diagram][OptModel_diagram]
-
-[OptModel_diagram]: images/OptModel_diagram.png 
-
-
-## Parameter binding
-We should use functions to enforce binding of parameters.
+| required number | pass to function |
+|-----------------|------------------|
+| 0               | `void`           |
+| 1               | `E`              |
+| 2               | `norm(Q),E`      |
+| 3               | `h,k,l`          |
+| 4               | `h,k,l,E`        |
 
 ### `OptFunction` parameter binding
 For the parameters of a single function we can combine the fixed/free logical information with the bound-ness of a parameter.
@@ -395,24 +343,7 @@ Then the get and set methods of an object can respect the status of the paramete
 ...
 ```
 
-### `OptModel` meta-function binding
-Binding parameters *between* functions which apply to a single dataset can still be accomplished by the use of binding functions.
-The best solution to accomplish this task is unclear, but may consist of
-
-- a ![N \times 3](https://latex.codecogs.com/svg.latex?N%20%5Ctimes%203) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
-- a length-![N] cellarray of 3-vectors each with the function number, parameter number, and binding function number, and the same cellarray of binding functions as before
-- a length-![N] cellarray of length-3 cellarrays each consisting of `{function_no, parameter_no, binding_fun_handle}`
-- or a length-![N] array of binding objects containing the same information in a more-concrete form
-
-In any case the meta binding functions will need to take a combined form of all (function-type) parameters as input, e.g.,
-`foreground_parameters = cellfun(@(x)x.get_parameters(), obj.foreground, 'UniformOutput',false);`
-and should return a single value, such that the binding can be resolved by
-`foreground_parameters{function_no}(parameter_no) = feval(binding_fun_handle, foreground_parameters);`.
-
-The specification that parameter 3 of function 2 should be equal in magnitude but opposite in sign to parameter 2 of function 1 might
-then be accomplished by `{2, 3, @(p)-p{1}(2)}`.
-
-### Parameter bounds
+### `OptFunction` parameter limits
 Some optimisers *require* that bounds be set on the applicable ranges of a model's parameters.
 In a simple case the upper and lower bounds are specified for each parameter as a single number.
 More flexible optimisers instead specify bounds in the form of (possibly nonlinear) inequalities provided as functions of the optimised parameters.
@@ -433,23 +364,158 @@ the bounding functions specified might be of the form:
 |2        |constant  | `@(p) lower_value;`  | `@(p) upper_value;`        |
 |3        |linear    | `@(p) p(1)*slope;`   | `@(p) p(1)*slope + offset` |
 
+### Named parameters
+To facilitate setting of parameter bindings and limits it may be useful to refer to parameters by user specified names in addition to indices.
+These names would need to be provided to the `OptFunction` object, ideally at creation, and would be used to translate binding or limit functions.
+
+For example a new `OptFunction` (without any bindings) given parameter names `{'A0', 'x0', 'w0', 'A1', 'x1', 'w1'}` could then have its third and sixth parameters bound together by, e.g., `obj.bind('w1','w0')` which would be translated to the new parameter function `obj.parameter_functions{end+1} = '@(z)z(3)'` with `obj.parameter_status(3) = numel(obj.parameter_functions)`.
+Or `obj.bind('x1','x0^2/3 + 12')` would become the anonymous function string `'@(y)y(2)^2/3 + 12'`.
+
+### One possible implementation of `OptFunction`
+
+![possible OptFunction diagram][OptFunction_diagram]
+
+[OptFunction_diagram]: images/OptFunction_diagram.png
+
+## Optimisation Functions Array Object
+It is worthwhile to allow for a user defined ![S(\mathbb{Q};\mathbf{p})] to be constructed as the sum of a number of user defined functions held in `OptFunction`s.
+And when fitting multiple datasets it will be worthwhile to have a list of `OptFunction` objects each of which is associated with one or more of the datasets.
+This will allow, e.g., multiple datasets to be fit to related functions where some number of their parameters are bound by user defined relationships.
+A new class is necessary to hold multiple `OptFunction` objects and handle their interactions and application to multiple datasets, `OptFunctionsArray` 
+
+The minimum set of properties of an `OptFunctionsArray` object are
+
+- a list of one or more `OptFunction` objects
+- function to dataset applicability information
+- inter-function parameter binding information
+- the reduction operator to use if multiple functions apply to one dataset
+	+ typically `+` or `*`, other operations *probably* do not need to be supported
+
+The `OptFunctionsArray` object will require access methods for all properties plus methods to
+
+- add one or more `OptFunction` objects to the list
+- get a collection of the parameters of all functions and set the parameters of all functions from a similar collection (a cellarray of vectors?)
+- get a vector of the independent parameters of all functions and set the independent parameters of all functions from a same-sized and ordered vector
+- evaluate the functions that apply to each of a provided array of datasets
+
+### `OptFunctionsArray` inter-function parameter binding
+Binding parameters *between* functions can still be accomplished by the use of binding functions.
+The best solution to accomplish this task is unclear, but may consist of
+
+- a ![N \times 3](https://latex.codecogs.com/svg.latex?N%20%5Ctimes%203) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
+- a length-![N] cellarray of 3-vectors each with the function number, parameter number, and binding function number, and the same cellarray of binding functions as before
+- a length-![N] cellarray of length-3 cellarrays each consisting of `{function_no, parameter_no, binding_fun_handle}`
+- or a length-![N] array of binding objects containing the same information in a more-concrete form
+
+In any case the meta binding functions will need to take a combined form of all (function-type) parameters as input, e.g.,
+`foreground_parameters = cellfun(@(x)x.get_parameters(), obj.foreground, 'UniformOutput',false);`
+and should return a single value, such that the binding can be resolved by
+`foreground_parameters{function_no}(parameter_no) = feval(binding_fun_handle, foreground_parameters);`.
+
+The specification that parameter 3 of function 2 should be equal in magnitude but opposite in sign to parameter 2 of function 1 might
+then be accomplished by `{2, 3, @(p)-p{1}(2)}`.
 
 
-
-## Function applicability
-Sometimes multiple datasets will be fit concurrently with a mixture of global and dataset-specific parameters.
-In order to allow for 'local' parameters we can specify which functions apply to which datasets.
-The per-function-type `applies` cellarray should be the same length as the function-type vector and should have entries 
+### `OptFunctionsArray` function applicability
+When multiple datasets are fit concurrently with a mixture of global and dataset-specific parameters identifying which functions correspond to which datasets is imperative.
+One way to accomplish this (in MATLAB-like languages) is for the `OptFunctionsArray` object to hold a per-function-type `applies` cellarray which is the same length as the `OptFunction` vector and should have entries 
 
 | `applies{i}` | meaning |
 |--------------|---------|
-| `0`  | function `i` applies to all datasets |
-| `-1` | duplicate function `i` and apply them independently to each dataset |
-| ![m] | function `i` applies *only* to dataset ![m] |
-| ![m,n,o,\ldots,p] | function `i` applies to each of ![m,n,o,\ldots,p] |
+| `0`  | `OptFunction` `i` applies to all datasets |
+| `-1` | duplicate `OptFunction` `i` and apply them independently to each dataset |
+| ![m] | `OptFunction` `i` applies *only* to dataset ![m] |
+| ![m,n,o,\ldots,p] | `OptFunction` `i` applies to each of ![m,n,o,\ldots,p] |
+
+In C++ or Python this might be better accomplished by holding a vector of vectors, e.g., `std::vector<std::vector<int>>` or `numpy.array([numpy.array([...]),...])`.
+
+The total number of all `applies` entries, e.g., `sum(arrayfun(@(x)numel(obj.applies(x)),1:numel(applies)))` + ``numel(datasets)*sum(cellarray(@(x)x==0,applies))`, should be equal to or greater than the number of datasets -- that is, each dataset must have at least one function which applies.
+
+### One possible implementation of `OptFunctionsArray`
+
+![possible OptFunctionsArray diagram][OptFunctionsArray_diagram]
+
+[OptFunctionsArray_diagram]: images/OptFunctionsArray_diagram.png
+
+## Optimisation Model Object
+For efficiency of model evaluation it will be worthwhile to allow for a user defined ![S(\mathbb{Q};\mathbf{p})] to be constructed from a set of multiplier, foreground, and background functions all held in `OptFunctionsArrays` objects.
+Keeping track of those `OptFunctionsArray` objects and interacting with the optimisation engine requires a new class, `OptModel`.
+
+`OptModel` should take three `OptFunctionsArray` objects
+
+- multiplier functions, ![M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]
+- foreground functions, ![F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]
+- background functions, ![B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]
+
+[M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]: https://latex.codecogs.com/svg.latex?M%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D%29%20%5Cequiv%20%5Cprod_i%20M_i%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D_i%29
+[F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]: https://latex.codecogs.com/svg.latex?F%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D%29%20%5Cequiv%20%5Csum_j%20F_j%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D_j%29
+[B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]: https://latex.codecogs.com/svg.latex?B%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D%29%20%5Cequiv%20%5Csum_k%20B_k%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D_k%29
+
+[M_i(a, \ldots; \mathbf{p}_i)]: https://latex.codecogs.com/svg.latex?M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29
+[F_j(a, \ldots; \mathbf{p}_j)]: https://latex.codecogs.com/svg.latex?F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29
+[B_k(a, \ldots; \mathbf{p}_k)]: https://latex.codecogs.com/svg.latex?B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29
+[\mathbf{p}_i]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_i
+[\mathbf{p}_j]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_j
+[\mathbf{p}_k]: https://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_k
+
+such that they collectively describe a real valued function
+
+![\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]
+
+[\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]: https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%5Cldots%3B%5Cmathbf%7Bp%7D%29%20%3D%20M%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D%29%20%5Ctimes%20F%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D%29%20&plus;%20B%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D%29
+
+
+which is consistent with the shape of the input,
+the parameter vector ![\mathbf{p}] is the concatenation of the independent multiplier, foreground, and background parameters, ![\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}],
+and the multiplication and addition are
+performed element-wise -- unless if all 
+![M_i](https://latex.codecogs.com/svg.latex?M_i) or all 
+![B_k](https://latex.codecogs.com/svg.latex?B_k) return scalar values then the multiplication or addition,
+respectively, can be performed using shape promotion rules.
+
+[\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:https://latex.codecogs.com/svg.latex?%5Cleft%5C%7B%5Cmathbf%7Bm%7D%2C%5Cmathbf%7Bf%7D%2C%5Cmathbf%7Bb%7D%5Cright%5C%7D
+
+The distinction between scaling, foreground, and background functions is overkill for simple cases
+but will enable efficient handling of resolution effects (where only the 
+![F_j](https://latex.codecogs.com/svg.latex?F_j)
+
+are convoluted with the instrumental resolution).
+
+The `OptModel` object must contain the following properties:
+
+- the multiplier, foreground, and background `OptFunctionsArray` objects
+- the dataset(s) used for model simulation and/or optimisation
+- the function which evaluates the per ![\mathbb{Q}_i] parts of ![f(\mathbf{p})]
+  + some optimisers require ![f_i(\mathbf{p})] and ![\mathbf{J}_i(\mathbf{p})] so we must be able to calculate for each ![\mathbb{Q}_i] independently
+- which back-end is to be employed in the model optimisation
+  + an `enum` or similar, depending on the language
+
+and must have methods which query and update its properties, plus:
+
+- simulate the composite model ![\rho(a, \ldots,\mathbf{p})](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29)
+- calculate ![r(\mathbf{p})] or the user defined ![f(\mathbf{p})]
+  - *possibly calculate vector ![f_i(\mathbf{p})] to support more back-ends* --
+  	as this requires we store the result for each ![\mathbb{Q}_i] instead of accumulating
+	the memory requirements will tend to be large.
+- estimate ![\mathbf{J}(\mathbf{p})], when required
+  - *possibly calculate the Jacobian in matrix form* which might require too much memory
+- collect the free and independent parameters from all `OptFunctionsArrays` objects into a single reduced parameter vector
+- distribute a modified reduced parameter vector to all `OptFunctionsArrays` objects
+- run the chosen optimisation back-end
+
+Storing the optimisation back-end as an `enum` or similar restricts the supported back-ends to a predefined set.
+This restriction may be unnecessary and should be lifted if a clear general back-end interfacing scheme becomes evident
+during the implementation of `OptModel`.
+
+
+### One possible implementation of the `OptModel`
+
+![OptModel implementation diagram][OptModel_diagram]
+
+[OptModel_diagram]: images/OptModel_diagram.png 
 
 ## Usage
-The following is a pseudo-code example of how `OptModel` and `OptFunction` might be used to fit the data contained in a `sqw` object.
+The following is a pseudo-code example of how `OptModel`, `OptFunctionsArray`, and `OptFunction` might be used to fit the data contained in a `sqw` object.
 
 ``` matlab
 % construct a function which takes only a parameter vector and returns a scalar
@@ -459,8 +525,8 @@ multiplier = OptFunction(@(x) x(1), 'inputs', 0, 'parameters', [1.,]);
 hklT = {'type', 'double', 'inputs', 4};
 sqwT = {'type', 'sqw', 'inputs', 1};
 
-fg = [OptFunction(@spinwaves, hklT{:}, 'parameters', p_spinwave), ...
-      OptFunction(@phonons,   hklT{:}, 'parameters', p_phonon) ];
+sw_func = OptFunction(@spinwaves, hklT{:}, 'parameters', p_spinwave);
+ph_func = OptFunction(@phonons,   hklT{:}, 'parameters', p_phonon);  
 
 bg = [OptFunction(@linear_in_h_bkg, hklT{:}, 'parameters', [1,0]), ...
       OptFunction(@incoherent_elastic, hklT{:}, 'parameters', [0]), ...
@@ -473,14 +539,13 @@ bg = [OptFunction(@linear_in_h_bkg, hklT{:}, 'parameters', [1,0]), ...
 %	bg(3).binding == [@(p)-p(2), @(p)p(1)]
 %   bg(3).mapping = [2,4]
 
-
-opt = OptModel([sqw_object_1, sqw_object_2]);
-opt.set_multiplier_functions(multiplier);
-opt.set_foreground_functions(fg);
-opt.set_background_functions(bg);
+% Create the OptModel object
 % the first background function should be treated independently for each sqw
 % and all other functions apply to all sqw objects
-opt.set_background_applies({-1,0,0});
+opt = OptModel([sqw_object_1, sqw_object_2], ...
+               'foreground', [sw_func, ph_func],...
+               'background', OptFunctionsArray(bg, 'applies', {-1,0,0}), ...
+               'multiplier', multiplier);
 
 % run the optimiser
 opt.set_backend(...); % specified by name? extra meta parameter specification?
@@ -489,27 +554,28 @@ opt.optimise();
 % pull out all fit parameters
 p_fit = opt.get_parameters();
 % or just those from the foreground function(s)
-p_spinwave_and_phonon_fit = opt.get_foreground_parameters();
+p_spinwave_and_phonon_fit = opt.get_foreground().get_parameters();
 % or just one of the foreground functions
-p_phonon_fit = opt.get_foreground_parameters(2);
+p_phonon_fit = opt.get_foreground().get_parameters(2);
 
 ```
 
 # Milestones
 1. Partial `OptFunction` class without fixed parameters or parameter bindings.
-2. Partial `OptModel` class without meta bindings or optimisation (only model simulation)
-3. Add parameter binding to `OptFunction`
-4. Add meta binding to `OptModel`
-5. Add optimisation for a single unbounded-parameter back-end to `OptModel`
-6. Add fixed parameters to `OptFunction`
-7. Add parameter bounds and additional optimisation back-ends to `OptModel`
+2. Partial `OptFunctionsArray` class holding only a single `OptFunction` and lacking inter-function binding and applicability information
+3. Partial `OptModel` class without multiplier or background functions, and only the ability to simulate the model
+4. Add model optimisation to `OptModel` for a single, unbounded-parameter, back-end (likely, Levenberg-Marquardt)
+5. Add fixed parameters and parameter binding to `OptFunction`
+6. Add multiple function support to `OptFunctionsArray` with inter-function binding
+7. Add foreground and background functions to `OptModel`
+8. Add parameter bounds and additional optimisation back-ends to `OptModel`
 
 
 # Feedback
 Identifying a set of optimisation problems covering a range of difficulty that can be used for integration testing
 will be necessary to check the correctness and performance of our solution.
 
-It will be possible and necessary to test the features of `OptFunction` and `OptModel` objects introduced at each milestone.
+It will be possible and necessary to test the features of `OptFunction`, `OptFunctionsArray`, and `OptModel` objects introduced at each milestone.
 
 # Open Questions
 ## Model functions via the compiled MATLAB interface
@@ -528,6 +594,7 @@ If model optimisation is to be supported when running compiled MATLAB/Horace fro
 - Can compiled MATLAB call pure Python functions?
 	+ How should such functions be provided to MATLAB? As `module.function` strings, memory addresses, etc.?
 - Does compiled MATLAB have access to builtin MATLAB functions like `feval` and `str2func`?
+	+ Either way it can not run arbitrary m-files! No MATLAB user functions can be called using the Python interface.
 
 
 ## Parameter functions via the compiled MATLAB interface
@@ -584,3 +651,24 @@ The `Python` implementation is accessible in `Takin`'s repository in the file [`
 If the chosen back-end optimisation engine is written in Python a similar method can be used to 
 interact with it through C++.
 Importantly, `pybind11` provides a **[Python C++ interface](https://pybind11.readthedocs.io/en/stable/advanced/pycpp/)**!
+
+
+## Incremental parameter binding specifications
+If a `OptModel` is created to fit three datasets to a single three-parameter function (`multiplier = @(x)1`, `background = @(x)0`) which initially is treated independently for all datasets it will start with a `OptFunctionsArray` that has no inter-function bindings, e.g., `foreground.status = []`, and each `OptFunction` will have no internal bindings, e.g., `foreground.functions(:).parameter_status = [0,0,0]`.
+
+If the user then decides that the second parameter of each function should represent a single global parameter they might bind them together via
+
+```
+	obj.bind('f2:p2', 'f1:p2');
+	obj.bind('f3:p2', 'f2:p2');
+```
+assuming that the three-parameter `OptFunction` was created with parameter names `{'p1','p2','p3'}` and the `OptFunctionsArray` was given function names `{'f1','f2','f3'}`.
+
+This naively might create anonymous binding functions for the `OptFunctionsArray` such that `obj.parameter_functions = {'@(x)x{1}(2)', '@(x)x{2}(2)'}` with `obj.parameter_status = {[2,2,1], [3,2,2]}`.
+Such an approach creates issues when deciding how to update the dependent parameters -- namely `'f2:p2'` must be update *before* `'f3:p2'` for the functions to have the correct full parameter vectors.
+
+A more complex implementation of the pseudomethod `bind` would recognize at the second call that `f2:p2` is already bound and might generate a second anonymous function `'@(y)y{1}(2)'` by, e.g., replacing `'x{2}(2)'` with `'@(x)x{1}(2)'`.
+A more complicated still version would recognize that the newly created anonymous function is equivalent to an existing one and would set `obj.parameter_status = {[2,2,1],[3,2,1]}`.
+
+In order for the dependency chain to always be fully resolved, do we need to restrict parameter functions to always be anonymous function strings (as produced by `func2str`) with a constant input parameter name (e.g., always `@(p)...`)?
+Or can we still allow full-fledged MATLAB function handles as parameter functions with the instruction to users that they should *never* chain parameter bindings?

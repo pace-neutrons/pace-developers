@@ -1,0 +1,37 @@
+@startuml OptFunctionsArray_diagram
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class OptFunctionsArray{
+- OptFunction[] functions
+- applicability
+- reduction_operator
+- vector function_names
+- vector parameter_status
+- vector parameter_functions
+==
++ get_functions()
++ set_functions(OptFunction[])
++ add_function(OptFunction)
++ get_parameters()
++ set_parameters()
++ get_parameter_status()
++ set_parameter_status()
++ get_parameter_functions()
++ set_parameter_functions()
++ add_parameter_function()
++ get_independent()
++ set_independent()
++ get_independent_lower_limits()
++ get_independent_upper_limits()
++ get_applies()
++ set_applies()
++ get_reducer()
++ set_reducer()
++ evaluate(datasets)
+}
+@enduml
