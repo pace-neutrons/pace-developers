@@ -197,21 +197,25 @@ multiFit+ will provide an interface to external modelling codes and external opt
 ## Optimisation Function Object
 The minimum information required for a model to simulate a `sqw` object are the ![\mathbb{Q}_i] contained in the object
 and one or more model parameters.
+Sometimes it may be useful instead to model intensity in a `sqw` object using its projection axes instead of ![\mathbb{Q}_i], so that, e.g., a one-dimensional cut can be fit by a simple one-dimensional peak to extract a peak position along the cut axis.
 It may also be desirable to give a function access to experimental details, e.g.,
 a scaling function may require the sample temperature to include the Bose thermal-population factor,
 or a background function may account for a sample-angle or scattering-angle dependent spurious signal.
 
-At a minimum `OptFunction` must support user defined functions which require only ![\mathbb{Q}_i],
-and therefore take four equal-shape arrays of floating point numbers,
-as well as user defined functions which require the `sqw` object.
+At a minimum `OptFunction` must support user defined functions which require
+
+- ![\mathbb{Q}_i], and therefore take four equal-shape arrays of floating point numbers returning a single intensity vector `S_of_Q_E_i`
+- ![\mathbf{Q}_i](https://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D_i) and return one or more intensity vectors (as a matrix)` S_j_of_Q_i` an equal number of mode energies `omega_j_of_Q_i` and, optionally, an equal number of mode intrinsic energy widths `gamma_j_of_Q_i`
+- one or more projection axes over which the binned data in a `sqw` object varies, returning a single intensity vector `S_of_axes_i`
+- the `sqw` object directly
+
+
 For added flexibility in potential other uses for `OptFunction` it should support functions which take
 any number of numeric arrays and functions which take any number of array-like objects.
 The supported function signatures are therefore:
 
-1. `numeric_arrays(a, ..., p)` of which `S_of_Q_w(h,k,l,w, p)` is a specific case
+1. `numeric_arrays(a, ..., p)` of which `S_of_Q_w(h,k,l,w, p)`, `S_omega_gamma_of_Q(h,k,l, p)`, and `S_of_axes(axes..., p)` are specific cases
 2. `arrays_objects(a, ..., p)` of which `S_of_Q_w(sqw_obj, p)` is a specific case
-
-Depending on the language in which `OptFunction` is defined this can be implemented in a variety of ways.
 
 It will be desirable to support convolution of the instrumental resolution with a user provided function using, e.g., `TobyFit`.
 However such a convolution should not be performed indiscriminately for all functions.
@@ -237,12 +241,20 @@ The `OptFunction` object must contain properties which are
 Depending on details of the implementation language additional properties may be required
 
 - the type of input the user defined function expects
+	+ likely `'coordinates'`, `'sqw'`, or `'axes'`
 - the number of inputs the user defined function expects
+- the type of output the user defined function will produce
+- the number of output arrays the user defined function will produce
 	
-In C++ both of these can be defined through appropriate usage of templates and the [Function objects library](https://en.cppreference.com/w/cpp/utility/functional).
-In Python the `inspect` module can be used to determine this information.
-In MATLAB it *may* be possible to obtain this information from a function definition through use of [partially-documented meta functions](http://undocumentedmatlab.com/articles/function-definition-meta-info) and, possibly, enforced usage of [Function Argument Validation](https://mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) in user functions but with so much uncertainty this should be left as a stretch goal.
+In C++ the input information can be defined through appropriate usage of templates and the [Function objects library](https://en.cppreference.com/w/cpp/utility/functional).
+In Python the `inspect` module can be used to determine the input information as well.
+In MATLAB it *may* be possible to obtain the input information from a function definition through use of [partially-documented meta functions](http://undocumentedmatlab.com/articles/function-definition-meta-info) and, possibly, enforced usage of [Function Argument Validation](https://mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) in user functions but with so much uncertainty this should be left as a stretch goal.
 
+Determining the number of output arrays that a function will produce in MATLAB and Python is relatively straightforward.
+In C++ the function 'output' might not be its return value and some further design work would be needed to define *how* a user defined C++ function should return ![S(\mathbb{Q}_i)] or ![\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)].
+
+[S(\mathbb{Q}_i)]: https://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D_i%29
+[\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: https://latex.codecogs.com/svg.latex?%5Cleft%5C%7BS_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Comega_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Cgamma_j%28%5Cmathbf%7BQ%7D_i%29%5Cright%5C%7D
 The `OptFunction` object must  contain methods to:
 
 - evaluate the function when given appropriate input, e.g., ![(a,\ldots)](https://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
@@ -276,17 +288,28 @@ Each `OptFunction` object knows how many and of what type its containing functio
 If the `OptFunction` `evaluate` method is called with the matching input then it should be passed along without modification.
 If, however, different input is provided `OptFunction.evaluate` should be able to construct the required input.
 
-The use case that should be supported at minimum is that a function requires four numeric vectors as input but `OptFunction.evaluate` was provided with a `sqw` object. In this case `OptFunction.evaluate` should pull the vectors `h,k,l,E` from the `sqw` object for use by the internal function.
+The use cases that should be supported at minimum are that a function requires three or four numeric coordinate vectors as input but `OptFunction.evaluate` was provided with a `sqw` object. In this case `OptFunction.evaluate` should pull the vectors `h,k,l` or `h,k,l,E` from the `sqw` object, respectively, for use by the internal function.
 
 Possible behaviour when numeric input is required but a `sqw` object is provided to `evaluate` might be
 
-| required number | pass to function |
+| required coordinates | pass to function |
 |-----------------|------------------|
 | 0               | `void`           |
 | 1               | `E`              |
 | 2               | `norm(Q),E`      |
 | 3               | `h,k,l`          |
 | 4               | `h,k,l,E`        |
+
+If a function expects numeric axes vectors as input then the dimensionality of the binned `sqw` object provided to `OptFunction` should match the number of input vectors that are expected.
+
+The `OptFunction` knows the output type of the user defined function.
+If ![S(\mathbb{Q}_i)] is returned this can be compared directly with the contents of a `sqw` object.
+If, however, the function returns ![\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)] then one of two things must be done to obtain ![S(\mathbb{Q}_i)]
+
+1. Use the instrumental resolution and, e.g., `tobyFit+` to calculate ![S(\mathbb{Q}_i)] at the `sqw` ![\mathbb{Q}] points from ![\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]
+2. 'broaden' the individual modes by applying a Gaussian (or user defined) smoothing filter as in `horace.disp2sqw`.
+
+The behaviour can, at least in part, be determined by the `convolute` flag in the `OptFunction` object.
 
 ### `OptFunction` parameter binding
 For the parameters of a single function we can combine the fixed/free logical information with the bound-ness of a parameter.
@@ -363,6 +386,7 @@ the second parameter is free and bound to be between constant values `lower_valu
 and the third parameter is free and bound to within a band defined by the first parameter,
 the bounding functions specified might be of the form:
 
+
 |parameter|bounds type| lower boundary: `p(i)`&ge;![f(\mathbf{p})] | upper boundary: `p(i)`&le;![f(\mathbf{p})]       |
 |--------:|----------|----------------------|----------------------------|
 |1        |unbound   | `@(p) -inf;`         | `@(p) inf;`                |
@@ -391,7 +415,7 @@ A new class is necessary to hold multiple `OptFunction` objects and handle their
 The minimum set of properties of an `OptFunctionsArray` object are
 
 - a list of one or more `OptFunction` objects
-- function to dataset applicability information
+- function-to-dataset mapping/applicability information
 - inter-function parameter binding information
 - the reduction operator to use if multiple functions apply to one dataset
 	+ typically `+` or `*`, other operations *probably* do not need to be supported
@@ -566,6 +590,8 @@ p_spinwave_and_phonon_fit = opt.get_foreground().get_parameters();
 p_phonon_fit = opt.get_foreground().get_parameters(2);
 
 ```
+
+Implicit in the above notation is that `OptModel` automatically constructs `OptFunctionsArray` objects from scalar or array `OptFunction` objects. The automatically constructed `OptFunctionsArray` objects would have default parameters (to be determined) so any non-default settings might be easiest accomplished by constructing the `OptFunctionsArray` object by hand, as in the case of the `'background'` functions.
 
 # Milestones
 1. Partial `OptFunction` class without fixed parameters or parameter bindings.
