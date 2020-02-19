@@ -92,7 +92,7 @@ By providing the necessary glue to connect user-provided ![S(\mathbb{Q};\mathbf{
 the routine extraction of physically relevant parameters from measured inelastic neutron scattering data.
 
 ## Deliverables
-- New classes `OptModel` and `OptFunction`, detailed below
+- New classes `OptModel`, `OptFunctionsArray`, and `OptFunction`, detailed below
 - Callback function to calculate ![r(\mathbf{p})] for user-provided ![S(\mathbb{Q};\mathbf{p})].
 - Callback function to calculate ![\mathbf{J}(\mathbf{p})] for arbitrary ![f(\mathbf{p})]; including ![r(\mathbf{p})]
 - Framework for interfacing to one or more optimisation libraries implementing:
@@ -213,11 +213,16 @@ The supported function signatures are therefore:
 
 Depending on the language in which `OptFunction` is defined this can be implemented in a variety of ways.
 
+It will be desirable to support convolution of the instrumental resolution with a user provided function using, e.g., `TobyFit`.
+However such a convolution should not be performed indiscriminately for all functions.
+
 The `OptFunction` object must contain properties which are
 
 - the user defined function
 	+ as a string containing its name, a function handle, or a function pointer,
 	depending on implementation language
+- an indication of whether instrumental resolution convolution should be performed
+	+ this might be as simple as a boolean flag or could be a more complicated structure with details for the convolution, *this will be determined later and should not be fixed at this point*
 - the initial (or last used) parameter vector for the model
 - a vector describing which parameters are allowed to be changed or, conversely, which parameters must not be changed
 	+ this could be a logical vector the same size as the parameter vector
@@ -236,7 +241,7 @@ Depending on details of the implementation language additional properties may be
 	
 In C++ both of these can be defined through appropriate usage of templates and the [Function objects library](https://en.cppreference.com/w/cpp/utility/functional).
 In Python the `inspect` module can be used to determine this information.
-In MATLAB it *may* be possible to obtain this information from a function definition through use of [partially-documented meta functions](http://undocumentedmatlab.com/articles/function-definition-meta-info) and, possibly, enforced of the usage of [Function Argument Validation](https://mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) but with so much uncertainty this should be left as a stretch goal.
+In MATLAB it *may* be possible to obtain this information from a function definition through use of [partially-documented meta functions](http://undocumentedmatlab.com/articles/function-definition-meta-info) and, possibly, enforced usage of [Function Argument Validation](https://mathworks.com/help/matlab/matlab_prog/function-argument-validation-1.html) in user functions but with so much uncertainty this should be left as a stretch goal.
 
 The `OptFunction` object must  contain methods to:
 
@@ -475,11 +480,7 @@ respectively, can be performed using shape promotion rules.
 
 [\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:https://latex.codecogs.com/svg.latex?%5Cleft%5C%7B%5Cmathbf%7Bm%7D%2C%5Cmathbf%7Bf%7D%2C%5Cmathbf%7Bb%7D%5Cright%5C%7D
 
-The distinction between scaling, foreground, and background functions is overkill for simple cases
-but will enable efficient handling of resolution effects (where only the 
-![F_j](https://latex.codecogs.com/svg.latex?F_j)
-
-are convoluted with the instrumental resolution).
+The distinction between scaling, foreground, and background functions is overkill for simple cases but will enable efficient handling of resolution effects (where only the ![F_j](https://latex.codecogs.com/svg.latex?F_j) are convoluted with the instrumental resolution).
 
 The `OptModel` object must contain the following properties:
 
@@ -492,16 +493,22 @@ The `OptModel` object must contain the following properties:
 
 and must have methods which query and update its properties, plus:
 
-- simulate the composite model ![\rho(a, \ldots,\mathbf{p})](https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29)
+- simulate the composite model ![\rho(a, \ldots,\mathbf{p})]
 - calculate ![r(\mathbf{p})] or the user defined ![f(\mathbf{p})]
-  - *possibly calculate vector ![f_i(\mathbf{p})] to support more back-ends* --
-  	as this requires we store the result for each ![\mathbb{Q}_i] instead of accumulating
-	the memory requirements will tend to be large.
+  - *possibly calculate vector ![f_i(\mathbf{p})] to support more back-ends* -- as this requires we store the result for each ![\mathbb{Q}_i] instead of accumulating 	the memory requirements will tend to be large.
+  - if an optimiser requires ![f_i(\mathbf{p})] but memory requirements (or communication speed in a distributed system) preclude storing this for all ![\mathbb{Q}_i], it might be possible to use a per-dataset reduced ![f_\eta(\mathbf{p})] where ![\eta \in 1,\ldots,M], with ![M \ge N+1] for length-![N] ![\mathbf{p}] and each ![\eta] corresponding to a defined subset of all ![\mathbb{Q}_i]
 - estimate ![\mathbf{J}(\mathbf{p})], when required
   - *possibly calculate the Jacobian in matrix form* which might require too much memory
-- collect the free and independent parameters from all `OptFunctionsArrays` objects into a single reduced parameter vector
-- distribute a modified reduced parameter vector to all `OptFunctionsArrays` objects
+  - a per-dataset reduced Jacobian might also be useful
+- collect the free and independent parameters from all `OptFunctionsArray` objects into a single reduced parameter vector
+- distribute a modified reduced parameter vector to all `OptFunctionsArray` objects
 - run the chosen optimisation back-end
+
+[\rho(a, \ldots,\mathbf{p})]: https://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29
+[f_\eta(\mathbf{p})]: https://latex.codecogs.com/svg.latex?f_%5Ceta%28%5Cmathbf%7Bp%7D%29
+[\eta \in 1,\ldots,M]: https://latex.codecogs.com/svg.latex?%5Ceta%20%5Cin%201%2C%5Cldots%2CM
+[M \ge N+1]: https://latex.codecogs.com/svg.latex?M%20%5Cge%20N&plus;1
+[\eta]: https://latex.codecogs.com/svg.latex?%5Ceta
 
 Storing the optimisation back-end as an `enum` or similar restricts the supported back-ends to a predefined set.
 This restriction may be unnecessary and should be lifted if a clear general back-end interfacing scheme becomes evident
@@ -632,6 +639,7 @@ The advantages and disadvantages of each potential language need to be assessed 
 | C++      | compiled &rarr; functionality constrained &rarr; fully testable | increased distribution complexity                    |
 |          | Python interface via `pybind11` simple                    | MATLAB interface via `mex` less simple                     |
 
+The interpreter issues eluded to above is an uncertainty regarding what happens if an interactive Python interpreter calls a function in the compiled MATLAB/Horace which in turn calls functions in a Python module?
 
 ### Calling Python functions from C++
 
