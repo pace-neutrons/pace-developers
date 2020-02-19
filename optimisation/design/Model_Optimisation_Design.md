@@ -639,7 +639,7 @@ The advantages and disadvantages of each potential language need to be assessed 
 | C++      | compiled &rarr; functionality constrained &rarr; fully testable | increased distribution complexity                    |
 |          | Python interface via `pybind11` simple                    | MATLAB interface via `mex` less simple                     |
 
-The interpreter issues eluded to above is an uncertainty regarding what happens if an interactive Python interpreter calls a function in the compiled MATLAB/Horace which in turn calls functions in a Python module?
+The interpreter issues alluded to above is an uncertainty regarding what happens if an interactive Python interpreter calls a function in the compiled MATLAB/Horace which in turn calls functions in a Python module?
 
 ### Calling Python functions from C++
 
