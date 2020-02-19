@@ -10,6 +10,7 @@ class OptFunction{
 - int number_of_inputs
 - enum input_type
 - char function
+- bool convolute
 - vector parameters
 - vector parameter_names
 - vector parameter_status
