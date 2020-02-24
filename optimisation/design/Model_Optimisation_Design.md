@@ -255,6 +255,7 @@ In C++ the function 'output' might not be its return value and some further desi
 
 [S(\mathbb{Q}_i)]: https://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D_i%29
 [\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: https://latex.codecogs.com/svg.latex?%5Cleft%5C%7BS_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Comega_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Cgamma_j%28%5Cmathbf%7BQ%7D_i%29%5Cright%5C%7D
+
 The `OptFunction` object must  contain methods to:
 
 - evaluate the function when given appropriate input, e.g., ![(a,\ldots)](https://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
@@ -399,6 +400,14 @@ These names would need to be provided to the `OptFunction` object, ideally at cr
 
 For example a new `OptFunction` (without any bindings) given parameter names `{'A0', 'x0', 'w0', 'A1', 'x1', 'w1'}` could then have its third and sixth parameters bound together by, e.g., `obj.bind('w1','w0')` which would be translated to the new parameter function `obj.parameter_functions{end+1} = '@(z)z(3)'` with `obj.parameter_status(3) = numel(obj.parameter_functions)`.
 Or `obj.bind('x1','x0^2/3 + 12')` would become the anonymous function string `'@(y)y(2)^2/3 + 12'`.
+
+### [Optional] Data transformation
+As an optional property and method of the `OptFunction` object, it could be useful to provide users with the ability to transform the data that will be passed on to the user defined function.
+
+The user would need to supply a number-of-inputs by number-of-inputs transformation matrix to be stored in the `OptFunction`.
+When the `OptFunction` is later evaluated it would check whether this function is an identity matrix and use it to transform the vectors passed on to the function if not.
+
+This would support the use case where an experiment is to be analysed in a spacegroup which differs from one used to perform a theoretical calculation and a simple transformation matrix can link the two. For example, two different origin choices for the same spacegroup or different labels chosen for a unique axis.
 
 ### One possible implementation of `OptFunction`
 
