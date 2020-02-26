@@ -1,0 +1,31 @@
+@startuml 03_context
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+Person(horace_user, "Horace User", "")
+Person(abins_user, "Abins User", "")
+Person_Ext(standalone_user, "Standalone User", "")
+Person_Ext(castep_user, "CASTEP User", "")
+
+Container(horace, "Horace", "Matlab, C++", "Analyses/visualises experimental data, and simulates and fits data given a function handle")
+Container(brille, "Brille", "Python, C++", "Uses symmetry to create a lookup table of values in 1st BZ and can linearly interpolate onto finer points")
+Container(euphonic, "Euphonic", "Python, C", "Calculates eigenvectors/values and structure factors at arbitrary q-points from force constants")
+Container(abins, "Abins", "Python", "Calculates/broadens/plots indirect instrument neutron spectra")
+Container(disp_dos_scripts, "dispersion.py, dos.py scripts", "Python", "")
+System_Ext(mantid, "Mantid")
+System_Ext(force_constants, "Force constants", "File(s)/Objects containing force constants")
+System_Ext(phonons, "Phonon frequencies/eigenvectors", "File(s)/Objects containing frequencies/eigenvectors")
+
+Rel(horace_user, horace, "Uses", "Simulation/fitting functions")
+Rel(horace, brille, "Uses", "To simulate: provides q-points, expects structure factors and eigenvalues")
+Rel(brille, euphonic, "Uses", "To create lookup table: provides q-points, expects eigenvalue/vectors")
+Rel(brille, euphonic, "Uses", "To calculate structure factor: provides eigenvalues/vectors, expects structure factors")
+Rel(horace, euphonic, "Uses", "To simulate: provides q-points, expects structure factors and eigenvalues")
+Rel(abins_user, mantid, "Uses", "View/simulate indirect instrument spectra")
+Rel(abins, mantid, "Is a plugin for")
+Rel(abins, euphonic, "Uses", "To simulate: Expects 1D energy spectra, resolved by atom and multiphonon order")
+Rel(standalone_user, euphonic, "Uses", "To calculate/plot DOS, dispersion, Q-E plots")
+Rel(castep_user, disp_dos_scripts, "Uses", "To plot dispersion/dos from .phonon/.bands")
+Rel(disp_dos_scripts, euphonic, "Uses", "To read/plot .phonon")
+Rel(euphonic, force_constants, "Reads")
+Rel(euphonic, phonons, "Reads")
+@enduml

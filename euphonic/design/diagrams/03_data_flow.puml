@@ -1,0 +1,45 @@
+@startuml 03_data_flow
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/release/1-0/C4_Container.puml
+
+hide stereotype
+
+System_Boundary(euphonic, "Euphonic") {
+    Container(fc_reader, "Force constants file reader", "Python")
+    Container(phonon_reader, "Frequencies/eigenvectors file reader", "Python")
+    Container(fc_data, "Object containing force constants", "Python/C")
+    Container(phonon_data, "Object containing frequencies/eigenvectors at q-points", "Python")
+    Container(crystal_sf, "Crystal structure factor at q-points (discrete energies)", "Python")
+    Container(2d_spectrum, "2D Spectrum", "Python")
+    Container(debye_waller, "Debye-Waller exponent", "Python")
+    Container(1d_spectrum, "1D Spectrum", "Python")
+    Container(1d_plot, "1d plotter", "Python")
+    Container(2d_plot, "2d plotter", "Python")
+}
+System_Ext(force_constants, "Force constants", "File(s)/Objects containing force constants")
+System_Ext(phonons, "Phonon frequencies/eigenvectors", "File(s)/Objects containing frequencies/eigenvectors")
+System_Ext(brille, "Brille")
+System_Ext(horace, "Horace")
+
+Rel(force_constants, fc_reader, "Is read by")
+Rel(phonons, phonon_reader, "Is read by")
+
+Rel(fc_reader, fc_data, "Is used to create")
+Rel(phonon_reader, phonon_data, "Is used to create")
+Rel(fc_data, phonon_data, "Calculates", "By Fourier interpolation")
+Rel(fc_data, 2d_spectrum, "Calculates Powder SF")
+Rel(phonon_data, crystal_sf, "Calculates")
+Rel(crystal_sf, 2d_spectrum, "Calculates", "By binning in energy")
+Rel(phonon_data, debye_waller, "Calculates")
+Rel(phonon_data, 1d_spectrum, "Calculates DOS")
+Rel(debye_waller, crystal_sf, "Is used as an input to calculate (optional)")
+
+Rel(1d_plot, 1d_spectrum, "Plots")
+Rel(2d_plot, 2d_spectrum, "Plots")
+Rel(1d_plot, phonon_data, "Plots dispersion")
+
+Rel(phonon_data, brille, "Required by", "To create lookup")
+Rel(crystal_sf, brille, "Required by", "To simulate")
+Rel(2d_spectrum, horace, "Required by", "To simulate powder")
+Rel(crystal_sf, horace, "Required by", "To simulate crystal")
+
+@enduml
