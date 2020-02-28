@@ -50,7 +50,7 @@ specific broadening and handle interaction with Mantid.
 In the literature these molecular crystal vibrations are usually separated into
 'internal' molecular vibrations (which are assumed to be flat) and 'external'
 vibrations (translations or rotations of the entire molecule). Currently Abins
-assumes all vibrations are flat (no dispersion) and employs semi-analytic power
+assumes all vibrations are flat (no dispersion) and employs semi-analytic powder
 averaging <sup>[1]</sup> up to 4th order multiphonon interactions. This could
 potentially be improved by integrating the eigenvectors over the Q accessible by
 the instrument, rather than assuming a flat bandstructure, but the exact method
