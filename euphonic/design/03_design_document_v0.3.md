@@ -51,7 +51,7 @@ In the literature these molecular crystal vibrations are usually separated into
 'internal' molecular vibrations (which are assumed to be flat) and 'external'
 vibrations (translations or rotations of the entire molecule). Currently Abins
 assumes all vibrations are flat (no dispersion) and employs semi-analytic powder
-averaging <sup>[1]</sup> up to 4th order multiphonon interactions. This could
+averaging ([1]) up to 4th order multiphonon interactions. This could
 potentially be improved by integrating the eigenvectors over the Q accessible by
 the instrument, rather than assuming a flat bandstructure, but the exact method
 for doing this is not yet clear. If may also be beneficial to perform a
@@ -134,13 +134,13 @@ explicitly included in the above diagrams for simplicity, but `Structure` will
 be used in further object descriptions and has the following attributes:
 |Attribute|Type|
 |---------|----|
-|Cell vectors|(3, 3) array of floats|
+|Cell vectors| Quantity wrapped (3,3) float numpy.ndarray|
 |Number of ions|int|
 |Ion coordinates (fractional)|(n_ions, 3) array of floats|
 |Ion types|(n_ions,) list of strings|
-|Ion masses|(n_ions,) array of floats|
-|Length units|string|
-|Mass units|string|
+|Ion masses| Quantity wrapped (n_ions,) float numpy.ndarray|
+|Cell vector unit|string|
+|Ion mass unit units|string|
 
 Methods required for this object are:
 
@@ -167,9 +167,9 @@ force constants). The attributes required for this object are:
 |Supercell matrix|(3, 3) array of ints|
 |Born charges (optional)|(n_ions, 3, 3) array of floats|
 |Dielectric permittivity tensor (optional)|(3, 3) array of floats|
-|Force constants units|string|
-|Born charges units|string|
-|Dielectric permittivity units|string|
+|Force constants unit|string|
+|Born charges unit|string|
+|Dielectric permittivity unit|string|
 
 Methods required on this object are:
 
@@ -200,7 +200,8 @@ belong to.
 |Split frequencies| (n_gamma_points, 3*n_ions) array of floats|
 |Split eigenvectors|(n_gamma_points, 3*n_ions, n_ions, 3) array of complex floats|
 |Gamma point indices|(n_gamma_points,) array of ints| 
-|Energy units|string|
+|Energy unit|string|
+|Structure factor unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
@@ -220,7 +221,8 @@ plotting, or binned and plotted in Euphonic.
 |Q-points|(n_qpts, 3) array of floats|
 |Structure factor|(n_qpts, 3*n_ions) array of floats|
 |Frequencies|(n_qpts, 3*n_ions) array of floats|
-|Energy units|string|
+|Structure factor unit|string|
+|Energy unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
@@ -242,7 +244,8 @@ optional but is needed if the user wants to include temperature effects.
 |Structure|Structure object|
 |Temperature|float|
 |Debye-waller|(n_ions, 3, 3) array of floats|
-|Temperature units|string|
+|Debye-waller unit|string|
+|Temperature unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
@@ -252,28 +255,29 @@ optional but is needed if the user wants to include temperature effects.
 
 This is an object for any 2D binned spectra, and can be plotted or exported to
 another program. It is intended to be general and can be used for binned crystal
-Q-E plots, powder |Q|-E plots etc. The x-tick locations/labels have been
+Q-E plots, powder |Q|-E plots etc. The x-tick labels have been
 included to allow helpful labelling of the x-axis, which is most often the
 Q-axis (e.g. high symmetry points), and as the structure/q-point information is
 not included in the 2D spectrum object these cannot be calculated on the fly.
-For parity it could be sensible to include y tick labels/locations, but until
+The labels are a list of tuples, each tuple consists of an integer specifing the
+location (which is an index of a bin center) and a string with the label
+contents. For parity it could be sensible to include y tick labels, but until
 Q-Q plots are a Euphonic requirement, these are not included in the current
 object definition.
 
 |Attribute|Type|
 |---------|----|
 |x bin edges|(n_xbins + 1) array of floats|
-|x bin units|string|
+|x bin unit|string|
+|x tick labels| list of (int, string) tuples|
 |y bin edges|(n_ybins + 1) array of floats|
-|y bin units|string|
-|x tick labels|list of strings|
-|x tick locations|array of ints|
+|y bin unit|string|
 |plot data|(n_xbins, n_ybins) array of floats|
+|plot data unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
-|Plot|x,y broadening|Matplotlib Figure|
-|Serialise|Filename|File
+|Serialise|Filename|File|
 
 ### 1D Spectrum
 
@@ -285,28 +289,150 @@ included for labelling of high-symmetry points for dispersion plotting.
 |Attribute|Type|
 |---------|----|
 |x bin edges|(n_xbins + 1), array of floats|
-|x bin units|string|
-|x tick labels|list of strings|
-|x tick locations|array of ints|
+|x bin unit|string|
+|x tick labels| list of (int, string) tuples|
+|y axis unit|string|
 |plot data|(n_xbins,) array of floats|
+|plot data unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
-|Plot|x broadening|Matplotlib Figure|
-|Serialise|Filename|File
+|Serialise|Filename|File|
 
 ## Python data object types
-As can be seen above, the Force Constants and Phonon Data objects are the only
-ones that do complex calculations. The other objects generally just contain
-calculated data, and maybe do some simple calculations. For this reason Force
-Constants and Phonon Data will be Python `classes` and all the others will be
-Python [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
 
-`dataclasses` have been chosen as they require less boilerplate code than
-regular classes, yet they still allow methods to be written and have a type so
-their purpose and content is obvious to the user. `dataclasses` were only
-introduced in Python `3.7` (and backported to `3.6`), but these versions are
-supported by both Matlab and Mantid so this is an acceptable dependency.
+Many of the objects above contain extra data (e.g. structure information) that
+is required for the other data to make sense. The Force Constants and Phonon
+Data objects are the ones that do complex calculations, so they must be full
+Python `classes`. The other objects have at least 1 associated method (even if
+it is just serialisation). So there are 2 main options for these objects:
+`classes` and [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
+A simple prototype for the case of the Structure object has been created for
+each case, using atomic units internally and properties to convert units for
+user access (as described in the [units](#units) section), and providing methods
+to input/output from/to a dictionary. 
+
+```
+from dataclasses import dataclass, field, InitVar, asdict
+import numpy as np
+from euphonic import ureg
+
+
+@dataclass
+class StructureDataclass:
+
+    cell_vectors_init: InitVar[ureg.Quantity]
+    n_ions: int
+    ion_r: np.ndarray
+    ion_type: np.ndarray
+    ion_mass_init: InitVar[ureg.Quantity]
+
+    cell_vectors: ureg.Quantity = field(init=False)
+    ion_mass: ureg.Quantity = field(init=False)
+    cell_vectors_unit: str = field(init=False)
+    ion_mass_unit: str = field(init=False)
+
+    def __post_init__(self, cell_vectors_init, ion_mass_init):
+        self._cell_vectors = cell_vectors_init.to(
+            ureg.INTERNAL_CELL_VECTORS_UNIT).magnitude
+        self._ion_mass = ion_mass_init.to(ureg.DEFAULT_ION_MASS_UNIT).magnitude
+        self.cell_vectors_unit = str(cell_vectors_init.units)
+        self.ion_mass_unit = str(ion_mass_init.units)
+
+    @property
+    def ion_mass(self):
+        return self._ion_mass*ureg('DEFAULT_ION_MASS_UNIT').to(
+            self.ion_mass_unit)
+
+    @property
+    def cell_vectors(self):
+        return self._cell_vectors*ureg('INTERNAL_CELL_VECTORS_UNIT').to(
+            self.cell_vectors_unit)
+
+    @ion_mass.setter
+    def ion_mass(self, ion_mass: ureg.Quantity):
+        pass
+
+    @cell_vectors.setter
+    def cell_vectors(self, cell_vectors: ureg.Quantity):
+        pass
+
+    def to_dict(self):
+        d = asdict(self)
+        for key, val in d.items():
+            try:
+                d[key] = val.magnitude
+            except AttributeError:
+                pass
+        return d
+
+    @classmethod
+    def from_dict(cls, d):
+        mu = d['ion_mass_unit']
+        lu = d['cell_vectors_unit']
+        return cls(d['cell_vectors']*ureg(lu), d['n_ions'], d['ion_r'],
+                   d['ion_type'], d['ion_mass']*ureg(mu),
+                   output_cell_vectors_unit=lu, output_ion_mass_unit=mu)
+
+
+class StructureClass(object):
+
+    def __init__(self, cell_vectors, n_ions, ion_r, ion_type, ion_mass):
+        self._cell_vectors = cell_vectors.to(
+            ureg.INTERNAL_CELL_VECTORS_UNIT).magnitude
+        self.n_ions = n_ions
+        self.ion_r = ion_r
+        self.ion_type = ion_type
+        self._ion_mass = ion_mass.to(ureg.INTERNAL_ION_MASS_UNIT).magnitude
+
+        self.cell_vectors_unit = str(cell_vectors.units)
+        self.ion_mass_unit = str(ion_mass.units)
+                
+    @property
+    def cell_vectors(self):
+        return self._cell_vectors*ureg('INTERNAL_CELL_VECTORS_UNIT').to(
+            self.cell_vectors_unit)
+
+    @property
+    def ion_mass(self):
+        return self._ion_mass*ureg('DEFAULT_ION_MASS_UNIT').to(
+            self.ion_mass_unit)
+
+    def to_dict(self):
+        d = vars(self).copy()
+        d['cell_vectors'] = d.pop('_cell_vectors')*ureg(
+            'INTERNAL_CELL_VECTORS_UNIT').to(self.cell_vectors_unit).magnitude
+        d['ion_mass'] = d.pop('_ion_mass')*ureg(
+            'INTERNAL_ION_MASS_UNIT').to(self.ion_mass_unit).magnitude
+        return d
+
+    @classmethod
+    def from_dict(cls, d):
+        mu = d['ion_mass_unit']
+        lu = d['cell_vectors_unit']
+        return cls(d['cell_vectors']*ureg(lu), d['n_ions'], d['ion_r'],
+                   d['ion_type'], d['ion_mass']*ureg(mu))
+```
+
+As can be seen above, the plain Python class actually requires fewer lines of
+code (37 vs. 55). The pattern of having `_cell_vectors` and `_ion_mass`
+internally in atomic units, with corresponding `cell_vectors` and `ion_mass`
+properties that wrap and convert before showing to the user, is actually quite
+difficult to implement in a Python `dataclass` and requires a lot of boilerplate
+that most Python developers won't be familiar with, unless they have used
+dataclasses extensively before. It appears Python dataclasses are best at
+storing input data as is, and maybe deriving a few attributes, rather than
+converting the input data. As a result, it may actually be better to have all
+the data objects be full Python classes.
+
+One advantage of `dataclasses` is the automatically generated `__repr__` method,
+which can nicely display the object contents. However, many objects (e.g. ones
+that contain per q-point data) would be too large to sensibly display like this
+anyway. `dataclasses` can also provide automatic `__eq__`, `__lt__` etc.
+methods, but these don't really make sense with our data.
+
+Given the above, all of the data objects in Euphonic should be full Python
+classes.
 
 ### Alternatives
 [**NamedTuple**](https://docs.python.org/3/library/typing.html#typing.NamedTuple) - 
@@ -353,23 +479,46 @@ This means the units are:
 - energy/frequency: hartree
 - charge: electron charge
 
-For the Force Constants and Phonon Data classes, all pieces of data with units
-are stored as a bare magnitude, implicitly in atomic units. This is stored as a
-'private' attribute e.g. `_frequencies` which shouldn't be accessed by the user
-but is used in internal calculations. There is a user facing `frequencies`
-attribute which is actually a property and wraps `_frequencies` as a `Quantity`
-and converts it to a user friendly unit before returning. The user friendly unit
-is stored in an `_e_units` attribute (for Energy) and can be changed by a user
-facing method. This is a good system for classes, but if we have many data
-objects which contain things in energy units (for example) this could result in
-a lot of duplicated code. It is not yet decided how to handle unit parsing when
-there are lots of data objects, this may become obvious once code starts being
-written. 
+Using `Pint >= 0.10.1` units can be aliased and added to the unit registry which
+allows a record of the default user-facing and internal units to be kept. For
+example `INTERNAL_CELL_VECTORS_UNIT` can be defined:
+```
+ureg.define('@alias bohr = INTERNAL_CELL_VECTORS_UNIT')
+```
+Which is what is used to create the `ureg` in the above Structure example.
+
+Inside Euphonic's data objects, all pieces of data with units are stored as a
+bare magnitude, implicitly in atomic units. For example, in the Structure class
+above `_cell_vectors` is a  'private' attribute which is stored as a plain Numpy
+array in units of bohr radius. The user-facing attribute is `cell_vectors` which
+is a property that converts the `_cell_vectors` to whatever unit is stored in
+the `cell_vectors_unit` attribute (e.g. Angstrom) and outputs a `Quantity` to
+the user which makes the units explicit. The output unit can be changed by
+changing the `cell_vectors_unit` attribute, this could be wrapped as a property
+to check for valid units before being set.
+
+When instantiating an object directly with the constructor, the user is expected
+to provide any data containing units as a `Quantity` specifying the units. The
+default units for that object will then be the same as whatever was input.
+
+When outputting to/taking input from another data format e.g. dictionary or
+file, `Quantity` objects are not used to increase portability. Instead, any data
+with units will be output as 2 fields: 1 containing the data, and 1 containing a
+string specifying the units. For example, in the Structure class above, when
+converting `cell_vectors` to a dictionary, the dictionary will contain:
+```
+'cell_vectors': array([[ 1.50755587e-13, -2.61116331e-13,  0.00000000e+00],
+                       [ 1.50755587e-13,  2.61116331e-13,  0.00000000e+00],
+                       [ 0.00000000e+00,  0.00000000e+00,  3.32452478e-13]])
+'cell_vectors_unit': 'angstrom'
+```
 
 ## Plotting
 Plotting functions will be contained in their own separate module, so that
 libraries such as `Matplotlib` will only be imported if a user wants to plot,
-and not required for general data analysis.
+and not required for general data analysis. In addition, a user may want to plot
+several Spectrum objects on the same axes, which requires plotting be done from
+a separate module rather than called as method on the Spectrum object. 
 
 Plotting in Euphonic will be fairly simple, as it is not Euphonic's main goal,
 and will be mainly useful for debugging and quick sanity checking of answers. 
