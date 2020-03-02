@@ -429,7 +429,9 @@ One advantage of `dataclasses` is the automatically generated `__repr__` method,
 which can nicely display the object contents. However, many objects (e.g. ones
 that contain per q-point data) would be too large to sensibly display like this
 anyway. `dataclasses` can also provide automatic `__eq__`, `__lt__` etc.
-methods, but these don't really make sense with our data.
+methods, but these don't really make sense with our data. It's also worth noting
+that `dataclasses` weren't available until Python 3.7 and were backported to
+3.6.
 
 Given the above, all of the data objects in Euphonic should be full Python
 classes.
@@ -443,12 +445,7 @@ chosen as they require more boilerplate to subclass, are not as flexible, and
 although immutability could be seen as an advantage as it guarantees the data
 will not change, this could have unforseen restrictions/inefficiencies in the
 future. In addition many features of `typing.NamedTuple` were not added until
-`3.6` so version restrictions would be similar
-
-**Class** - Regular Python classes were a potential option as they could satisfy
-all requirements of containing data and having methods, but might be
-overkill for some very simple data objects such as DOS, contain lots of
-boilerplate code, and therefore be more difficult to maintain.
+`3.6` so version restrictions would be similar to dataclasses
 
 **Dictionary** - Dictionaries could contain all the required data, but as they
 are not a class won't have an obvious type so the user would have to inspect the
