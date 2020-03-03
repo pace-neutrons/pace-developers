@@ -504,9 +504,9 @@ with units will be output as 2 fields: 1 containing the data, and 1 containing a
 string specifying the units. For example, in the Structure class above, when
 converting `cell_vectors` to a dictionary, the dictionary will contain:
 ```
-'cell_vectors': array([[ 1.50755587e-13, -2.61116331e-13,  0.00000000e+00],
-                       [ 1.50755587e-13,  2.61116331e-13,  0.00000000e+00],
-                       [ 0.00000000e+00,  0.00000000e+00,  3.32452478e-13]])
+'cell_vectors': array([[ 2.426176, -4.20226   0.      ],
+                       [ 2.426176,  4.20226   0.      ],
+                       [ 0.,        0.,       5.350304]])
 'cell_vectors_unit': 'angstrom'
 ```
 
