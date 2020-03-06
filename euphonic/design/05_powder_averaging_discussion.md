@@ -3,6 +3,7 @@
 These notes were initially drawn up by Adam Jackson. They were
 discussed and developed in a meeting on 5/3/20 with Greg Tucker, Duc
 Le, Keith Refson and Rebecca Fair.
+Further revisions were made by AJJ and reviewed via GitHub PR.
 
 In this document **q** refers to a 3-dimensional momentum transfer
 vector, while *q* refers to "mod q", a scalar value of momentum
@@ -20,7 +21,7 @@ transfer.
         1.  [Random sampling](#orgce0cfe3)
         2.  [Spherical sampling](#orgd1b667c)
         3.  [Unknown](#org93896a1)
-5.  [Observations](#orgf40d9b1)
+5.  [Further questions](#orgf40d9b1)
 6.  [Going forward](#orgcc884e6)
 
 
@@ -68,7 +69,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 -   Fundamental spectrum:
 
     S<sub>i,k</sub> = Q<sup>2</sup> / 3 Tr(**B**) exp(-Q<sup>2</sup> / a);
-        
+
     where a = 1/5(Tr(**A**) + 2(**B:A**)/Tr(**B**))
 
     -   Uses **B** (mode displacement) and **A** (sum over all mode displacements)
@@ -106,19 +107,19 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 
 ## Design questions
 
-#### How do we correctly weight the samples to obtain the S(q,ω) corresponding to a powder experiment?
+### How do we correctly weight the samples to obtain the S(q,ω) corresponding to a powder experiment?
 
 -   When sampling a regular sequence of spherical shells, it seems sufficient to average over the points taken at each *q*.
 -   If our samples are placed arbitrarily in space, it is less obvious how to determine these weights
 
-#### How do we sample the space to ensure that all of 4-D space is included in the results (avoiding "blind spots")?
+### How do we sample the space to ensure that all of 4-D space is included in the results (avoiding "blind spots")?
 -   This is a known problem and is solved by sampling a lot of points
 -   Consider the topology/features of the space; there are more
     features intersecting a spherical shell at large *q* than a
     smaller shell at low *q*. This implies that a greater number of
     samples is needed as we go further out in *q*.
 
-#### How can we do this efficiently?
+### How can we do this efficiently?
 
 -   Use symmetry!
     - The irreducible wedge of the Brillouin zone can be
@@ -138,7 +139,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
       needs recalculating. This might not be commensurate with the
       desired *q* bins, however.
 
-#### How can we check the convergence? Is a "fire-and-forget" approach feasible?
+### How can we check the convergence? Is a "fire-and-forget" approach feasible?
 
 - This could be a substantial project in its own right. To progress
   the project we should get a baseline method in place and then
@@ -153,7 +154,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
   information lurking in the force constants data.
 
 
-#### Is the same sampling mesh suitable for the **A** matrix used in Debye-Waller calculation, or should this be a separate q-mesh?
+### Is the same sampling mesh suitable for the **A** matrix used in Debye-Waller calculation, or should this be a separate q-mesh?
 
 - This point was not discussed in the meeting. It's worth observing
   that DW should only need sampling within a single Brillouin zone,
@@ -161,7 +162,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
   Monkhorst-Pack grids initially.
 
 
-#### Can we use statistical methods to quantify uncertainty in the convergence?
+### Can we use statistical methods to quantify uncertainty in the convergence?
 
 - Statistical methods, propogation of error approaches could provide
   some useful tools
@@ -183,7 +184,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
     used?
     - Random sampling on spherical shells seems more common that fully
       random sampling in **q**-space.
--   Has natural advantage of being uniform in space... eventually. 
+-   Has natural advantage of being uniform in space... eventually.
 -   Convergence can be examined systematically, adding new points
     without removing old ones. A smoother process than replacing
     entire sampling meshes with different criteria.
@@ -209,6 +210,9 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 -   MDANSE requires the user to set up a q lattice for sampling,
     including a "spherical grid" option with a set range of "shells"
     and "vectors".
+-   Another approach that doesn't seem to be in use but is perhaps
+    a truer estimate of the integral is to sample _within a q bin_
+    rather than exactly at the surface.
 
 
 <a id="org93896a1"></a>
@@ -224,7 +228,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 
 <a id="orgf40d9b1"></a>
 
-# Observations
+# Further questions
 
 -   There are two different possible objectives here: uniform sampling
     **at each q** and uniform sampling **over the spherical
@@ -233,6 +237,9 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 -   Why do we pre-determine the mod(q) bins?
     -   easier to compare with instrument
     -   able to check convergence *at each bin* independently
+    -   in Abins, the simulated *q* bins do not match the TOSCA
+        instrument measurements, in which the bin size increases with
+        *q*.
 
 -   Do we need to include a resolution function before/during powder
     averaging?
@@ -283,6 +290,26 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
       of dω/d*q*, then the Sampling Theorem would give us a maximum
       acceptable spacing for *q*-sampling that accurately captures the
       whole band structure.
+
+High-priority independent work packages to be progressed are:
+
+- Analytic method for incoherent scattering systems
+- Spherical averaging on a requested sequence of *q* values, with options to
+  - Sample in a uniform way (e.g. Fibonacci scheme)
+  - Sample randomly
+
+Further scoping work should be performed for:
+
+- Sampling from an arbitrary collection points in **q**-space (not regular shells)
+- Sampling within *q* bins (i.e. the link between this approach and spherical averaging.)
+
+There are some longer-term projects that could be valuable but will
+require basic infrastructure to be in place first:
+
+- Explore the convergence properties of spherical averaging and random sampling methods
+- Examine how this might be predicted from the force constants data
+- Develop an algorithm for automatic convergence to a defined tolerance
+- Consider appropriate statistical approaches for setting and interpreting that tolerance
 
 # References
 
