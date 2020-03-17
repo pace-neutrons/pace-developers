@@ -19,9 +19,12 @@ a lookup table of phonon eigenvectors and frequencies, which can be used to
 cheaply get frequencies and eigenvectors on a finer grid via linear
 interpolation. The structure factor can then be calculated on this finer grid
 (calculating the structure factor is much cheaper than calculating the
-frequencies/eigenvectors). The hierarchy of Horace/Brille/Euphonic is not yet
-decided so Euphonic must be flexible. In addition, in the future there is scope
-to calculate the structure factor for powder samples, this also needs to be
+frequencies/eigenvectors). This finer grid interpolation may also be useful to
+Euphonic for well-converged density of states, Debye-Waller exponents or powder
+averaging for example, so Euphonic may also want to depend on Brille for this
+purpose. However, the hierarchy of Horace/Brille/Euphonic is not yet decided so
+Euphonic must be flexible. In addition, in the future there is scope to
+calculate the structure factor for powder samples, this also needs to be
 considered. From this the requirements are:
 
 - Euphonic must be able to take a list of q-points as input, and return the
@@ -31,6 +34,7 @@ eigenvectors at q-points, from which the crystal structure factor can be
 calculated
 - Euphonic must allow for future calculation of a powder structure factor, which
 would be along scalar q, and binned in energy
+- Euphonic must not preclude having Brille as a dependency
 - Euphonic must run with a Python version that is compatible with the latest
 versions of Matlab (2019b supports 2.7, 3.6 and 3.7)
 - Euphonic should use packages that are compatible with Matlab, or have suitable
@@ -50,19 +54,21 @@ specific broadening and handle interaction with Mantid.
 In the literature these molecular crystal vibrations are usually separated into
 'internal' molecular vibrations (which are assumed to be flat) and 'external'
 vibrations (translations or rotations of the entire molecule). Currently Abins
-assumes all vibrations are flat (no dispersion) and employs semi-analytic powder
-averaging ([1]) up to 4th order multiphonon interactions. This could
-potentially be improved by integrating the eigenvectors over the Q accessible by
-the instrument, rather than assuming a flat bandstructure, but the exact method
-for doing this is not yet clear. If may also be beneficial to perform a
-numerical powder average rather than semi-analytical, but this may make
+employs semi-analytic powder averaging ([1]) up to 4th order multiphonon
+interactions. This assumes that all scattering is incoherent and all vibrations
+are flat (no dispersion). This could potentially be improved by integrating the
+eigenvectors over the Q accessible by the instrument, rather than assuming a
+flat bandstructure, but the exact method for doing this is not yet clear. It may
+also be beneficial to perform a numerical powder average rather than
+semi-analytical, which would give access to coherent effects, but this may make
 calculating higher order interactions prohibitively expensive, and needs to be
 investigated. These calculations should produce a 1D spectrum in energy,
 resolved per atom and quantum order. For Euphonic to be useful to Abins, the
 requirements are:
 
 - Euphonic must be able to produce a 1D energy-binned incoherent spectrum
-resolved per atom and quantum order
+resolved per atom and quantum order, from both a force constants matrix and from
+precalculated phonon frequencies/eigenvectors
 - Euphonic must run with versions of Python that are shipped with Mantid (as of
 Mantid 4.3.0 Python 3.6, 3.7, 3.8)
 
@@ -127,10 +133,10 @@ so the details of the powder structure factor may change
 
 ## Euphonic Data Objects
 
-### Structure
-The cell structure is an important piece of data describing the material, and is
+### Crystal
+The crystal structure is an important piece of data describing the material, and is
 required for many of the objects to do further calculations. It was not
-explicitly included in the above diagrams for simplicity, but `Structure` will
+explicitly included in the above diagrams for simplicity, but `Crystal` will
 be used in further object descriptions and has the following attributes:
 |Attribute|Type|
 |---------|----|
@@ -156,12 +162,12 @@ Force constants can be Fourier interpolated to calculate frequencies and
 eigenvectors at any q-point, it is therefore Euphonic's main data object and can
 be used to create most others. Force constants are calculated by an external
 code (e.g. CASTEP, Phonopy) and read to create this object. Force constants are
-useless on their own and require extra structure data (read in along with the
-force constants). The attributes required for this object are:
+useless on their own and require extra structure information (read in along with
+the force constants). The attributes required for this object are:
 
 |Attribute|Type|
 |---------|----|
-|Structure| Structure object|
+|Crystal| Crystal object|
 |Force constants|(n_cells, 3\*n_ions, 3\*n_ions) array of floats|
 |Cell origins|(n_cells, 3) array of ints|
 |Supercell matrix|(3, 3) array of ints|
@@ -183,23 +189,20 @@ Methods required on this object are:
 
 This contains phonon frequencies/eigenvectors calculated at arbitrary q-points.
 For dielectric materials, at the gamma point the frequencies are different
-depending on the direction of approach (LO-TO splitting). This should be
-included on dispersion plots so there must be a mechanism to contain the
-duplicated frequencies/eigenvectors at gamma points. They are contained in
-separate arrays, with an extra indexing array to determine which q-point they
-belong to.
+depending on the direction of approach (LO-TO splitting). This is handled by
+having duplicated gamma points next to each other to contain the split
+frequencies. As a result of this the size of the q-point array used to create
+this object from the force constants won't necessarily be the same size as the
+q-point array contained in this object.
 
 |Attribute|Type|
 |---------|----|
-|Structure|Structure object|
+|Crystal|Crystal object|
 |Number of q-points|int|
 |Q-points|(n_qpts, 3) array of floats|
 |Q-point weights|(n_qpts,) array of floats|
 |Frequencies|(n_qpts, 3*n_ions) array of floats|
 |Eigenvectors|(n_qpts, 3*n_ions, n_ions, 3) array of complex floats|
-|Split frequencies| (n_gamma_points, 3*n_ions) array of floats|
-|Split eigenvectors|(n_gamma_points, 3*n_ions, n_ions, 3) array of complex floats|
-|Gamma point indices|(n_gamma_points,) array of ints| 
 |Energy unit|string|
 |Structure factor unit|string|
 
@@ -241,7 +244,7 @@ optional but is needed if the user wants to include temperature effects.
 
 |Attribute|Type|
 |---------|----|
-|Structure|Structure object|
+|Crystal|Crystal object|
 |Temperature|float|
 |Debye-waller|(n_ions, 3, 3) array of floats|
 |Debye-waller unit|string|
@@ -301,13 +304,13 @@ included for labelling of high-symmetry points for dispersion plotting.
 
 ## Python data object types
 
-Many of the objects above contain extra data (e.g. structure information) that
-is required for the other data to make sense. The Force Constants and Phonon
-Data objects are the ones that do complex calculations, so they must be full
-Python `classes`. The other objects have at least 1 associated method (even if
-it is just serialisation). So there are 2 main options for these objects:
-`classes` and [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
-A simple prototype for the case of the Structure object has been created for
+Many of the objects above contain extra data (e.g. crystal structure
+information) that is required for the other data to make sense. The Force
+Constants and Phonon Data objects are the ones that do complex calculations, so
+they must be full Python `classes`. The other objects have at least 1 associated
+method (even if it is just serialisation). So there are 2 main options for these
+objects: `classes` and [`dataclasses`](https://docs.python.org/3/library/dataclasses.html).
+A simple prototype for the case of the Crystal object has been created for
 each case, using atomic units internally and properties to convert units for
 user access (as described in the [units](#units) section), and providing methods
 to input/output from/to a dictionary. 
@@ -319,7 +322,7 @@ from euphonic import ureg
 
 
 @dataclass
-class StructureDataclass:
+class CrystalDataclass:
 
     cell_vectors_init: InitVar[ureg.Quantity]
     n_ions: int
@@ -375,7 +378,7 @@ class StructureDataclass:
                    output_cell_vectors_unit=lu, output_ion_mass_unit=mu)
 
 
-class StructureClass(object):
+class CrystalClass(object):
 
     def __init__(self, cell_vectors, n_ions, ion_r, ion_type, ion_mass):
         self._cell_vectors = cell_vectors.to(
@@ -461,7 +464,7 @@ required data as arguments which is messy and likely to cause errors.
 ## Units
 Units in Euphonic will be handled by the [`Pint`](https://pint.readthedocs.io)
 package. This provides a large list of unit conversions that will not have to be
-maintianed by Euphonic, and allows for addition of custom units. It handles
+maintained by Euphonic, and allows for addition of custom units. It handles
 units by wrapping values (even Numpy arrays) in a `Quantity` object which has
 both a magnitude and unit, and provides methods for easy conversion. One thing
 to note is doing repeated operations on `Quantity` objects can reduce
@@ -482,10 +485,10 @@ example `INTERNAL_CELL_VECTORS_UNIT` can be defined:
 ```
 ureg.define('@alias bohr = INTERNAL_CELL_VECTORS_UNIT')
 ```
-Which is what is used to create the `ureg` in the above Structure example.
+Which is what is used to create the `ureg` in the above Crystal example.
 
 Inside Euphonic's data objects, all pieces of data with units are stored as a
-bare magnitude, implicitly in atomic units. For example, in the Structure class
+bare magnitude, implicitly in atomic units. For example, in the Crystal class
 above `_cell_vectors` is a  'private' attribute which is stored as a plain Numpy
 array in units of bohr radius. The user-facing attribute is `cell_vectors` which
 is a property that converts the `_cell_vectors` to whatever unit is stored in
@@ -501,7 +504,7 @@ default units for that object will then be the same as whatever was input.
 When outputting to/taking input from another data format e.g. dictionary or
 file, `Quantity` objects are not used to increase portability. Instead, any data
 with units will be output as 2 fields: 1 containing the data, and 1 containing a
-string specifying the units. For example, in the Structure class above, when
+string specifying the units. For example, in the Crystal class above, when
 converting `cell_vectors` to a dictionary, the dictionary will contain:
 ```
 'cell_vectors': array([[ 2.426176, -4.20226   0.      ],
@@ -524,8 +527,12 @@ and will be mainly useful for debugging and quick sanity checking of answers.
 For both easy testing and export to other programs, Euphonic will need to be
 able to serialise most of its data objects. They should each have their own
 methods, although it is not decided what formats should be supported and more
-may be added later. Initial support could be for one of: 
+may be added later. In the first instance implementing a human-readable format
+might be sensible as it can be useful for testing. Initial support could be for
+one of:
 
-- `yaml`: human readable, Phonopy uses it so `pyyaml` is is already a dependency
-- `json`: human readable, Python has built-in json module, may represent objects
-better
+- `yaml`: Phonopy uses it so `pyyaml` is is already a dependency
+- `json`: Python has built-in json module, may represent objects better
+
+A binary data format will also be required for storing large objects. Currently,
+the most likely format for this is HDF5.
