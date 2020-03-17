@@ -28,4 +28,5 @@ Rel(castep_user, disp_dos_scripts, "Uses", "To plot dispersion/dos from .phonon/
 Rel(disp_dos_scripts, euphonic, "Uses", "To read/plot .phonon")
 Rel(euphonic, force_constants, "Reads")
 Rel(euphonic, phonons, "Reads")
+Rel_Neighbor(euphonic, brille, "May Use")
 @enduml
