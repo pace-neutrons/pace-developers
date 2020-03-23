@@ -10,11 +10,11 @@ This document describes the implementation of topics summarised by the [high lev
 
 To distribute Matlab code to users without a Matlab license, the **Matlab Compiler** toolbox has to be used.
 There are two main Matlab functions to compile code to a library or executable; a low level compiler, `mcc` and a higher level `deploytool`.
-`deploytool` is primarily a GUI application which also allows us to package an installer and bundle the (1GB) **MCR** with the Python version of Horace.
+`deploytool` is primarily a GUI application which also allows us to package an installer and bundle the (1GB) Matlab Compiler Runtime (**MCR**) with the Python version of Horace.
 `mcc` is a command-line application and does the actual "compilation" (encrypts and packs specified `m`-files into a `ctf` archive).
 This may be invoked within a Matlab session, or as a separate executable, making it suitable to be used in build systems.
 [An example CMake](https://github.com/mducle/hugo/blob/master/src/CMakeLists.txt#L49) file shows how this could be implemented.
-`mcc` only parses `m` and `mex` files, so, because the `Horace` and `Herbert` distributions contains many non-such files the build process copies the `m`/`mex` files to a new folder structure.
+`mcc` only parses `m` and `mex` files, so, because the `Horace` and `Herbert` distributions contains many files which are not `m` nor `mex`, the build process copies only the `m`/`mex` files to a new folder structure.
 `mcc` gives an error on zero-length files and on the markup tags used by `docify` so these are removed from the temporary folder using a shell script.
 A single `m`- or `mex`-file has to be specified as the target of the compilation, which is `pyhorace_init.m` in our case.
 The `-a` switch then adds an `m`- or `mex`-file or a folder to the `ctf`, and may be specified repeatedly. 
@@ -78,29 +78,28 @@ There is no official (documented) way of circumventing this data copy.
 This is probably for memory safety reasons: both Matlab and Python rely on reference counting to determine when to delete objects and free their associated memory.
 However, it is difficult to mesh the two systems, so Matlab seems to have opted to keep the two reference counts separate by *not* sharing data between Matlab and Python.
 
-It *may* be possible to circumvent the data copying by writing `mex` files using the Matlab C++ API.
-However, to do so safely would probably involve setting up our own reference-counting system to ensure that neither Matlab nor Python deletes memory pointed by each others variables.
-This system would then have to mesh with both Python's and Matlab's systems.
-The details are discussed below in the section on [using `mex` files for type conversion](#mex_wrapping).
+It is possible to circumvent the data copying by writing `mex` files using the Matlab C++ API, and an outline of a [possible implementation](#mex_wrapping) is given below.
+This has not yet been implemented in the prototype, however, due to time constraints.
 
 ## Wrapper implementation
 
 In any case, the actual documented code example for handling Matlab data in Python is even more inefficient.
 Matlab functions called from Python accept only wrapped `matlab.<type>` objects as input, and the default constructors for numeric arrays of these types only take Python `list`s as input.
-This default constructors then *copies* the contents of the list to an `array.array` and wraps this in a `matlab.<type>` class with addition information such as type, dimensions and strides.
-If we were to pass a `numpy` array (which is already a type which follows the `buffer` protocol and so is convertible to `array.array` without copying) we need to convert it to a `list` which involves an additional data copy.
-Thus the default method to pass data from Python to Matlab requires *three* data copies.
-The [prototype implementation](https://github.com/mducle/hugo/blob/master/pyHorace/TypeWrappers.py#L25) avoids the two unecessary copies by constructing a `matlab.<type>` object directly wrapping the `numpy` array.
-It can only do this for `numpy` arrays which are stored in memory in a column-major (Fortran-style) layout, however, because Matlab only supports such a layout.
-(Or at least its Python interface only supports - there are indications in the code that the `mxArray` *can* support a row-major layout).
-For row-major (C-style) `numpy` arrays, the prototype implementation is forced to perform a data copy.
+This default constructors then *copies* the contents of the list to an `array.array` and wraps this in a `matlab.<type>` class with additional information such as type, dimensions and strides.
+Thus, if we were to pass a `numpy` array (which is already a type which follows the `buffer` protocol and so is convertible to `array.array` without copying) we need to convert it to a `list` which involves an *additional* data copy.
+Thus the default method to pass data from a `numpy` array to Matlab requires *three* data copies (`numpy` to `list`, `list` to `buffer`, and internally within Matlab).
+The [prototype implementation](https://github.com/mducle/hugo/blob/master/pyHorace/TypeWrappers.py#L25) avoids the two unecessary Python-side copies by constructing a `matlab.<type>` object which directly wraps the `numpy` array.
+It can only do this for `numpy` arrays which are stored in memory in a column-major (Fortran-style) layout, however, because the Matlab-Python library only supports such a layout.
+(There are indications that internally the `mxArray` *can* support a row-major layout, but this has not been explored in detail).
+In any case, for row-major (C-style) `numpy` arrays, the prototype implementation is forced to perform a data copy.
 
 ## Complex-valued arrays
 
-Likewise, for complex-valued arrays, a data copy is required because the Matlab-Python API requires complex arrays to be stored as separate real and imaginery parts, in different memory locations.
+Likewise, for complex-valued arrays, a data copy is required because the Matlab-Python library requires complex arrays to be stored as separate real and imaginery parts, in different memory locations.
 This contrasts with the behaviour of `numpy` which stores complex arrays in an interleaved memory format where each element contains both real and imaginery components.
 This also, ironically, contrasts with the internal behaviour of Matlab, which since R2018a has *also* used an interleaved data format for complex arrays.
-(The Matlab-Python API thus forces two completely unecessary data copies, probably for backwards compatibility reasons with older versions of Matlab which stored the real and imaginery parts separately).
+(The Matlab-Python library thus forces two completely unecessary data copies, probably for backwards compatibility reasons with older versions of Matlab which stored the real and imaginery parts separately).
+In the prototype implementation we have also been forced to create copy from an interleaved array to separate arrays for complex arrays.
 
 ## Other considerations
 
@@ -108,12 +107,17 @@ In the reverse direction, data exported from Matlab to Python in the `matlab.<ty
 (One data copy has already been made by the Matlab-Python library internally).
 This wrapping is done in the [`TypeWrappers` class](https://github.com/mducle/hugo/blob/master/pyHorace/TypeWrappers.py#L56) of the prototype implementation.
 
-Finally most Matlab functions expect their input to be floating point numbers, whereas the Matlab-Python library automatically converts Python `int` into `int` etc. (and the default numeric format in Python is an `int`).
+Most Matlab functions expect their input to be floating point numbers, whereas the Matlab-Python library automatically converts Python `int` into `int` etc. (and the default numeric format in Python is an `int`).
 The `pyHorace` wrapper thus [explicitly converts all numerical values to `double`](https://github.com/mducle/hugo/blob/master/pyHorace/DataTypes.py#L30). 
-This consciously breaks the few Matlab (mostly Java) functions that expect `int` in favour of the many which expect `float`.
-Of course, this also means making an additional copy of the array in most cases, since it is not possible to convert from `int` to `float` without changing the array memory.
+This consciously breaks the few Matlab (mostly Java) functions that expect `int` in favour of the many which expect `double`.
+Of course, this also means making an additional copy of the array in most cases, since it is not possible to convert from `int` to `double` without changing the array memory.
 It may be possible to perform this conversion *in-place* using a compiled C module if the data types are the same widths (e.g. `int` and single-precision floats, or `long` and double-precision).
 Plain Python code, however, does not allow such an in-place conversion, hence the prototype implementation requires a data copy.
+Additionally, parts of the Horace code uses single-precision floats for operations rather than double, so this would require an addition memory copy to convert from input double-precision arrays.
+
+Finally, an alternative to using the provided Matlab-Python API is to write our own Python C module (or C++ via PyBind11) to wrap the `ctf` archive and handle data conversion between Python and Matlab.
+This would avoid the inefficiencies noted above, at the cost of a lot of development effort.
+
 
 ## <a name="mex_wrapping"></a> Type Conversions in a `mex` file
 
@@ -132,16 +136,16 @@ For this, we may use the following strategy:
 1. We create a wrapper class which contains a reference to the child-array in the exported language and a *shared-copy* of the original array (no actual memory copy is needed to create a shared copy).
 2. In both Matlab and Python, as long as one array has a link to an underlying memory location, and that array is in scope, the memory location will not be freed.
 3. Thus the shared-copy of the original array ensures that the memory remains valid even if the original array is deleted, as long as the wrapper object itself is not deleted.
-4. The wrapper object has a destructor method which ensures that the reference to the child-array in the exported language is invalidated when it is deleted (which potentially frees the underlying memory).
+4. The wrapper object has a destructor method which ensures that the reference to the child-array in the exported language is invalidated when it is deleted (since this deletes the shared-copy too and so potentially allows the underlying memory to be freed). 
 
 As a concrete example, take the case of exporting a Matlab array to `numpy`.
 We first use a `mex` file to create a `numpy` object which wraps the data-in-memory of the Matlab array, and exports this `numpy` object to a Python-side module-global `dict`.
-It also creates a shared-copy of the original input array using the method described [here](https://uk.mathworks.com/matlabcentral/answers/396103-mxcreateshareddatacopy-no-longer-supported-in-r2018a).
-The `mex` file then returns both the key to the `numpy` object, its address in memory, and the shared-copy which is stored in a *Matlab* wrapper (handle) object.
+It also creates a (Matlab `mxArray`) shared-copy of the original input array using the method described [here](https://uk.mathworks.com/matlabcentral/answers/396103-mxcreateshareddatacopy-no-longer-supported-in-r2018a).
+The `mex` file then returns the key to the `numpy` object, its address in memory, and the shared-copy which is stored in a *Matlab* wrapper (handle) object.
 It is this Matlab wrapper object which is passed to Python as a `matlab.object`.
 We then have additional Python wrappers which can extract the key from the Matlab wrapper object and use that to access the exported `numpy` array.
-As long as the Matlab wrapper stays in scopy in *Python* (as a `matlab.object`) the underlying memory is valid and we can use the linked `numpy` array.
-If manipulation in Matlab changes the `numpy` object in the dictionary such that its address (the address of the wrapper and not the data-in-memory) is different from that in the Matlab wrapper object, we delete the Matlab object.
+As long as the Matlab wrapper stays in scope in *Python* (as a `matlab.object`) the underlying memory is valid and we can use the linked `numpy` array.
+If manipulation in Python changes the `numpy` object in the dictionary such that its address (the address of the wrapper and not the data-in-memory) is different from that in the Matlab wrapper object, we delete the Matlab object.
 This thus breaks the link between the Matlab and Python arrays (because an implicit copy has already happened on the Python side - e.g. through `a = a + b` or some such operation).
 
 Exporting in the reverse direction (from Python to Matlab) is (perhaps) a bit more straightforward.
@@ -152,10 +156,10 @@ Once this `mxArray` which wraps a `numpy` memory has been created, we export it 
 The Python C API module also creates a shared (`memoryview`) copy of the original `numpy` array, to keep it in memory, and keeps this in a module-global `dict` with a random key.
 We then have Python wrapper code which creates a Matlab handle object to store the name of the exported `base` namespace Matlab array and the key to the shared-copy.
 Additional Matlab wrapper codes ensure that when they are passed the Matlab handle object wrapper from Python that this resolves to the array in the `base` namespace.
-When the Matlab handle object wrapper goes out of scope or deleted it removes the share-copy's key from the module-global `dict` and deletes the `base` namespace Matlab array.
+When the Matlab handle object wrapper goes out of scope or is deleted it removes the shared-copy's key from the module-global `dict` and deletes the `base` namespace Matlab array.
 
-No prototype implementation of the above schemes exist at present, due to time reasons. 
-Instead, a the Python function call described in the [next section](#pymatpy) implements a `mex` file which creates `numpy` array that wraps memory from a Matlab array but which only exists whilst the `mex` file executes.
+No prototype implementation of the above schemes exist at present due to time constraints. 
+Instead, the Python function call described in the [next section](#pymatpy) implements a `mex` file which creates `numpy` arrays that wraps memory from a Matlab array but which only exists whilst the `mex` file executes.
 The [wrapped `numpy` array](https://github.com/mducle/hugo/blob/master/src/call_python.cpp#L14) is passed to the user defined function directly, and should be only used in the called function so there should not be issues with garbage collection.
 
 
@@ -169,11 +173,11 @@ The design for this is that whenever the `pyHorace` wrapper encounters a callabl
 2. Creates a Matlab-side [`pythonFunctionWrapper`](https://github.com/mducle/hugo/blob/master/src/pythonFunctionWrapper.m) object which as its destructor will call a [`mex` function](https://github.com/mducle/hugo/blob/master/src/pythonRemoveFuncKey.cpp) to remove the function reference from the `FunctionWrapper` `dict`.
 3. The `pythonFunctionWrapper` is passed to the Matlab [`call.m`](https://github.com/mducle/hugo/blob/master/src/call.m) and [`call2.m`](https://github.com/mducle/hugo/blob/master/src/call2.m) functions.
 4. `call.m` / `call2.m` detects this object and replaces it with a (Matlab) anonymous function which calls [`call_python.mex`](https://github.com/mducle/hugo/blob/master/src/call_python.cpp).
-5. The first argument to `call_python.mex` is the Python function key and subsequent arguments are to passed to this Python function (after being wrapped in a `numpy` class as described above).
+5. The first argument to `call_python.mex` is the Python function key and subsequent arguments are passed to the Python function.
 5. The anonymous function which calls `call_python.mex` created by `call.m` / `call2.m` is then passed to the desired Matlab function (e.g. `sqw_eval`) which treats it as a normal Matlab function.
 6. When it is called, `call_python.mex` then checks the `dict` in `pyHorace.FunctionWrapper` to see if the key is valid and if it is, calls the function referenced by it.
 7. `call_python.mex` wraps `float`/`double` and `complex<float>`/`complex<double>` Matlab arrays in a `numpy` array wrapper before passing these to the Python function (other wrappers are possible but have not been implemented).
-8. On return, `call_python.mex` copies the data in the `numpy` array (the prototype implementation assumes only a single array is returned) into a Matlab array and returns this to Matlab.
+8. On return, `call_python.mex` copies the data in the `numpy` array (the prototype implementation assumes only one array is returned) into a Matlab array and returns this to Matlab.
 
 The reason to wrap the function key in a `pythonFunctionWrapper` object is to ensure that the function reference does not persist eternally in the `FunctionWrapper` `dict`, causing a memory leak.
 When the `pythonFunctionWrapper` object goes out of scope, it should be deleted by Matlab, and this calls its destructor `mex` function to remove the reference from the global `dict`.
