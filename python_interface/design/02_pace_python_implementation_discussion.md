@@ -20,8 +20,8 @@ A single `m`- or `mex`-file has to be specified as the target of the compilation
 The `-a` switch then adds an `m`- or `mex`-file or a folder to the `ctf`, and may be specified repeatedly. 
 Each `m`- or `mex`-file specified by an `-a` switch is available to be called directly by Python.
 `m`- or `mex`-files contained within a folder specified by `-a` are included in the `ctf` archive but cannot be called directly by Python.
-For `pyHorace`, two `m`-files which internally uses `feval` are specified by the `-a` switch (`call.m` and `call2.m`) to call the actual Horace/Herbert routines which are included only as folders.
-`call.m` is to call functions directly, whilst `call2.m` calls methods of objects.
+For `pyHorace`, two `m`-files which internally uses `feval` are specified by the `-a` switch (`call.m` and `call_method.m`) to call the actual Horace/Herbert routines which are included only as folders.
+`call.m` is to call functions directly, whilst `call_method.m` calls methods of objects.
 There is also a `thinwrapper` class to wrap old-style objects so that they are not converted to Python `dict`s.
 The compilation time is approximately 10 minutes.
 
@@ -213,7 +213,7 @@ from pyHorace import Matlab
 m = Matlab()
 
 # We cannot directly create a variable in the Matlab base namespace
-# So we first create it in Python using the default matlab.double ctor and get its memory address
+# So we first create it in Python using the default matlab.double constructor and get its memory address
 import matlab
 mm = matlab.double([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 addr_py = mm._data.buffer_info()[0]

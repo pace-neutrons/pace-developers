@@ -10,7 +10,7 @@ Implementation details are presented in a [separate document](02_pace_python_imp
 
 # Motivation
 
-PACE will be a suit of several interconnected programs for inelastic neutron data analysis, which are written both in Matlab and in Python.
+PACE will be a suite of several interconnected programs for inelastic neutron scattering data analysis, which are written both in Matlab and in Python.
 One major goal of the project is to have both a Matlab and a Python user interface (of which the Python interface *would not require a Matlab license* to use).
 Thus, in order to present the user with a seamless experience,
 
@@ -38,10 +38,10 @@ We end with a [summary and discussion points](#summary).
 
 As detailed in [this section](02_pace_python_implementation_discussion.md#compiled_matlab), Matlab code may be "compiled" using the **Matlab Compiler** and freely distributed to users without a Matlab license.
 In order to run this "compiled" code, the user is required to install the free/gratis **Matlab Compiler Runtime** package, and this **MCR** package must match the version of Matlab used to compile the Horace library.
-Thus, if we always target the latest version of Matlab, we should require users to re-install (upgrade) the **MCR** twice a year, which may not be desirable.
+Thus, it would make sense to target a specific Matlab release for stability until new features make upgrading desirable.
 
 The compiled Matlab library is a platform-independent Component Technology File (`ctf`) which contains compressed and encrypted versions of the `m` and `mex`-files used in the project.
-The **MCR** is a platform-dependent installation (approximately 1GB download) which contains the base Matlab distribution and libraries but is set up to be able to run only code from `ctf`s.
+The **MCR** is a platform-dependent installation ([approximately 1GB download](https://uk.mathworks.com/products/compiler/matlab-runtime.html)) which contains the base Matlab distribution and libraries but is set up to be able to run only code from `ctf`s.
 Code which uses any toolbox will have that toolbox included in the `ctf`.
 Depending on the desired functionality the `ctf` may be deployed as a stand-alone program, C/C++ shared library, Python or Java package with suitable bindings.
 Mathworks allows the **MCR** to be packaged with the `ctf` (with suitable bindings) in a single distribution, or just the `ctf` on its own (so users need to manually install the **MCR**).
