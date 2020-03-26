@@ -19,6 +19,7 @@ needs to be decided:
 calculation, but the structure factor calculation is currently under testing*
 
 ### 1.1 Which software to benchmark against
+**Discussion**
 Possibilities include:
  * CASTEP phonons tool interpolation against Euphonic interpolation
  * OClimax structure factor calculation against Euphonic's. OClimax can only be
@@ -31,7 +32,16 @@ Possibilities include:
  * Phonopy interpolation (and structure factor calculation?) compared with
  Euphonic
 
+ **Conclusion**
+ Benchmarking performance against other software is useful to ensure Euphonic
+ isn't much slower, however, it is important to get a fair comparison and it
+ shouldn't be prioritised over bechmarking Euphonic's performance over time. For
+ Ab2tds/OClimax it is not possible to get a fair comparison (see above) so these
+ will not be benchmarked. CASTEP and Phonopy will run on SCARF so it may make
+ sense to do some simple benchmarking if this is easy enough to do.
+
 ### 1.2 Which timing/benchmarking tools will be used in each case
+**Discussion**
 How can we directly compare timing results with Euphonic? This depends on the
 software being benchmarked. If in Python this should be fairly simple and the
 tools available include:
@@ -49,7 +59,12 @@ tools available include:
 For timing other tools on the CL the obvious choice would be Linux's `time`. But
 how do we gather these results and is there anyting better out there?
 
+**Conclusion**
+The tools don't matter so much as long as they are accurate. Python's `timeit`
+and Linux's `time` should be sufficient.
+
 ### 1.3 Which cuts/q-points will be used for benchmarking
+**Discussion**
 If we want to benchmark against Ab2tds/OClimax they would need to be cuts in a
 single direction in Q (we could use Q-Q cuts for OClimax). Are the cuts we're
 using for validation big enough? 
@@ -58,6 +73,12 @@ For CASTEP phonons/Phonopy benchmarking we could use a set of random q-points,
 or would a 'fair' comparison use a regular grid to allow CASTEP/Phonopy to use
 symmetry? How many q-points should we use? This will probably be limited by
 .phonon file size.
+
+**Conclusion**
+It would make sense to do performance benchmarking of interpolation at the same
+time as validation for CASTEP/Phonopy (we aren't benchmarking performance with
+OClimax/Ab2tds). Therefore we will be benchmarking against the same cuts used
+for validation.
 
 ### 1.4 Where benchmarking results will be stored
 The benchmarking results themselves will be relatively small, so could be stored
@@ -71,12 +92,32 @@ This could form part of the testing framework for the Horace/Euphonic interface
 e.g. short tests being run on each commit to Horace/Euphonic, and larger
 performance tests being run once a week using cuts from the SAN storage.
 
-Questions still to be answered:
-* Where should the Euphonic Horace simulation function and its tests go? In a
+**Discussion**
+Where should the Euphonic Horace simulation function and its tests go? In a
 separate repo? Inside Horace?
-* What systems do we want to run the performance tests on? Is SCARF enough?
-* What timing tools will we use? Matlab's timeit? Or is Jenkins job execution
+
+**Conclusion**
+Euphonic's Horace simulation functions are currently stored
+[here](https://github.com/pace-neutrons/Meuphonic). This is fine for now and can
+be pulled in by tests as needed
+
+**Discussion**
+What systems do we want to run the performance tests on? Is SCARF enough?
+
+**Conclusion**
+Provided that it is documented what system any benchmarking has been run on
+(e.g.SCARF 18) nodes, this is enough.
+
+**Discussion**
+What timing tools will we use? Matlab's timeit? Or is Jenkins job execution
 time enough?
+
+**Conclusion**
+Jenkins job execution time is not a good measure as this can vary due to
+resources available etc. Matlab timeit is a good a measure as any other,
+initially the time could just be printed but later output in proper format
+(XML?) to make use of Jenkins'
+[benchmark plugin](https://jenkins.io/doc/pipeline/steps/benchmark/)
 
 
 ## 3. Euphonic Performance Over Time
@@ -85,6 +126,12 @@ job interpolating tens of thousands of q-points could be run regularly
 (e.g. once a week) as a performance test. This could be run on SCARF and compare
 the pure Python with the C version, and different numbers of cores.
 
+**Discussion**
 Would Jenkins job execution time be enough? If we want 'publishable' results
 which tools do we use for timing (see 1.2 above) and how to we compare to other
 software?
+
+**Conclusion**
+Python's built-in timeit should be a good measure, this could be initially
+printed, then upgraded to make use of Jenkins' benchmark plugin. This doesn't
+need to be compared to other software as part of the job.

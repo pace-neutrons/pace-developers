@@ -10,14 +10,16 @@ energy)
 - Interpolated frequencies
 - Interpolated eigenvectors
 
-For details on how these are calculated see [placeholder]()
+For details on how these are calculated see [here](../design/04_algorithms.md)
 
 ## Repositories
 
-The repository for storing validation scripts/results is at [TBD]().
+The repository for storing validation scripts/results is at [TBD](). This will
+store the results from OClimax/Ab2tds/Euphonic, but also the input files
+required to rerun them.
 
-The experimental data files are too large to be hosted on Github, so are stored
-at [TBD]().
+The experimental data files are too large to be hosted on Github, so will be
+stored on a SAN file server, details [TBD]().
 
 ## Chosen software
 - [**Ab2tds**](03_ab2tds.md) will be used to verify the coherent crystal
@@ -77,6 +79,7 @@ CASTEP force constants -> CASTEP interpolation -> OClimax intensities
 CASTEP force constants -> Euphonic interpolation -> Euphonic intensities
 ```
 ## Comparison with software
+**Discussion:**
 One option to get a good variety of points for comparison with OClimax and
 Ab2tds would be to produce a 'spaghetti' plot of high-symmetry paths, which
 would get good coverage over the 1st Brillouin Zone, and use a set of random
@@ -90,6 +93,12 @@ a set of random points would therefore not be possible without running
 OClimax/Ab2tds once for each random q-point. Something like a spaghetti plot may
 be possible with Ab2tds using an array of `redStarts` parameters, but producing
 this with OClimax would need it to be run once for each q-direction.
+
+**Conclusion:**
+As random points/spaghetti plots will be either difficult/impossible with
+Ab2tds/OClimax, it has been decided to simulate a variety of experimental data
+cuts, 2-3 Q-E cuts for each material. These should be a mix of high/low symmetry
+and high/low Q.
 
 ## Comparison with experimental data
 Euphonic will be verified against cuts of experimental data in
@@ -125,11 +134,15 @@ And the mean relative error is defined as:
 For comparing structure factors and frequencies, the mean/max absolute error is
 meaningful, as they both have a defined unit (e.g. meV) so can be used for
 comparison. However, as values of the structure factor at Bragg peaks may be
-extremely large, this may give an unrepresentative value, so this case would
-require use of a relative error tolerance.
+extremely large, this may give an unrepresentative value, so it might make sense
+to exclude these values from the calculation, use a relative error tolerance, or
+simply just test that they give some 'large' value.
 
 Neutron scattering intensities may be subject to an arbitrary scaling factor so
 comparing absolute values doesn't make sense. For comparing intensities the
 mean/max relative error will be used. However, for near zero values of
 intensity, the relative error may be unrepresentatively large. In this case,
 this would require use of an absolute error tolerance.
+
+In all cases it might be sensible to calculate both an absolute and relative
+error.
