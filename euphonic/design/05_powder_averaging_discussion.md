@@ -187,9 +187,7 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
     used?
     - Random sampling on spherical shells seems more common that fully
       random sampling in **q**-space.
-          - An example is found in spinw:
-            https://github.com/SpinW/spinw/blob/master/swfiles/%40spinw/powspec.m#L291
-            which does random sampling on specified abs(q) shells.
+      - An example is found in spinw [source code](https://github.com/SpinW/spinw/blob/master/swfiles/%40spinw/powspec.m#L291) which does random sampling on specified abs(q) shells.
 -   Has natural advantage of being uniform in space... eventually.
 -   Convergence can be examined systematically, adding new points
     without removing old ones. A smoother process than replacing
@@ -213,14 +211,13 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
     -   points per shell has to be a Fibonacci number
         - That's not a deal-breaker but could be annoying when exploring convergence
     -   or can sample *randomly* at *each* spherical shell surface
-    - Code link: https://github.com/SpinW/spinw/blob/master/swfiles/%40spinw/powspec.m#L268
+    - [source code](https://github.com/SpinW/spinw/blob/master/swfiles/%40spinw/powspec.m#L268)
 -   MDANSE requires the user to set up a q lattice for sampling,
     including a "spherical grid" option with a set range of "shells"
     and "vectors".
 -   `mcphase` does a very primitive regular spherical
-    grid (specified by number of points along theta and phi directions
-    and the by number of abs(q) bins):
-    https://github.com/mducle/mcphase/blob/master/bin/powdermagnon.pl#L225
+    grid, specified by number of points along theta and phi directions
+    and the by number of abs(q) bins. [source code](https://github.com/mducle/mcphase/blob/master/bin/powdermagnon.pl#L225)
     - This is _not_ the best way!
 -   Another approach that doesn't seem to be in use but is perhaps
     a truer estimate of the integral is to sample _within a q bin_
@@ -275,9 +272,8 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
         -   The McVine package is somewhat intimidating; such work is
             not to be taken lightly.
         -   McStas is also another package which can be used to do
-            something similar:
-            https://www.youtube.com/watch?v=ZcqermI64VA but if
-            anything it can be even more complicated than McVine.
+            something similar, but if anything it can be even more
+            complicated than McVine. ([40-min video](https://www.youtube.com/watch?v=ZcqermI64VA))
 
 <a id="orgcc884e6"></a>
 
