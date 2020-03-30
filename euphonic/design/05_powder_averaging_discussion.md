@@ -240,6 +240,9 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
     -   in Abins, the simulated *q* bins do not match the TOSCA
         instrument measurements, in which the bin size increases with
         *q*.
+    -   With random/uniform q-sampling, we could re-sample to
+        arbitrary/inconsistent q-bin sizes. This will need dense
+        sampling relative to bin size.
 
 -   Do we need to include a resolution function before/during powder
     averaging?
