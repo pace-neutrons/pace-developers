@@ -167,7 +167,10 @@ Powder averaging is appropriate to simulation of many neutron instrument measure
 - Statistical methods, propogation of error approaches could provide
   some useful tools
 - Experimentally we can examine uncertainty by comparing different
-  detector contributions to the same bin
+  detector contributions to the same abs(q) bin
+  - e.g. different &phi; contributions from TOSCA's ring of detectors.
+  - It is _possible_ to collect multiple measurements at same **q**
+    but requires runs at multiple incident energies.
 - We should be able to somehow examine the changing variance in S as more
   **q**-points are sampled.
 
