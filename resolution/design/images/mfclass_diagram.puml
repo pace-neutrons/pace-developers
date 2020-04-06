@@ -1,0 +1,62 @@
+@startuml mfclass_diagram
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class mfclass{
+    - array data
+    - array mask
+    + simulate()
+    + fit()
+__ foreground __
+    - array fun
+    - vector pin
+    - vector free
+    - array bind
+__ background __
+    - array bfun
+    - vector bpin
+    - vector bfree
+    - array bbind
+__ private __
+    - string dataset_class_
+    - mfclass_wrapfun wrapfun_
+}
+
+class mfclass_tobyfit{
+    - array mc_contributions
+    - integer mc_points
+    - struct refine_crystal
+    - struct refine_tobyfit
+}
+
+class mfclass_wrapfun{
+    + wrap_functions_and_parameters()
+__ foreground __
+    - function fun_wrap
+    - mfclass_plist p_wrap
+    - function func_init
+    - bool f_pass_caller
+__ background __
+    - function bfun_wrap
+    - mfclass_plist bp_wrap
+    - function bfunc_init
+    - bool b_pass_caller
+}
+
+class mfclass_plist{
+    - mfclass_plist plist_
+    - bool p_present_
+    - vector p_
+}
+
+mfclass <|-- mfclass_tobyfit
+mfclass *-- mfclass_wrapfun : contains
+mfclass_wrapfun "1" *-- "2" mfclass_plist : contains
+mfclass_plist *-- mfclass_plist : contains
+
+note left of mfclass_tobyfit: Implements convolution\nby wrapping fun with\nresolution integral
+@enduml

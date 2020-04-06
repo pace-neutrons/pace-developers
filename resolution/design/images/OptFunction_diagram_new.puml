@@ -1,0 +1,15 @@
+@startuml OptFunction_extension
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class OptFunction{
+    - bool apply_resolution
+    - char convolution_function
+    - char resolution_function
+    + convolute()
+}
+@enduml
