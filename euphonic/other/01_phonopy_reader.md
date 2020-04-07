@@ -96,3 +96,8 @@ cell, but it is inefficient and would result in wasted storage/computation,
 and it has not been tested whether this method would actually work. For now,
 it is recommended that Phonopy users output the force constants for the unit
 cell if they want to interpolate with Euphonic.
+
+It may also be possible to re-map the output force constants for any atoms
+which have their `cell_origins` outside the supercell onto another cell,
+so that all atoms share the same `cell_origins`. This needs to be
+investigated.
