@@ -48,7 +48,7 @@ __ background __
 }
 
 class mfclass_plist{
-    - mfclass_plist plist_
+    - cellarray plist_
     - bool p_present_
     - vector p_
 }

@@ -14,14 +14,14 @@ class OptModel{
 
 class OptFunctions{
     + simulate()
-    + initialise()
-    + evaluate()
+    - initialise()
+    - evaluate()
 }
 
 class OptFunction{
     + simulate()
-    + initialise()
-    + evaluate()
+    - initialise()
+    - evaluate()
 }
 
 class TobyfitOptFunction{
@@ -31,15 +31,15 @@ class TobyfitOptFunction{
     - struct refine_moderator
     - struct cached_tables
     + simulate()
-    + initialise()
-    + evaluate()
+    - initialise()
+    - evaluate()
 }
 
 class RaytracedResolutionOptFunction{
     - ...
     + simulate()
-    + initialise()
-    + evaluate()
+    - initialise()
+    - evaluate()
 }
 
 OptModel *-- "3" OptFunctions

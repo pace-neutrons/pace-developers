@@ -24,15 +24,16 @@ the initial and final momenta of detected neutrons, ![\delta\mathbf{k}_\text{i}]
 These uncertainties naturally give rise to uncertainties in the momentum, ![\delta\mathbf{Q}], and energy, ![\delta E], transferred to the sample;
 and therefore uncertainties in the doubly-differential cross section.
 In the interest of simplified notation we can define a momentum-energy four vector ![\mathbb{Q} \equiv (\mathb{Q},E)], with uncertainty ![\delta\mathbb{Q}].
-The uncertainty in momentum-energy at a given ideal momentum-energy point gives rise to the instrumental resolution function ![R(\mathbb{X};\mathbb{Q})].
-The instrumental resolution is, in general, a scalar function of the four components of ![\mathbb{Q}] and we can define its variance along each component of ![\mathbb{Q}]
 
-![V_i(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i^2 R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} -\left(\frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\right)^2]
+The uncertainty at a given ideal measurement point gives rise to the instrumental resolution function, ![R(\mathbb{Q};\mathbb{Q}_0)].
+The instrumental resolution function is continuous in momentum-energy space, ![\mathbb{Q}], and is a functional of the configuration where the instrument is set to record intensity, ![\mathbb{Q}_0] &mdash; the resolution function typically depends on much more than *just* ![\mathbb{Q}_0], but precisely *what* it depends on is instrument dependent and beyond the scope of this document.
+We can define the components of the ![4\times4] covariance matrix of the instrumental resolution function at ![\mathbb{Q}] as
 
-from which we will always find ![\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})].
+![V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]
 
-In some cases it may be possible and desirable to approximate the instrumental resolution function by a hyperellipsoid.
+where the integrals over ![\mathbb{X}] cover all momentum-energy space, and the ![X_i], ![X_j] are components of the orthonormal basis therein.
 
+In some cases it may be desirable to approximate the instrumental resolution function by a hyperellipsoid defined from the covariance matrix.
 
 The Proper Analysis of Coherent Excitations (PACE) requires the possibility of accounting for resolution effects when comparing
 discreet measured inelastic neutron scattering data, ![S_i(\mathbb{Q}_i)],
@@ -53,7 +54,7 @@ These user-provided scattering functions may account for some instrumental effec
 and are unlikely to account for resolution.
 In cases where features of the model are of comparable size to the instrumental resolution an accurate estimate to model parameters will only be possible if the model is convoluted with the resolution _before_ comparison with measured intensity.
 
-By providing the necessary resolution wrapper to user-provided ![S(\mathbb{Q};\mathbf{p})] models
+By providing the necessary resolution wrapper to user-provided ![S(\mathbb{Q};\mathbf{p})] models,
 PACE will enable the routine extraction of physically relevant parameters from measured inelastic neutron scattering data.
 
 ## Deliverables
@@ -64,7 +65,7 @@ PACE will enable the routine extraction of physically relevant parameters from m
 
 # Existing Solution
 Resolution convolution is accomplished within the existing `multifit` framework through specialisation of the MATLAB class `mfclass`.
-Like [`OptModel`] `mfclass` contains independent-variable array(s), foreground and background function(s) plus their parameters and meta information for fixing and binding-together parameters.
+Like [`OptModel`], `mfclass` contains independent-variable array(s), foreground and background function(s) plus their parameters and meta information for fixing and binding-together parameters.
 
 Additionally, `mfclass` supports 'wrapping' its foreground and background functions in arbitrary other functions by including a `mfclass_wrapfun` object.
 When the `mfclass` methods `simulate()` or `fit()` are called the `mfclass_wrapfun` property's `wrap_functions_and_parameters()` method is used to
@@ -91,7 +92,10 @@ obj = obj.set_bbind(...); % optionally bind background parameters
 [sim_obj(s), p_fit] = obj.fit();  
 ```
 
-The flexibility provided by the interaction of `mfclass`, `mfclass_tobyfit`, `mfclass_wrapfun`, and `mfclass_plist` comes with the significant drawback that the code is difficult to understand and therefore difficult to maintain.
+The flexibility provided by the interaction of `mfclass`, `mfclass_wrapfun`, and `mfclass_plist` comes with the significant drawback that code utilising these classes can be difficult to understand and maintain.
+
+Specifically in the case of `mfclass_tobyfit`, only some of the information and none of the proceedures required to perform the resolution convolution are provided within the class as properties and methods.
+The remaining information is produced when a special tobyfit-defined private method of the `sqw` class is stored as a property of and called by a method of `mfclass_wrapfun`, and the entire convolution proceedure is implemented as another tobyfit-defined public method of the `sqw` class which is also stored as a property of and called by a method of `mfclass_wrapfun`.
 
 
 [`OptModel`]: ../../optimisation/design/Model_Optimisation_Design.md#optimisation-model-object
@@ -99,20 +103,22 @@ The flexibility provided by the interaction of `mfclass`, `mfclass_tobyfit`, `mf
 [mfclass]: images/mfclass_diagram.png
 
 # Proposed Solution
+The solution proposed here is driven by the aspiration that all of the machinery required to carry out a resolution convolution method should be part of the class which implements the scheme.
+This in turn will hopefully improve the chances that someone first encountering PACE will be able to easily understand and maintain the resolution convolution functionality.
 
-As part of the optimisation scheme a new class [`OptFunction`] will be created; objects of this class are not intended to handle instrumental resolution convolution.
+As part of the [optimisation scheme] a new class [`OptFunction`] will be created; objects of this class are not intended to handle instrumental resolution convolution.
 Instead resolution effects will be dealt with by extending `OptFunction` with one or more new classes.
 
 There has been some discussion of implementing new methods for estimating the instrumental resolution of a direct-geometry time-of-flight spectrometer, e.g., making use of Monte Carlo ray-tracing to produce a probability distribution of neutron states incident on the sample along with analytic approximations to the secondary spectrometer.
 
-Additionally, we have investigated new methods for performing the resolution convolution -- notably, reuse of in-resolution function evaluations for nearby detector pixels.
+Additionally, we have investigated new methods for performing the resolution convolution &mdash; notably, reuse of in-resolution function evaluations for nearby detector pixels.
 
 In order to support multiple ways of estimating the instrument resolution and performing the convolution we require a flexible resolution convolution scheme to be implemented in conjunction with `OptFunction`.
 
 ## `OptFunction` subclasses
 `OptFunction` will be extended to include an `initialise()` method which performs no action by default, and a `simulate()` method which calls the `initialise()` method before the `evaluate()` method. Same-named similar extensions will be added to `OptFunctions` as well.
 The two 'gateway' methods, `simulate()` and `optimise()`, in `OptModel` will be modified to first call its contained `OptFunctions` objects' `initialise()` and then to continue utilising a private `evaluate()` method to finish simulating or optimising the model.
-The `evaluate()` method of `OptFunction` and `OptFunctions` must remain public.
+The `initialise()` and `evaluate()` methods of `OptFunction` and `OptFunctions` should be accessible only to objects of the classes intended to hold them, namely `OptFunctions` and `OptModel`, respectively.
 
 With these changes we can then impelemnt a new subclass of `OptFunction` for any resolution convolution scheme.
 Notably, we must produce `TobyfitOptFunction` which reproduces the resolution estimation and convolution scheme in `tobyfit`.
@@ -122,6 +128,7 @@ and `Kernel2DOptFunction` which uses a user-defined two dimensional kernel to 's
 ![OptFunction_subclasses]
 
 [OptFunction_subclasses]: images/OptFunction_subclasses.png
+[optimisation scheme]: ../../optimisation/design/Model_Optimisation_Design.md
 [`OptFunction`]: ../../optimisation/design/Model_Optimisation_Design.md#optimisation-function-object
 
 ## Possible (partial) implementation
@@ -137,12 +144,12 @@ classdef OptModel
     methods
         function varargout = simulate(obj, varargin)
             obj.initialise();
-            varargout = obj.evaluate(varargin);
+            varargout = obj.evaluate(varargin{:});
         end
         function varargout = optimise(obj, varargin)
             obj.initialise();
             % optimisation implemented here
-            varargout = obj.evaluate(varargin);
+            varargout = obj.evaluate(varargin{:});
         end
     end
     methods (Access = private)
@@ -166,8 +173,10 @@ classdef OptFunctions
     methods
         function varargout = simulate(obj, varargin)
             obj.initialise();
-            varargout = obj.evaluate(varargin);
+            varargout = obj.evaluate(varargin{:});
         end
+    end
+    methods (Access = {?OptModel})
         function obj=initialise(obj)
             for i=1:numel(obj.optfunctions)
                 obj.optfunctions(i)=obj.optfunctions(i).initialise();
@@ -184,8 +193,10 @@ classdef OptFunction
     methods
         function varargout = simulate(obj, varargin)
             obj.initialise();
-            varargout = obj.evaluate(varargin);
+            varargout = obj.evaluate(varargin{:});
         end
+    end
+    methods (Access = {?OptFunctions})
         function obj=initialise(obj)
         end
         function varargout = evaluate(obj, varargin)
@@ -221,8 +232,10 @@ classdef TobyfitOptFunction < OptFunction
         end
         function varargout = simulate(obj,varargin)
             obj.initialise();
-            varargout = evaluate(obj,varargin);
+            varargout = evaluate(obj,varargin{:});
         end
+    end
+    methods (Access = {?OptFunctions})
         function obj=initalise(obj)
             % handle cached-lookup table creation
             obj.cached_lookup_tables = TobyfitLookup(obj);
@@ -269,7 +282,7 @@ If the `struct` is set then a number of parameters are appended to the standard 
 In `TobyfitOptFunction` the `struct` parameters should be replaced with assert-style validated object parameters, `TobyfitSampleRefinement` and `TobyfitModeratorRefinement`, and the `OptFunction` parameter accessor methods should be overloaded to get and set any additional refinement parameters.
 
 In the `simulate()` and `fit()` methods of `mfclass_tobyfit` an initialisation function is called to construct a `struct` which contains information useful in estimating the instrumental resolution, including de-duplicated copies of instrument component probability distribution lookup tables.
-The content of this `struct` depends on the input set of `sqw` objects and so can only be determined once the input is defined -- this precludes the possibility of storing its information within the `sqw` objects directly.
+The content of this `struct` depends on the input set of `sqw` objects and so can only be determined once the input is defined &mdash; this precludes the possibility of storing its information within the `sqw` objects directly.
 When the resolution estimate is convoluted with the user-function this `struct` is passed as part of the function call.
 
 For `TobyfitOptFunction` the passed `struct` tables should be replaced with an assert-style validated object parameter, `TobyfitLookup`.
@@ -300,9 +313,13 @@ Constructing the %-encoded link can be done at, e.g., the codecogs website
 --->
 [\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
 [E]: http://latex.codecogs.com/svg.latex?E
+[X_i]: http://latex.codecogs.com/svg.latex?%5Cinline%20X_i
+[X_j]: http://latex.codecogs.com/svg.latex?%5Cinline%20X_j
 [\omega]: http://latex.codecogs.com/svg.latex?%5Comega
 [\mathbf{p}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D
 [\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
+[\mathbb{X}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BX%7D
+[\mathbb{Q}_0]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_0
 [\mathbb{Q}_i]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_i
 [S_i(\mathbb{Q}_i)]: http://latex.codecogs.com/svg.latex?S_i%28%5Cmathbb%7BQ%7D_i%29
 [S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
@@ -325,7 +342,10 @@ Constructing the %-encoded link can be done at, e.g., the codecogs website
 [\delta E]: http://latex.codecogs.com/svg.latex?%5Cdelta%20E
 [\delta\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cdelta%5Cmathbb%7BQ%7D
 [R(\mathbb{Q}) \propto \delta\mathbb{Q}(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BQ%7D%29%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D%28%5Cmathbb%7BQ%7D%29
+[R(\mathbb{Q};\mathbb{Q}_0)]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BQ%7D%3B%5Cmathbb%7BQ%7D_0%29
 [R(\mathbb{X};\mathbb{Q})]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29
 [R\left\{S(\mathbb{Q};\mathbf{p})\right\}\equiv\int R(\mathbb{X};\mathbb{Q})S(\mathbb{X};\mathbf{p})d\mathbb{X}]: http://latex.codecogs.com/svg.latex?R%5Cleft%5C%7BS%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29%5Cright%5C%7D%5Cequiv%5Cint%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29S%28%5Cmathbb%7BX%7D%3B%5Cmathbf%7Bp%7D%29d%5Cmathbb%7BX%7D
-[V_i(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i^2 R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} -\left(\frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\right)^2]: http://latex.codecogs.com/svg.latex?V_i%28%5Cmathbb%7BQ%7D%29%20%5Cequiv%20%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%5E2%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%20-%5Cleft%28%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%5Cright%29%5E2
 [\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?%5Csqrt%7B%5Cmathbb%7BV%7D%28%5Cmathbb%7BQ%7D%29%7D%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D%28%5Cmathbb%7BQ%7D%29
+[V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]: http://latex.codecogs.com/svg.latex?V_%7Bij%7D%28%5Cmathbb%7BQ%7D%29%20%5Cequiv%20%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%20X_j%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%20-%20%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_j%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D
+[\sqrt{\mathbb{V}_{ii}(\mathbb{Q})} \propto \delta\mathbb{Q}_i(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?%5Csqrt%7B%5Cmathbb%7BV%7D_%7Bii%7D%28%5Cmathbb%7BQ%7D%29%7D%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D_i%28%5Cmathbb%7BQ%7D%29
+[4\times4]: http://latex.codecogs.com/svg.latex?4%5Ctimes4
