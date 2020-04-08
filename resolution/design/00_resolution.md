@@ -53,7 +53,7 @@ These user-provided scattering functions may account for some instrumental effec
 and are unlikely to account for resolution.
 In cases where features of the model are of comparable size to the instrumental resolution an accurate estimate to model parameters will only be possible if the model is convoluted with the resolution _before_ comparison with measured intensity.
 
-By providing the necessary resolution wrapper to user-provided ![S(\mathbb{Q};\mathbf{p})] models
+By providing the necessary resolution wrapper to user-provided ![S(\mathbb{Q};\mathbf{p})] models,
 PACE will enable the routine extraction of physically relevant parameters from measured inelastic neutron scattering data.
 
 ## Deliverables
