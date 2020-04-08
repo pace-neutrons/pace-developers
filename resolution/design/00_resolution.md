@@ -114,7 +114,7 @@ In order to support multiple ways of estimating the instrument resolution and pe
 The two 'gateway' methods, `simulate()` and `optimise()`, in `OptModel` will be modified to first call its contained `OptFunctions` objects' `initialise()` and then to continue utilising a private `evaluate()` method to finish simulating or optimising the model.
 The `evaluate()` method of `OptFunction` and `OptFunctions` must remain public.
 
-With these changes we can then impelemnt a new subclass of `OptFunction` for any resolution convolution scheme.
+With these changes we can then implement a new subclass of `OptFunction` for any resolution convolution scheme.
 Notably, we must produce `TobyfitOptFunction` which reproduces the resolution estimation and convolution scheme in `tobyfit`.
 Other possible schemes include `RaytracedResolutionOptFunction` which uses a ray-tracing-derived lookup table for ![\delta\mathbf{k}_\text{i}];
 and `Kernel2DOptFunction` which uses a user-defined two dimensional kernel to 'smooth' an `axes` model in the same way that the independent data has been smoothed.
