@@ -64,7 +64,7 @@ PACE will enable the routine extraction of physically relevant parameters from m
 
 # Existing Solution
 Resolution convolution is accomplished within the existing `multifit` framework through specialisation of the MATLAB class `mfclass`.
-Like [`OptModel`] `mfclass` contains independent-variable array(s), foreground and background function(s) plus their parameters and meta information for fixing and binding-together parameters.
+Like [`OptModel`], `mfclass` contains independent-variable array(s), foreground and background function(s) plus their parameters and meta information for fixing and binding-together parameters.
 
 Additionally, `mfclass` supports 'wrapping' its foreground and background functions in arbitrary other functions by including a `mfclass_wrapfun` object.
 When the `mfclass` methods `simulate()` or `fit()` are called the `mfclass_wrapfun` property's `wrap_functions_and_parameters()` method is used to
