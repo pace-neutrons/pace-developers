@@ -56,7 +56,7 @@ class mfclass_plist{
 mfclass <|-- mfclass_tobyfit
 mfclass *-- mfclass_wrapfun : contains
 mfclass_wrapfun "1" *-- "2" mfclass_plist : contains
-mfclass_plist *-- mfclass_plist : contains
+
 
 note left of mfclass_tobyfit: Implements convolution\nby wrapping fun with\nresolution integral
 @enduml
