@@ -83,21 +83,13 @@ force constants matrix's first dimension is the same length as cell_origins.
 One possible solution for this (although it has not been implemented) is
 discussed in the next section.
 
-### Possible Solution
+### Solution
 
-It is possible to create a `cell_origins` array which includes all the unique
-origins from all the atoms (which will be longer than `cell_origins` if it was
-just created from all the origins from atom #1, say), and create a larger
-force constants matrix with a first dimension the same length as the new,
-larger `cell_origins`. However, there is not enough information from the
-`phonopy.yaml` to fill in this larger force constants matrix so many elements
-may be empty. This would allow interpolation to be performed from a primitive
-cell, but it is inefficient and would result in wasted storage/computation,
-and it has not been tested whether this method would actually work. For now,
-it is recommended that Phonopy users output the force constants for the unit
-cell if they want to interpolate with Euphonic.
-
-It may also be possible to re-map the output force constants for any atoms
-which have their `cell_origins` outside the supercell onto another cell,
-so that all atoms share the same `cell_origins`. This needs to be
-investigated.
+It is possible to re-map the force constants so that all atoms have the
+same cell origins by creating a map which maps the cell origins of atoms
+2 .. n onto the equivalent origins of atom 1 so that all atoms then share
+the same cell origins. The equivalent cell origins are just
+r<sub>1</sub>(J) - r<sub>1</sub>(1) where r<sub>1</sub>(J) is the
+coordinate of atom 1 in supercell J. This map can then be used to reorder
+the entries for atom j in the force constants matrix. This has been
+implemented in [this PR](https://github.com/pace-neutrons/Euphonic/pull/56)
