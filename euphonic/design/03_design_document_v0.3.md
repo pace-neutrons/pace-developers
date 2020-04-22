@@ -204,7 +204,6 @@ q-point array contained in this object.
 |Frequencies|(n_qpts, 3*n_ions) array of floats|
 |Eigenvectors|(n_qpts, 3*n_ions, n_ions, 3) array of complex floats|
 |Energy unit|string|
-|Structure factor unit|string|
 
 |Method|Input required|Output|
 |------|--------------|------|
@@ -221,6 +220,7 @@ plotting, or binned and plotted in Euphonic.
 
 |Attribute|Type|
 |---------|----|
+|Crystal|Crystal object|
 |Q-points|(n_qpts, 3) array of floats|
 |Structure factor|(n_qpts, 3*n_ions) array of floats|
 |Frequencies|(n_qpts, 3*n_ions) array of floats|
