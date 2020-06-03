@@ -16,9 +16,7 @@ This may change in the future as the project evolves.
 Hopefully this should be obvious, make sure all CI tests are passing for all
 architectures on master
 
-## 2. Update versions
-To prepare a release some changes need to be made:
-* Update the `__version__` variable in `euphonic/__init__.py` to the new version
+## 2. Update the changelog
 * Update the `Unreleased` title in `CHANGELOG.rst` and the associated Github
 compare to the new version e.g.
 ```
@@ -39,19 +37,38 @@ becomes:
 Note the compare in `Unreleased` now compares with the latest version v0.2.3
 not v0.2.2
 
-## 3. Test Github release.py
+## 3. Commit and tag changes (don't push yet)
+Commit the changes made to `CHANGELOG.rst` and tag the commit with the new
+version e.g.:
+
+```
+git tag v0.2.3
+```
+Versioning is managed by
+[versioneer](https://github.com/warner/python-versioneer) so once a
+commit has been tagged, this will update `euphonic.__version__`
+automatically
+
+## 4. Test Github release.py
 Running `release.py` with the `--github` flag will generate a JSON payload that
 can be posted to Github's release API (see the script for details on how it
 generates this). By default it will just print the payload, this is useful to
 check the payload is being generated correctly. Make sure to check the 
-version/body etc. are all what you expect.
+version/body etc. are all what you expect. If it's not what you expect, now
+is the time to make any changes, as the commit/tag haven't been pushed yet,
+the tag can still be deleted and reapplied once any fixes have been made.
 
-## 4. Test PyPI release.py
+## 5. Test PyPI release.py
 Running `release.py` with the `--pypi` flag will build and package Euphonic in
 the `dist` directory (see script for specific commands). Check this runs with no
-errors and the `dist` looks sensible
+errors and Euphonic can be installed correctly from what is inside `dist` and any
+tests pass. Again, as the commit/tag haven't been pushed yet, if anything is wrong
+with the dist it can be fixed at this stage.
 
-## 5. Actually release on Github and PyPI
+## 6. Push the commit
+If you're happy with the Github/PyPI test releases, push the commit/tag to master.
+
+## 7. Actually release on Github and PyPI
 To actually post to Github/upload to PyPI run
 `python release.py --github --pypi --notest`
 
@@ -61,15 +78,12 @@ Set it as the `GITHUB_TOKEN` envronment variable and it will be used to
 authenticate.
 
 For PyPI, it will then ask for a username and password with permission for the
-Euphonic project on PyPI. An access token could also be used for this, this will
-be tested next release.
+Euphonic project on PyPI
 
-## 6. Test Github/PyPI releases
+## 8. Test Github/PyPI releases
 Check a release has actually been done on Github and looks sensible. Try
 downloading the .zip and installing and running tests.
 
 Check the PyPI release using `pip`. Download and install from `pip` and run all
 tests to ensure the install works. Do this on both Linux and Windows if
 possible.
-
-These could potentially be made into a CI job, one to think about.
