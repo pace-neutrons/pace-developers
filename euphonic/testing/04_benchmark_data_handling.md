@@ -6,30 +6,7 @@ Scripts have been tested on python 3.6 and 3.8.
 
 ## Copying from Jenkins to SAN
 
-The data from the builds are stored in performance_benchmarks.json files as Jenkins artefacts. This data is produced by the pytest-benchmark plugin and has speedup data calculated and added to it. We have decided a better place to store the data is in the SAN storage. However, it cannot be directly sent from Jenkins to the SAN storage as Jenkins has read only access to SAN.
-
-The solution created is a python script that pulls artefacts from Jenkins using the API and writes them to the SAN storage. The script can be found in the euphonic codebase at `tests_and_analysis/performance_benchmarking/artifact_handling/copy_benchmark_artifacts.py`. If you are connecting to a network location e.g. the SAN, then you may need to be on the VPN or connected to the relevant network. To use the script you need as few parameters:
-
-- `-u` or `--user-id` Jenkins user ID from Anvil
-  - On the Jenkins instance click on your username in the top right hand corner and the user ID should be displayed on that page
-  - This user needs admin privileges to PACE-neutrons which may need to be requested from ANVIL@stfc.ac.uk
-- `-t` or `--token` Jenkins user token
-  - You can create a token on the Jenkins instance by clicking on your username in the top right hand corner, going to configure and clicking 'Create new API token'
-- `-c` or `--copy-to-location` A location to copy the files to
-  - It is likely you will be copying to the SAN storage (though you can pass anything here), but for security reasons this is being kept off GitHub so you will have to find it and type it yourself
-
-There are also two optional parameters which may help in running the script
-
-- `-j` or `--jenkins-job-url` The url of the Jenkins job
-  - This defaults to the correct url for the current Jenkins job at the time of writing
-- `r` or `--range` The range of Jenkins job builds to copy (inclusive)
-  - This defaults to all of the Jenkins job builds found at the given url
-  - You must pass two integer arguments
-
-Example runs:
-
-- `python copy_benchmark_artifacts.py -u my_id -t my_token -c my_dir`
-- `python copy_benchmark_artifacts.py -u my_id -t my_token -c my_dir -r 1 9`
+A job ("Handle Artifacts") is triggered by the "Performance Benchmarking" Jenkins job to copy the performance_benchmarks.json file to the SAN. This couldn't be handled by the "Performance Benchmarking" job, because it has to be a freestyle job using the slurm plugin and we can't access the SAN in this manner. The "Handle Artifacts" job copies the last artifacts from the "Performance Benchmarking" job. This involved identifying the performance_benchmarks.json artifacts and then using the SAN path secret text robocopies the performance_benchmarks.json file to a directory with a name of formatted date and time. 
 
 ## Visualisation
 
