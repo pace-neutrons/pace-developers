@@ -8,7 +8,7 @@ To start with the Jenkins instance needs linux agents with the label `sl7` and w
 
 This is set up as a multibranch pipeline. The multibranch pipeline detects branches of the repository with the file `tests_and_analysis\LinuxJenkinsfile` and creates the branches own pipeline from the multibranch pipeline's settings and the Jenkinsfile.
 
-To set up the multibranch pipeline we need to declare the 'Branch Sources' to which we add a GitHub source. This source includes a repository https url of https://github.com/pace-neutrons/Euphonic and Jenkins credentials can be found or created for the pace-builder account. These Jenkins credentials need to be of the username and password type, but you can replace the password with a relevant GitHub API token. In the same section we need to set some 'Behaviours'. Click add and select 'Discover branches (all branches)' and do the same for 'Discover tags', 'Clean before checkout' and 'Wipe out repository & force clone'.
+To set up the multibranch pipeline we need to declare the 'Branch Sources' to which we add a Git source (not GitHub as this does not catch new branches as well). This source includes a repository https url of https://github.com/pace-neutrons/Euphonic and Jenkins credentials can be found or created for the pace-builder account. These Jenkins credentials need to be of the username and password type, but you can replace the password with a relevant GitHub API token. In the same section we need to set some 'Behaviours'. Click add and select 'Discover branches (all branches)' and do the same for 'Discover tags', 'Clean before checkout' and 'Wipe out repository & force clone'.
 
 You must also set the 'Build Configuration' with the mode 'by Jenkinsfile' and the 'Script Path' as `tests_and_analysis\LinuxJenkinsfile`.
 
@@ -18,8 +18,12 @@ Then click save and it is set up, the repository should be scanned and tests run
 
 ## Windows
 
-This set up is much the same as the Linux multibranch pipeline. However, we will not set up the 'Branch Sources' as a GitHub repository, but as a Git repository (this avoids having data sent back to GitHub on whether the pipeline fails or not, which we are avoiding as the Windows node often fails for odd reasons not related to the code being tested). In the Git branch source setup input the same credentials, repository and behaviour as the Linux pipeline.
+This set up is much the same as the Linux multibranch pipeline. In the Git branch source setup input the same credentials, repository and behaviour as the Linux pipeline.
 
 In 'Build Configuration' again select the 'by Jenkinsfile' mode and this time set the 'Script path to `tests_and_analysis/WindowsJenkinsfile`.
 
 Set the triggers and discarding item strategies to be the same as the Linux builds. Then click save and it is set up, the repository should be scanned and tests run.
+
+## Mac
+
+The same setup as before, but in 'Build Configuration' again select the 'by Jenkinsfile' mode and this time set the 'Script path to `tests_and_analysis/MacJenkinsfile`.
