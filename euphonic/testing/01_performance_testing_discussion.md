@@ -135,3 +135,6 @@ software?
 Python's built-in timeit should be a good measure, this could be initially
 printed, then upgraded to make use of Jenkins' benchmark plugin. This doesn't
 need to be compared to other software as part of the job.
+
+**Implementation**
+This is now running as a Jenkins job. The implementation uses pytest and the pytest-benchmark plugin to run interpolation and record performance in a json file. The json file is then written to the SAN in a separate job. There are tools in the codebase to visualise the performance over time. Please see [benchmark data handling](https://github.com/pace-neutrons/pace-developers/blob/master/euphonic/testing/04_benchmark_data_handling.md)
