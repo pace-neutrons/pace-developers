@@ -87,3 +87,5 @@ downloading the .zip and installing and running tests.
 Check the PyPI release using `pip`. Download and install from `pip` and run all
 tests to ensure the install works. Do this on both Linux and Windows if
 possible.
+
+Check that the tag has run and been tested successfully on the Windows, Linux and Mac Jenkins pipelines.
