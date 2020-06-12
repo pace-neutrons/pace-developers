@@ -18,10 +18,10 @@ This script can create 3 types of plots depending on what arguments are parsed: 
 
 Used by parsing the `-p` or `--performance` parameter with a directory e.g. `python visualise.py -p my_dir`. These plots shows how the median performance of functions on given architectures has changed over the course of time in the performance_benchmarks.json files stored in `my_dir`. The functionality searches for nested files in the directory. Multiple plots may be spawned depending on which functions have been tested and which architectures the tests have been run on.
 
-## Speedups over time
+### Speedups over time
 
 Used by parsing the `-st` or `--speedup-over-time` parameter with a directory e.g. `python visualise.py -st my_dir`. This plot shows how speedups (the effect on performance from the utilisation of parallelisation) has changed over the course of time in the performance_benchmarks.json files stored in `my_dir`. The functionality searches for nested files in the directory. Multiple plots may be spawned depending on which functions have been tested and which architectures the tests have been run on.
 
-## Speedups for a particular file
+### Speedups for a particular file
 
 Used by parsing the `-sf` or `--speedup-file` parameter with a performance_benchmarks.json file e.g. `python visualise.py -sf my_dir\performance_benchmarks.json`. This plots shows how effective the utilisation of parallelisation has been in the test runs stored in the given file by plotting speedup against threads. Multiple plots may be spawned depending on what test functions speedups were calculated for in the file.
