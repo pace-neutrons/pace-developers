@@ -1,4 +1,4 @@
-[<-previous](0004-pace-documentation-link-to-projects.md) | next->
+[<-previous](0004-pace-documentation-link-to-projects.md) | [next->](0006-store-built-documentation-in-branch.md)
 
 # 5. PACE Projects must be semantically versioned
 

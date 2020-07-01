@@ -29,7 +29,8 @@ We will use GitHub pages for all PACE project documentation.
 
 - documentation will be available at URLs under `pace-neutrons.github.io` 
 - GitHub pages can be configured to make the documentation available at any owned URL
-- documentation is stored "as code" alongside the source
+- sources for the documentation are stored alongside the source code
+- built documentation is stored in the GitHub
 - build pipelines for each project will be required to convert the source `rst` files to `html` for display
 - API documentation can be included for compiled C code
 
