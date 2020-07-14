@@ -50,7 +50,7 @@ Storing built documentations in a separate GitHub repository:
 
 ## Decision
 
-Built documentation will be stored on the `gh_pages` branch.
+Built documentation will be stored on the `gh-pages` branch.
 
 
 
@@ -60,4 +60,3 @@ Built documentation will be stored on the `gh_pages` branch.
 - Any previously build documentation for the current project version must be deleted from the `gh-pages` branch.
 - Management of documentation builds for non-`master` branch will need to be considered on a per-project basis.
 - Non-`master` branch build documentation may be put in named folders on the `gh-pages` branch - these would need to be managed, i.e. deleted after the branch is merged or periodically.
-
