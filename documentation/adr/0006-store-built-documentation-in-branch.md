@@ -1,4 +1,4 @@
-[<-previous](0005-pace-projects-must-be-semantically-versioned.md) | next->
+[<-previous](0005-pace-projects-must-be-semantically-versioned.md) | [next->](0007-developer-scripts-storage-location.md)
 
 # 6. Store built documentation in branch
 
