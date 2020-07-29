@@ -1,0 +1,49 @@
+@startuml OptFunction_subclasses
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+class OptModel{
+    + simulate()
+    + optimise()
+    - evaluate()
+}
+
+class OptFunctions{
+    + simulate()
+    - initialise()
+    - evaluate()
+}
+
+class OptFunction{
+    + simulate()
+    - initialise()
+    - evaluate()
+}
+
+class TobyfitOptFunction{
+    - integer mc_points
+    - struct mc_contributions
+    - struct refine_crystal
+    - struct refine_moderator
+    - struct cached_tables
+    + simulate()
+    - initialise()
+    - evaluate()
+}
+
+class RaytracedResolutionOptFunction{
+    - ...
+    + simulate()
+    - initialise()
+    - evaluate()
+}
+
+OptModel *-- "3" OptFunctions
+OptFunctions *-- "N" OptFunction
+OptFunction <|-- TobyfitOptFunction
+OptFunction <|-- RaytracedResolutionOptFunction
+@enduml
