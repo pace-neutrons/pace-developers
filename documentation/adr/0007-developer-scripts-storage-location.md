@@ -49,8 +49,13 @@ it could be stored in `pace-developers/euphonic/scripts` or
 * Scripts that are intended for development only should not be committed to
 the master branch of main software repositories
 * Any development scripts committed to `pace-developers` should specify the
-exact version of any software they have been developed against in the form
-`vrelease.version+commithash`, e.g. `v0.11+g1076c97`, at the top of the script
-([versioneer](https://github.com/warner/python-versioneer) style). If they have
-been developed against a release version of the software, the commit hash can be
-omitted.
+exact version of any software they have been developed against. This should
+be in the form:
+  - `vrelease.version` if if they have been developed against a release
+    version of the software
+  -  `vrelease.version+ncommits.commithash` (e.g. `v0.11+5.g1076c97`) if the
+     project uses
+     [versioneer](https://github.com/warner/python-versioneer)
+  - `vrelease.version+commithash` (e.g. `v0.11+g1076c97`) if the project does
+    not use versioneer (to avoid having to manually count the number of
+    commits since the last release)
