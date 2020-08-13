@@ -31,7 +31,7 @@ the broadening function in `disp2sqw` will be a combination of both intrinsic an
 
 In the current Horace implementation, these model functions are used by the `multifit_sqw` function/class
 (which inherits from `multifit`) to fit to data using a built-in Levenberg-Marquardt optimizer. 
-The [new design for PACE](Model_Optimisation_Design.md) proposes instead to use a pair of classes, `OptFunction` and `OptModel`.
+The [new design for PACE](Model_Optimisation_Design.md) proposes instead to use a host of classes including `OptFunction` and `OptModel`.
 `OptModel` will be more like the current `multifit` (or `tobyfit`) class,
 whilst `OptFunction` is a wrapper around the user supplied model function to handle parameter bindings and bounds currently handled by `multifit`.
 `OptFunction` should therefore have functionality to transform type 2 input to type 1 input
@@ -100,7 +100,7 @@ We can avoid the memory copy for the input argument arrays as long as they are r
 This would use a `mex` file to wrap the Python function call and its arguments in a `numpy` array,
 similar to the work described [here](../../python_interface/design/02_pace_python_implementation_discussion.md#pymatpy).
 
-As noted in the [Appendix](#app_nativememory), a memory copy of the output argument is only possible
+As noted in the [Appendix](#app_nativememory), avoiding a memory copy of the output argument is only possible
 by passing a Matlab-allocated memory block (wrapped in a `numpy` array) to Python for the user defined function to fill in its value.
 This is not straightforward for users to implement (it requires users to avoid using the assignment operator for the output [return] value).
 In these cases, it is likely that a memory copy of the output argument is unavoidable.
@@ -247,12 +247,12 @@ The function signatures in C is thus:
 
 ```c
 void user_model_sqw(const double *qh, const double *qk, const double *ql, const double *en,
-                    const double *parameters, double *results, int *n_elem);
+                    const double *parameters, double *results, unsigned long *n_elem);
 void user_model_dsp(const double *qh, const double *qk, const double *ql,
                     const double *parameters, double *result_omega, double *results_S, int *n_elem);
 ```
 
-where `n_elem` is the number of elements which Matlab expects `results` to have.
+where `n_elem` is the number of elements which Matlab expects `results` to have and the length of all input vectors.
 
 When constructing the `OptFunction` object in Matlab, the user should use a gateway Matlab function (e.g. `@compiled_model`)
 and must tell Horace which type of C function is used (how many inputs) and their names:
@@ -591,5 +591,6 @@ Constructing the %-encoded link can be done at, e.g., the codecogs website
 [\mathbb{Q} \equiv (\mathb{Q},E)]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
 [S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
 [\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
+[\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
 [N]: http://latex.codecogs.com/svg.latex?N
 [(E_n, S(\mathbf{Q}, E_n))]: http://latex.codecogs.com/svg.latex?%28E_n%2C%20S%28%5Cmathbf%7BQ%7D%2C%20E_n%29%29
