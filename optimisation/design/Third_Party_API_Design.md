@@ -11,8 +11,7 @@ and how they interface with Horace, using either Matlab, Python, C, C++ or Fortr
 # Motivation
 
 Analysis of inelastic neutron scattering data almost always requires a parameterised model of the measured scattering intensities.
-Horace, as currently implemented, requires this model to be in the form of a Matlab function.
-This function is required to either 
+Horace, as *currently implemented*, requires this model to be in the form of a Matlab function, which is required to either 
 
 1. Take a 4D vector of momentum-energy ![\mathbb{Q} \equiv (\mathb{Q},E)] and yield the scattering function ![S(\mathbb{Q})].
 2. Take the 3D vector of momentum transfer ![\mathbf{Q}] only and yield ![N] sets of vectors ![(E_n, S(\mathbf{Q}, E_n))] where ![N] is the number of dispersion branches.
@@ -34,8 +33,11 @@ In the current Horace implementation, these model functions are used by the `mul
 The [new design for PACE](Model_Optimisation_Design.md) proposes instead to use a host of classes including `OptFunction` and `OptModel`.
 `OptModel` will be more like the current `multifit` (or `tobyfit`) class,
 whilst `OptFunction` is a wrapper around the user supplied model function to handle parameter bindings and bounds currently handled by `multifit`.
-`OptFunction` should therefore have functionality to transform type 2 input to type 1 input
-whilst `OptModel` would expect only type 1 input.
+In this design, `OptModel` will expect its input (of type `OptFunction`) to behave like the type 1 functions listed above,
+whilst for other types of user functions, `OptFunction` will transform the input and outputs to the form that `OptModel` expects.
+In addition to the two types noted above which Horace currently handles, the [new API](Model_Optimisation_Design.md#calling-the-function-inside-optfunction)
+defines several additional standard function types (including an alternative to type 2 which also yields an intrinsic energy width for each mode), which it will automatically transform.
+For other functions, users would need to define the transformation themselves. 
 
 The current implementation of Horace is Matlab-focussed and user defined model functions must be Matlab functions.
 PACE, however, will have a Python version or interface.
@@ -55,8 +57,10 @@ This is because Matlab does not allow its own objects (instances of Matlab-defin
 (A workaround for this for the Python user interface using a compiled Horace library exists,
 and is described [here](../../python_interface/design/01_pace_python_high_level_discussion.md#interpreter-calls)).
 This means that the second type of function signatures described in the [optimisation design document](Model_Optimisation_Design.md#optimisation-function-object), 
+`array_objects(a, ..., p)`, `S_of_Q_w(sqw_obj, p)` or `S_of_axes(axes..., p)`
 where Matlab objects (in particular an `sqw` object) are passed as input to the user defined function,
-will not be possible with non-Matlab functions, unless `OptFunction` unwraps this object into a (several) POD array(s).
+will not be possible with non-Matlab functions, because the `a`, `sqw_obj` or `axes` objects cannot be passed from Matlab to an external library function.
+However, `OptFunction` may still accept such objects but will need rules for transforming them into POD coordinates (which it already understands for `sqw` or `dnd` objects).
 
 The next difficulty is to infer the required input arguments for user defined model functions.
 Several methods for this springs to mind:
@@ -112,6 +116,11 @@ This again will wrap the input arguments so that no memory copies occur, provide
 and the Python side function expects only `numpy` arrays as inputs.
 Again, like the first case, output arguments will have to be memory-copies
 or the user-defined function should fill in values in a Matlab-allocated `numpy` wrapped array.
+
+It should be noted here that the two use cases above will probably require *separate* implementations for the Matlab-Python interface.
+A compiled Horace library within Python (case 2) will crash if its Matlab component (e.g. Horace / `OptFunction` / `OptModel`)
+tries to use the Matlab-built-in Python interface, because this entails Matlab launching a separate Python process which conflicts with the existing Python process.
+
 
 
 ## <a name="compiled"></a> Compiled languages
@@ -589,8 +598,15 @@ Constructing the %-encoded link can be done at, e.g., the codecogs website
 	https://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
 [\mathbb{Q} \equiv (\mathb{Q},E)]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
+[\mathbb{Q}]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
 [S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
 [\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
 [\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
 [N]: http://latex.codecogs.com/svg.latex?N
 [(E_n, S(\mathbf{Q}, E_n))]: http://latex.codecogs.com/svg.latex?%28E_n%2C%20S%28%5Cmathbf%7BQ%7D%2C%20E_n%29%29
+[(E_n, S(\mathbf{Q}, E_n), \gamma(\mathbf{Q}, E_n))]: http://latex.codecogs.com/svg.latex?%28E_n%2C%20S%28%5Cmathbf%7BQ%7D%2C%20E_n%29%2C%20%5Cgamma%28%5Cmathbf%7BQ%7D%2C%20E_n%29%29
+[\gamma(\mathbf{Q}, E_n)]: http://latex.codecogs.com/svg.latex?%5Cgamma%28%5Cmathbf%7BQ%7D%2C%20E_n%29
+[(|Q|, E)]: http://latex.codecogs.com/svg.latex?%28%7CQ%7C%2C%20E%29
+[S(|Q|, E)]: http://latex.codecogs.com/svg.latex?S%28%7CQ%7C%2C%20E%29
+[E]: http://latex.codecogs.com/svg.latex?E
+[S(E)]: http://latex.codecogs.com/svg.latex?S%28E%29
