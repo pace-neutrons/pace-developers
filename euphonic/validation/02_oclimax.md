@@ -109,7 +109,7 @@ So the bin minimum is `MINQ=0.00`, the bin size is `dQ=0.05` and the bin maximum
 
 ### Debye-Waller factor calculation
 
-Originally OClimax used a version of the DW factor suitable for powders, as it only made a small difference (%1) to the result but was much faster. However, OClimax now does the full DW calculation for single crystals. (I'm not sure yet if this is the anisotropic 3x3 DW factor or the isotropic DW_xx, DW_yy, DW_zz version)
+Originally OClimax used a version of the DW factor suitable for powders, as it only made a small difference (%1) to the result but was much faster. However, OClimax now does the full anisotropic DW calculation for single crystals.
 
 # OClimax output
 OClimax outputs its result in a .csv file, an example can be seen in `lzo/oclimax/011_scan/output/La2Zr2O7_2Dmesh_sc_0K_nores.csv` for T=0K with no resolution applied. This file has 3 columns, which for the S(Q,w) map are Q, energy and the structure factor. It appear the values in the first 2 columns are the lower bin edges **NOT** the bin centres.
@@ -117,21 +117,5 @@ OClimax outputs its result in a .csv file, an example can be seen in `lzo/oclima
 There is also a Python script pclimax.py which can be used to visualise the .csv data. This can be downloaded from the same page as OClimax [here](https://sites.google.com/site/ornliceman/download)
 
 # Comparing Euphonic and OClimax
-## Visual comparison
-The following shows an example output from both OClimax and Euphonic for an LZO cut at T=100K with no resolution function:  
-
-|OClimax|Euphonic|
-|------|--------|
-|![](images/02_oclimax_100K.png)|![](images/02_euphonic_011_cut_T100_nores.png)|
-
-By eye, the agreement looks very good, and the match is still good if we examine the intensities more closely at certain q-points
-
-![](images/02_oclimax_intensities.png) ![](images/02_oclimax_intensities_gamma.png)
-
-At the gamma points, some of the peaks are slightly higher for OClimax than Euphonic, which isn't apparent at non-gamma points. I'm currently not sure of the reason for this.
-
-## Numeric comparison
-There is a script for comparing OClimax and Euphonic output in the benchmarking repository. The one for LZO is `lzo/oclimax/read_oclimax.py`. It compares the data from the .csv file to the output from Euphonic's calculate_sqw_map function. This prints out the minimum, maximum and mean percentage different between the S(Q,w) map calculations for Euphonic's PhononData, Euphonic's InterpolationData and OClimax. It also plots the structure factors for those cases at a few arbitrary q-points so the difference can be seen visually. The agreement is generally good (less that %1) for LZO, but there are some discrepancies of the order of a few % at some q-points. Maybe due to the Debye-Waller factor calculation?
-
-## Performance benchmarking
-As OClimax runs in a Docker container, it will be difficult to fairly compare performance of both OClimax and Euphonic (unless Euphonic was installed in the Docker container?). Does it even make sense to install Euphonic in a Docker container as it will probably never actually be used that way? Additionally, OClimax doesn't perform interpolation whereas Euphonic does so does it make sense to only compare performance of the structure factor calculation, which is negligible? For interpolation, are we then comparing the performance of CASTEP's phonon tool with Euphonic?
+For details on the comparison, see
+[here](https://github.com/pace-neutrons/euphonic-validation/blob/9a76831/shared/compare_data/validate_oclimax.ipynb)

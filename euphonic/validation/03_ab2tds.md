@@ -49,19 +49,7 @@ An example input parameter file is at `lzo/ab2tds/fourier_input/011_scan/intensi
 * `bottom_meV=0` Setting to 0 ignores negative frequencies
 * `NEUTRONCALC=1` Needs to be set to 1 for neutron scattering (otherwise it does x-ray)
 * `CohB={'La': 8.24, 'Zr': 7.16, 'O': 5.803}` This must be specified if NEUTRONCALC=1. A dictionary containing the coherent scattering lengths for each atom type
-* `NeutronE=100` **NOTE: Euphonic doesn't use the incident energy in its calculations, so to compare with Ab2tds, the 
-  following lines must be altered in the `make_TDS_DispersionIntensityCurvesClone.py` and 
-  `make_TDS_DispersionIntensityCurves.py` scripts.** Replace:
-  ```
-  kinstokes = numpy.sqrt(numpy.maximum( (NeutronE-evals*(0.0001239852 *1000))/NeutronE, 0.0 ))
-  kinantistk= numpy.sqrt((NeutronE+evals*(0.0001239852 *1000))/NeutronE)
-  ```
-  with
-  ```
-  kinstokes = 1.0
-  kinantistk= 1.0
-  ```
-  so this parameter actually doesn't matter
+* `NeutronE=1e10` Ab2tds uses this to calculate Stokes scattering (usually applied to Raman scattering), to ignore this, this can be effectively set to 1 by setting an absurdly high neutron energy
 * `branchWeight=np.ones(3*n_ions).tolist()` We want all phonon branches to be weighted the same, so use Numpy to make an 
   array of ones the same length as the number of branches
 * `EigScal=0` Must be set to 0 (or, actually, any number except 1 or 2) for a neutron calculation
@@ -75,10 +63,15 @@ An example input parameter file is at `lzo/ab2tds/fourier_input/011_scan/intensi
   points in each section that you want to plot, but I'm only plotting one section. That's why this value is a list rather 
   than just an integer.  
 
-### With Interpolation  
+### With Interpolation
+As we are testing Euphonic's interpolation and structure factor calculation,
+rather than Ab2tds' interpolation, it has been decided not to validate against
+Ab2tds' interpolation. Information about running Ab2tds with interpolation is
+left here for completeness.
+
 This requires a q-point grid file that has had the above preprocessing steps to be turned into an .md5 file, and an input parameter file. Run with:  
 `make_TDS_DispersionIntensityCurves qpt_grid.md5 input_param_file`   
-An example input parameter file is at `lzo/ab2tds/fourier_input/011_scan/intensity_map_interpolation_input.py`. This input file needs to match the specific cut you are simulating (docs [here](http://ftp.esrf.fr/scisoft/AB2TDS/DispersionIntensityCurves.html)). I will only list the params that are different to the S(q,w) without interpolation calculation:
+This input file needs to match the specific cut you are simulating (docs [here](http://ftp.esrf.fr/scisoft/AB2TDS/DispersionIntensityCurves.html)). I will only list the params that are different to the S(q,w) without interpolation calculation:
 * `Nfour_interp=4` Set this to whatever was set in the 'Fourier interpolation of the dynamical matrix' preprocessing step
 * `tth_max=45` This parameter isn't mentioned in the documentation but in the code is documented as 'When searching for 
   maximum contrast angles, the maximum 2theta angle achievable on the beamline'. This is used to calculate contrast in the 
@@ -86,37 +79,11 @@ An example input parameter file is at `lzo/ab2tds/fourier_input/011_scan/intensi
 * `Nqlines=[500]` - redStarts and redEnds can be set to the same as S(Q,w) without interpolation, but in this case Nqlines must actually be set as **number of q-points - 1**
 
 # Ab2tds Output
-Ab2tds has many output files, examples can be seen in the benchmarking repository at `lzo/ab2tds/011_scan/outputs/`. The most useful ones are:
+Ab2tds has many output files, the most useful ones are:
 * `res.dat` Contains the S(Q,w) map with resolution, each row is an energy bin and each column is a q-point
 * `alongthelineF.dat` Contains the raw (non energy-binned) structure factors for each branch and q-point. Each row is a q-point and each column is a branch
 
-
 # Comparing Euphonic and Ab2tds
 
-## Visual comparison
-The following shows an example output from both Ab2tds and Euphonic for an LZO cut at T=100K:  
-
-|Ab2tds|Euphonic|
-|------|--------|
-|![](images/03_ab2tds_011_cut_T100.png)|![](images/03_euphonic_011_cut_T100.png)|
-
-These look fairly similar, but if you inspect the intensities more closely at a particular q-point (especially gamma points), the intensities are actually not that similar and there are zig-zag artefacts, which most likely results from the resolution convolution. This can be seen in the following figure:
-
-![](images/03_ab2tds_intensities_gamma.png)
-
-To account for this, the raw structure factors in `alongthelineF.dat` can be looked at instead. They have very good agreement, except the Ab2tds interpolation at the gamma points:
-
-![](images/03_ab2tds_sf.png) ![](images/03_ab2tds_sf_gamma.png)
-
-## Numeric comparison
-There are some ~terrible~ scripts for comparing Ab2tds and Euphonic output in the benchmarking repository. The ones for LZO can be found in the `lzo/ab2tds` directory
-* `check_ab2tds_data.py` This compares the energy binned output from res.dat with the output from Euphonic's calculate_sqw_map function for one of the cuts in the directory (e.g. for LZO 011_scan or 0-1-1_scan). The Ab2tds data shows zig-zag artefacts due to the resolution function (I haven't figured out how to prevent this yet) so this probably isn't the best comparison
-* `check_ab2tds_sf.py` This compares the raw structure factors from alongthelineF.dat with the output from Euphonic's calculate_structure factor function for one of the cuts in the directory (e.g. for LZO 011_scan or 0-1-1_scan). This script also checks the frequencies of each branch for degeneracies and compares the **summed** structure factor for these degenerate branches to account for the fact that the degenerate eigenvectors will be arbitrarily mixed. This prints out the minimum, maximum and mean percentage different between the structure factor calculations for Euphonic's PhononData, Euphonic's InterpolationData, Ab2tds without interpolation, and Ab2tds with interpolation. It also plots the structure factors for those cases at a few arbitrary q-points so the difference can be seen visually.
-## Performance benchmarking
-It is difficult to directly compare performance as there are many different steps and it depends whether you're comparing Euphonic just reading from a .phonon file, or reading from a .castep_bin file and interpolating, and whether it's Ab2tds with or without interpolation. There is some initial timing data (for LZO) in `lzo/ab2tds/profiling` for Ab2tds.
-
-For each different case the steps that would need to be taken into account and timed would be:  
-**Ab2tds without interpolation**  
-`Running CASTEP on a q-point grid sufficient for DW factor` -> `Running CASTEP on the q-point path of interest` -> `Reconstruction of BZ` -> `DW factor calculation` -> `Fourier interpolation` -> `Running make_TDS_DispersionIntensityCurvesClone`  
-**Ab2tds with interpolation**  
-`Running CASTEP on a q-point grid sufficient for DW factor and interpolation` -> `Reconstruction of BZ` -> `DW factor calculation` -> `Fourier interpolation with sufficient Nfour_interp` -> `Running make_TDS_DispersionIntensityCurves`
+For details on the comparison, see
+[here](https://github.com/pace-neutrons/euphonic-validation/blob/9a76831/shared/compare_data/validate_ab2tds.ipynb)

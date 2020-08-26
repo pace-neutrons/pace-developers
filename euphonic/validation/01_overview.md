@@ -14,12 +14,14 @@ For details on how these are calculated see [here](../design/04_algorithms.md)
 
 ## Repositories
 
-The repository for storing validation scripts/results is at [TBD](). This will
-store the results from OClimax/Ab2tds/Euphonic, but also the input files
-required to rerun them.
+The repository for storing validation scripts/results is at
+https://github.com/pace-neutrons/euphonic-validation. This will store the
+results from OClimax/Ab2tds/Euphonic, but also the input files required to
+rerun them.
 
 The experimental data files are too large to be hosted on Github, so will be
-stored on a SAN file server, details [TBD]().
+stored on a SAN file server, see
+[here](https://github.com/pace-neutrons/Horace/blob/58df1c0/documentation/adr/0012-use-network-storage-for-large-datafiles.md).
 
 ## Chosen software
 - [**Ab2tds**](03_ab2tds.md) will be used to verify the coherent crystal
@@ -120,7 +122,6 @@ simulation codes.
 |La<sub>2</sub>Zr<sub>2</sub>O<sub>7</sub>|MERLIN|CASTEP|22|4|No|
 |Quartz|MERLIN|CASTEP|9|100|Yes|
 |Niobium|LET|CASTEP|1|1728|No|
-|Vanadyl|LET|CP2K (+Phonopy)|?|?|?|
 
 ## Metrics
 
