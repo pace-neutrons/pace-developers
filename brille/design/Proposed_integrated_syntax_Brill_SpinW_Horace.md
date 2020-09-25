@@ -15,6 +15,7 @@
 
 [Implications for implementations](#implications-for-implementations)
 
+
 ## Introduction
 
 [Brille](https://github.com/brille/brille) is a C++ library with Python wrappings for symmetry operations and linear interpolation within an irreducible part of the first Brillouin Zone.
@@ -25,6 +26,17 @@ It is examples of this interpolating functionality that we shall explore in this
 This document will include both working (mostly Matlab) and proposed (mostly Python) code examples.
 Proposed code examples will be marked by black lines on either side of the code block.
 The code examples will use a combination of Brille, SpinW, Horace and MSlice.
+
+
+## Namespaces in the Python interface
+
+The proposed Python interface for Horace is to use a [compiled library](../../python_interface/design/01_pace_python_high_level_discussion.md).
+However, if more than one compiled Matlab library is loaded into Python,
+there is a restriction that data cannot be passed directly between them, but must go through the Python host process, causing a performance bottle-neck.
+This is because there may be incompatible application binary interfaces (ABIs) between the compiled Matlab libraries.
+To avoid this problem, we propose to include all necessary programs for PACE (e.g. Horace and SpinW at a minimum) within a single compiled library, tentatively called "Pacy".
+The Python wrapper module for this library will have submodules for Horace (`pacy.horace`), SpinW (`pacy.spinw`) and general Matlab functions (`pacy.matlab`).
+
 
 ## Workflow
 
@@ -55,16 +67,38 @@ The proposed syntax for Python is:
 <td><img src="https://placehold.it/5x100/000000/000000?text=+"></td>
 <td>
 <pre lang="python">
-from pyHorace import horace as h
+from pacy import horace as h
 proj = {'u':[1,0,0], 'v':[0,1,0], 'type':'rrr'}
-cut1 = h.cut_sqw(sqw_file, proj, [hmin, hstep, hmax], [kmin, kstep, kmax], 
-                                 [lmin, lmax], [emin, estep, emax])
+cut1 = h.cut_sqw(sqw_file, proj, (hmin, hstep, hmax), (kmin, kstep, kmax), 
+                                 (lmin, lmax), (emin, estep, emax))
 </pre>
 </td>
 <td><img src="https://placehold.it/5x100/000000/000000?text=+"></td>
 </table>
 
-For powder data, this is currently possible using the MSlice program.
+This syntax purposefully mirrors the Matlab usage, but we propose that the function definition follow more "Pythonic" lines:
+
+<table>
+<td><img src="https://placehold.it/5x100/000000/000000?text=+"></td>
+<td>
+<pre lang="python">
+def cut_sqw(sqw_input: Union[Path, sqw],     # input is either path to sqw file or sqw object in memory
+            proj: Dict[str, Any] = None,     # Defaults to: {'u':[1,0,0], 'v':[0,1,0], 'type':'rrr'}
+            u_range: Optional[Tuple] = None,
+            v_range: Optional[Tuple] = None,
+            w_range: Optional[Tuple] = None,
+            e_range: Optional[Tuple] = None,
+            no_pix: Optional[bool] = False,  # If this is True, will return a dnd object, else sqw 
+            ) -> Union[sqw, dnd]
+</pre>
+</td>
+<td><img src="https://placehold.it/5x100/000000/000000?text=+"></td>
+</table>
+
+So that users need not specify all the positional arguments but could specify, e.g., `cut1 = h.cut_sqw(sqw_file, proj, e_range=(emin, estep, emax))`,
+leaving the other range parameters their default values, `(-float('inf'), 0, float('inf'))` where a step of `0` means to use the step size of the data.
+
+For powder data, data extraction is currently possible using the MSlice program.
 There are two implementations of MSlice: [one](https://github.com/mantidproject/mslice) in Python as part of [Mantid](https://www.mantidproject.org)
 and [the original](http://mslice.isis.rl.ac.uk/Main_Page) written in Matlab.
 The original Matlab MSlice is mostly a GUI program with an undocumented CLI (by using the underlying functions of the GUI).
@@ -115,7 +149,8 @@ In Python it would be:
 <td><img src="https://placehold.it/5x70/000000/000000?text=+"></td>
 <td>
 <pre lang="python">
-tri = h.sw_model('triAF', 1)
+from pace import spinw as sw
+tri = sw.sw_model('triAF', 1)
 spinw_pars = {'hermit': False, 'formfact': True, 'resfun': 'gauss'}
 sim1 = h.disp2sqw_eval(cut1, tri.horace_sqw, fwhm, **spinw_pars)
 </pre>
@@ -142,7 +177,7 @@ And the proposed Python syntax:
 <td>
 <pre lang="python">
 import brille as b
-tri = h.sw_model('triAF', 1)
+tri = sw.sw_model('triAF', 1)
 spinw_pars = {'hermit': False, 'formfact': True, 'resfun': 'gauss'}
 brl_pars = {'max_volume':1e-5}
 brl = b.Brille(tri, **brl_pars)
@@ -152,8 +187,6 @@ sim1 = h.disp2sqw_eval(cut1, brl.horace_sqw, fwhm, **spinw_pars)
 <td><img src="https://placehold.it/5x150/000000/000000?text=+"></td>
 </table>
 
-This syntax assumes that the Horace python distribution (`pyHorace`) will include SpinW as well as Horace.
-This would enable both to use the same Matlab interpreter process, and make intercommunication much easier and faster.
 Again these syntax should work for powder data objects, possibly replacing `h.disp2sqw` with `m.disp2sqw` method of `MSlice` (yet to be implemented).
 
 
@@ -187,7 +220,8 @@ The proposed Python syntax for this is:
 <td><img src="https://placehold.it/5x400/000000/000000?text=+"></td>
 <td>
 <pre lang="python">
-from pyHorace import horace as h
+from pacy import horace as h
+from pacy import spinw as sw
 import brille as b
 <br>
 proj = {'u':[1,0,0], 'v':[0,1,0], 'type':'rrr'}
@@ -203,7 +237,7 @@ sample = h.IX_sample(True,[0,0,1],[0,1,0],'cuboid',[0.01,0.05,0.01]);
 maps = h.maps_instrument(ei, freq, 'S');
 cut1.set_sample(sample);
 cut1.set_instrument(maps);
-tbf = tobyfit(cut1);
+tbf = h.tobyfit(cut1);
 tbf.set_fun(brl.horace_sqw, [J1, J2, J3, J4, J5, J6, 0.1], **model_pars);
 tbf.set_mc_points(5);
 data_out, fitdata = tbf.fit();
@@ -230,10 +264,10 @@ This causes an issue if the user is running Python and runs Horace through a sla
 The nested interpreters will then cause a hard-crash (segmentation fault memory error).
 
 This is currently not an issue for SpinW (since it is a Matlab program), but is an issue for Euphonic.
-It may become an issue for SpinW when pySpinW is fully implemented and released to users.
+It may become an issue for SpinW when `pySpinW` is fully implemented and released to users.
 One option to overcome this issue is to run the interpreters in different processes, which would allow nested interpreters.
 However, the current implementation for this in Matlab 2020a is extremely slow.
-An alternative option specifically for `pyHorace` is to write a bridge `mex` file to communicate directly with the parent Python process
+An alternative option specifically for `pacy` is to write a bridge `mex` file to communicate directly with the parent Python process
 and funnel calls to Euphonic and `pySpinW` through this rather than the built-in Matlab-Python interface.
 
 Handling of powder data is currently very poorly supported.
@@ -245,14 +279,14 @@ Thus handling of powder data requires us to chose one of two approaches:
 1. An implementation of powder data handling in Horace which leverages its fitting framework.
 2. An implementation of a fitting framework (or wrappers to the base Mantid fitting framework) for MSlice.
 
-Adopting approach 1 means that both Matlab and Python user interfaces could be supported in principle (using `pyHorace` for Python),
+Adopting approach 1 means that both Matlab and Python user interfaces could be supported in principle (using `pacy` for Python),
 whereas option 2 will essentially mean that *powder data analysis would only be supported in Python and not Matlab*.
 This is because running MSlice from Matlab would also require Mantid and would require a non-trivial set-up and installation.
 
 There already exists a prototype powder handling implementation in Horace but it is not robust.
 It is uncertain how much developer effort would be required to perfect this implementation, or if it should be rewritten.
 Furthermore, the current powder analysis workflows only use Mantid/MSlice,
-so that if we adopt approach 1 we should need users to additionally install `pyHorace` which is a very large download.
+so that if we adopt approach 1 we should need users to additionally install `pacy` which is a very large download.
 On the other hand, they would need to install a similarly large download for SpinW as it is currently (part)-implemented in Python,
 although it is planned in future to have a much more lightweight Python implementation.
 
