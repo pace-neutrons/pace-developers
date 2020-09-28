@@ -283,8 +283,11 @@ Adopting approach 1 means that both Matlab and Python user interfaces could be s
 whereas option 2 will essentially mean that *powder data analysis would only be supported in Python and not Matlab*.
 This is because running MSlice from Matlab would also require Mantid and would require a non-trivial set-up and installation.
 
-There already exists a prototype powder handling implementation in Horace but it is not robust.
-It is uncertain how much developer effort would be required to perfect this implementation, or if it should be rewritten.
+There already exists a prototype powder handling implementation in Horace but it is incomplete and unstable.
+Refactoring this to make it more robust is on the PACE roadmap, but depends on implementation of 
+[new APIs](https://github.com/pace-neutrons/Horace/blob/master/documentation/add/07-sqw_redesign.md) for the `sqw` and related classes in the Horace framework.
+The timescale for the this work is currently uncertain but it is not anticipated that work on a powder implementation could begin for many months yet.
+
 Furthermore, the current powder analysis workflows only use Mantid/MSlice,
 so that if we adopt approach 1 we should need users to additionally install `pacy` which is a very large download.
 On the other hand, they would need to install a similarly large download for SpinW as it is currently (part)-implemented in Python,
