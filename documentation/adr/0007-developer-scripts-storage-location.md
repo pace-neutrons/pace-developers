@@ -1,4 +1,4 @@
-[<-previous](0006-store-built-documentation-in-branch.md) | next->
+[<-previous](0006-store-built-documentation-in-branch.md) | [next->](0008-pace-syntax-guiding-principles.md)
 
 # 7. Developer scripts storage location
 
