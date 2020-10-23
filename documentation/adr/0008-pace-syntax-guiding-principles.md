@@ -18,6 +18,8 @@ The way in which these programs interact with each other is presently unclear.
 Furthermore the programs are written in several different languages.
 In this ADR we propose some guiding principles in the design of the interfaces
 between the programs or components which make up PACE.
+This was discussed at a meeting whose
+[minutes are here.](https://stfc365.sharepoint.com/:w:/r/sites/PACEProject/Shared%20Documents/Meetings/PACE-General/pace_syntax_meeting1_minutes.docx))
 
 ## Decision
 
@@ -25,16 +27,20 @@ The guiding principle for PACE-supported programs is **commonality**.
 That is, interacting with the different programs of PACE should be **seamless**
 to the user, and the user interface presented to them should be **uniform**.
 
+The uniform interface means that function names and how users specify parameters
+or arguments to functions in Matlab and Python flavours of PACE should align
+as closely as possible.
+
 ## Consequences
 
 There are several implications stemming from this guiding principle:
 
 * There should be a single downloadble distribution which bundles all the 
-necessary components (e.g. Horace, Euphonic, Brille and SpinW at the moment).
+necessary components (presently: Horace, Euphonic, Brille and SpinW).
 * User syntax should follow the same format for each program,
 and should be similar between Matlab and Python interfaces.
 Specifically the same method and keyword names should be used.
-* Syntax should be "Pythonic"(prefer keyword to positional arguments;
+* Syntax should be "Pythonic" (prefer keyword to positional arguments;
 reasonable defaults for as many input arguments as practicable);
 This applies to both Matlab and Python interfaces,
 since the end goal is to migrate entirely to Python.
