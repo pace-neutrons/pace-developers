@@ -311,41 +311,41 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	http://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
-[E]: http://latex.codecogs.com/svg.latex?E
-[X_i]: http://latex.codecogs.com/svg.latex?%5Cinline%20X_i
-[X_j]: http://latex.codecogs.com/svg.latex?%5Cinline%20X_j
-[\omega]: http://latex.codecogs.com/svg.latex?%5Comega
-[\mathbf{p}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D
-[\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
-[\mathbb{X}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BX%7D
-[\mathbb{Q}_0]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_0
-[\mathbb{Q}_i]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_i
-[S_i(\mathbb{Q}_i)]: http://latex.codecogs.com/svg.latex?S_i%28%5Cmathbb%7BQ%7D_i%29
-[S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
-[S(\mathbb{Q};\mathbf{p})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29
-[\mathbb{p}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7Bp%7D
-[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbf%7BQ%7D%2C%20E%29%20%5Cpropto%20%5Cfrac%7B%5Cpartial%5E2%20%5Csigma%7D%7B%5Cpartial%20%5Cmathbf%7BQ%7D%20%5Cpartial%20E%7D
-[\mathbb{Q} \equiv (\mathb{Q},E)]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
-[m]: http://latex.codecogs.com/svg.latex?m
-[m,n,o,\ldots,p]: http://latex.codecogs.com/svg.latex?%5C%5Bm%2Cn%2Co%2C%5Cldots%2Cp%5C%5D
-[N]: http://latex.codecogs.com/svg.latex?N
-[p_3 = 1 - p_2]: http://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2
+[\mathbf{Q}]: svg/mathbfQ.svg
+[E]: svg/E.svg
+[X_i]: svg/Xi.svg
+[X_j]: svg/Xj.svg
+[\omega]: svg/omega.svg
+[\mathbf{p}]: svg/mathbfp.svg
+[\mathbb{Q}]: svg/mathbbQ.svg
+[\mathbb{X}]: svg/mathbbX.svg
+[\mathbb{Q}_0]: svg/mathbbQ0.svg
+[\mathbb{Q}_i]: svg/mathbbQi.svg
+[S_i(\mathbb{Q}_i)]: svg/SimathbbQi.svg
+[S(\mathbb{Q})]: svg/SmathbbQ.svg
+[S(\mathbb{Q};\mathbf{p})]: svg/SmathbbQmathbfp.svg
+[\mathbb{p}]: svg/mathbbp.svg
+[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/SmathbfQEproptofracp.svg
+[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/mathbbQequivmathbQE.svg
+[m]: svg/m.svg
+[m,n,o,\ldots,p]: svg/mnoldotsp.svg
+[N]: svg/N.svg
+[p_3 = 1 - p_2]: svg/p31p2.svg
 
-[\mathbf{Q} = \mathbf{k}_\text{i} - \mathbf{k}_\text{f}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D%20%3D%20%5Cmathbf%7Bk%7D_%5Ctext%7Bi%7D%20-%20%5Cmathbf%7Bk%7D_%5Ctext%7Bf%7D
-[E = \frac{\hbar^2}{2m_\text{n}}(k_\text{i}^2 - k_\text{f}^2)]: http://latex.codecogs.com/svg.latex?E%20%3D%20%5Cfrac%7B%5Chbar%5E2%7D%7B2m_%5Ctext%7Bn%7D%7D%28k_%5Ctext%7Bi%7D%5E2%20-%20k_%5Ctext%7Bf%7D%5E2%29
-[\delta\mathbf{k}_\text{i}]: http://latex.codecogs.com/svg.latex?%5Cdelta%5Cmathbf%7Bk%7D_%5Ctext%7Bi%7D
-[\delta\mathbf{k}_\text{f}]: http://latex.codecogs.com/svg.latex?%5Cdelta%5Cmathbf%7Bk%7D_%5Ctext%7Bf%7D
-[\mathbf{k}_\text{i}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bk%7D_%5Ctext%7Bi%7D
-[\mathbf{k}_\text{f}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bk%7D_%5Ctext%7Bf%7D
-[\delta\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cdelta%5Cmathbf%7BQ%7D
-[\delta E]: http://latex.codecogs.com/svg.latex?%5Cdelta%20E
-[\delta\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cdelta%5Cmathbb%7BQ%7D
-[R(\mathbb{Q}) \propto \delta\mathbb{Q}(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BQ%7D%29%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D%28%5Cmathbb%7BQ%7D%29
-[R(\mathbb{Q};\mathbb{Q}_0)]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BQ%7D%3B%5Cmathbb%7BQ%7D_0%29
-[R(\mathbb{X};\mathbb{Q})]: http://latex.codecogs.com/svg.latex?R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29
-[R\left\{S(\mathbb{Q};\mathbf{p})\right\}\equiv\int R(\mathbb{X};\mathbb{Q})S(\mathbb{X};\mathbf{p})d\mathbb{X}]: http://latex.codecogs.com/svg.latex?R%5Cleft%5C%7BS%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29%5Cright%5C%7D%5Cequiv%5Cint%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29S%28%5Cmathbb%7BX%7D%3B%5Cmathbf%7Bp%7D%29d%5Cmathbb%7BX%7D
-[\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?%5Csqrt%7B%5Cmathbb%7BV%7D%28%5Cmathbb%7BQ%7D%29%7D%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D%28%5Cmathbb%7BQ%7D%29
-[V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]: http://latex.codecogs.com/svg.latex?V_%7Bij%7D%28%5Cmathbb%7BQ%7D%29%20%5Cequiv%20%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%20X_j%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%20-%20%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_i%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%5Cfrac%7B%5Cint%20d%5Cmathbb%7BX%7D%20X_j%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D%7B%5Cint%20d%5Cmathbb%7BX%7D%20R%28%5Cmathbb%7BX%7D%3B%5Cmathbb%7BQ%7D%29%7D
-[\sqrt{\mathbb{V}_{ii}(\mathbb{Q})} \propto \delta\mathbb{Q}_i(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?%5Csqrt%7B%5Cmathbb%7BV%7D_%7Bii%7D%28%5Cmathbb%7BQ%7D%29%7D%20%5Cpropto%20%5Cdelta%5Cmathbb%7BQ%7D_i%28%5Cmathbb%7BQ%7D%29
-[4\times4]: http://latex.codecogs.com/svg.latex?4%5Ctimes4
+[\mathbf{Q} = \mathbf{k}_\text{i} - \mathbf{k}_\text{f}]: svg/mathbfQmathbfktextim.svg
+[E = \frac{\hbar^2}{2m_\text{n}}(k_\text{i}^2 - k_\text{f}^2)]: svg/Efrachbar22mtextnkte.svg
+[\delta\mathbf{k}_\text{i}]: svg/deltamathbfktexti.svg
+[\delta\mathbf{k}_\text{f}]: svg/deltamathbfktextf.svg
+[\mathbf{k}_\text{i}]: svg/mathbfktexti.svg
+[\mathbf{k}_\text{f}]: svg/mathbfktextf.svg
+[\delta\mathbf{Q}]: svg/deltamathbfQ.svg
+[\delta E]: svg/deltaE.svg
+[\delta\mathbb{Q}]: svg/deltamathbbQ.svg
+[R(\mathbb{Q}) \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/RmathbbQproptodeltam.svg
+[R(\mathbb{Q};\mathbb{Q}_0)]: svg/RmathbbQmathbbQ0.svg
+[R(\mathbb{X};\mathbb{Q})]: svg/RmathbbXmathbbQ.svg
+[R\left\{S(\mathbb{Q};\mathbf{p})\right\}\equiv\int R(\mathbb{X};\mathbb{Q})S(\mathbb{X};\mathbf{p})d\mathbb{X}]: svg/RleftSmathbbQmathbfp.svg
+[\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/sqrtmathbbVmathbbQpr.svg
+[V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]: svg/VijmathbbQequivfraci.svg
+[\sqrt{\mathbb{V}_{ii}(\mathbb{Q})} \propto \delta\mathbb{Q}_i(\mathbb{Q})]: svg/sqrtmathbbViimathbbQ.svg
+[4\times4]: svg/4times4.svg
