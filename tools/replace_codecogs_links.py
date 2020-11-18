@@ -1,82 +1,93 @@
 import re
 
-PATURL = 'codecogs.com/svg'
-PATIMG = r'\[(.*)\]:\s*(.*)'
-PATINLINEIMG = r'\[(.*)\]\((.*)\)'
+CODECOGS_SVG_PATTERN=r'\[(.*)\](:|\()\s*(http://latex.codecogs.com/svg.latex\?[^\)\n]*)'
 
-def sanitise(x, keep=[]):
+def sanitise(x, keep=['_','-','=']):
     s = "".join([c for c in x if c.isalnum() or c in keep]).rstrip()
-    return s if len(s)<20 else s[:20]
+    s = s.replace('math','_').replace('=','_eq_').replace('-','_mns_').replace('partial','d')
+    return s
 
-def get_names_urls(lines, parturl=PATURL, pat=PATIMG, pat_inline=PATINLINEIMG):
-    nu = [l for l in lines if re.search(parturl, l)]
-    d = {}
-    for x in nu:
-        r = re.search(pat, x)
-        if r is None:
-            r = re.search(pat_inline, x)
-        if r is None:
-            continue
-        name = sanitise(r.groups()[0])
-        url = r.groups()[1]
-        d[name] = url
-    return d
+def linkname_url(lines):
+    """ Extract the link names and URL targets from all lines
 
-def fetch_svg(url, name, outdir):
+    Returns a dictionary with URL keys and link names
+    """
+    name_per_url = {}
+    # Iterate over lines with codecogs URLS
+    for line in filter(lambda x: re.search(CODECOGS_SVG_PATTERN, x), lines):
+        r = re.search(CODECOGS_SVG_PATTERN, line)
+        name_per_url[r.groups()[2]] = r.groups()[0]
+    return name_per_url
+
+def fetch_svg(url, linkname, outdir):
+    """ Fetch a remote SVG image from the provided URL
+
+    The linkname is sanitised to produce a viable filename which is returned.
+    If the target filename already exists it is verified to represent the same
+    URL.
+    If the target filename does not exist the remote content is fetched and
+    written followed by the generating URL.
+    """
     import requests, pathlib
+    name = sanitise(linkname)
     outPath = pathlib.Path('.','svg',name+'.svg')
     out = str(outPath)
-    if not outPath.exists():
+    if outPath.exists():
+        # verify that the existing file was generated from the same url
+        with open(out,'r') as out_file:
+            lines = out_file.readlines()
+            # find the (hopefully) one line matching our [link]: url regex
+            for line in filter(lambda x: re.search(CODECOGS_SVG_PATTERN, x), lines):
+                r = re.search(CODECOGS_SVG_PATTERN, line)
+                if linkname not in r.groups()[0] and url not in r.groups()[2]:
+                    msg = 'The file {} exists for link {} instead of {}'
+                    raise Exception(msg.format(out, r.groups()[0]), linkname)
+    else:
         r = requests.get(url)
         if not r.ok:
             raise Exception("Fetching {} failed with reason {}".format(url, r.reason))
-        open(out, 'wb').write(r.content)
+        with open(out,'wb') as out_file:
+            out_file.write(r.content)
+        # add the generating URL as a comment in the SVG file
+        with open(out,'a') as out_file:
+            comment = '\n<!-- Generated from\n[{}]: {}\n-->'.format(linkname,url)
+            out_file.write(comment)
     return out.replace('\\','/') # always use unix-style path separators
-    
-def fetch_urls_locs(name_url, outdir):
-    url_loc = {}
-    for name, url in name_url.items():
-        url_loc[url] = fetch_svg(url, name, outdir)
-    return url_loc
 
-def update_lines(lines, url_loc, parturl=PATURL, patimg=PATIMG, patimg_inline=PATINLINEIMG):
+def update_lines(lines, url_loc):
     ul = []
     for line in lines:
-        if re.search(parturl, line):
-            r = re.search(patimg, line)
-            if not r:
-                r = re.search(patimg_inline, line)
-            if not r:
-                print('Failing line:\n{}'.format(line))
-            url = r.groups()[1]
+        r = re.search(CODECOGS_SVG_PATTERN, line)
+        if r:
+            url = r.groups()[2]
             if url in url_loc.keys():
                 line = line.replace(url, url_loc[url])
             else:
                 print('Missed URL? {}'.format(line))
         ul.append(line)
     return ul
-    
+
 def replace_codecogs_links(filename, backup_ext=None):
     from pathlib import Path
     cwd = Path().cwd()
     fpath = Path(*Path(filename).absolute().parts[:-1])
     if not cwd.samefile(fpath):
         raise Exception('The current working directory and markdown file directory should be the same')
-        
+
     with open(filename, 'r') as f:
-        orig_lines = f.readlines()
-    
+        lines = f.readlines()
+
     outdir = Path(fpath, 'svg')
     if not (outdir.exists() and outdir.is_dir()):
         outdir.mkdir()
-    replaced_lines = update_lines(orig_lines, fetch_urls_locs(get_names_urls(orig_lines), outdir))
     if backup_ext:
         ext = backup_ext if '.' in backup_ext else '.'+backup_ext
         with open(filename+ext, 'w') as f:
-            for line in orig_lines:
+            for line in lines:
                 f.write(line)
     with open(filename, 'w') as f:
-        for line in replaced_lines:
+        loc_per_url = {u: fetch_svg(u, n, outdir) for u, n in linkname_url(lines).items()}
+        for line in update_lines(lines, loc_per_url):
             f.write(line)
 
 if __name__ == '__main__':
@@ -85,8 +96,8 @@ if __name__ == '__main__':
     parser.add_argument('filename', type=str, help='the markdown filename')
     parser.add_argument('-b', '--backup', type=str, help='backup the original file with the given extension')
     args = parser.parse_args()
-    
+
     replace_codecogs_links(args.filename, args.backup)
     #print('replace_codecogs_links({},{})'.format(args.filename, args.backup))
-    
+
 # where the per-observation weights, ![w_i](https://latex.codecogs.com/svg.latex?w_i), could be constant or some function of the variance,

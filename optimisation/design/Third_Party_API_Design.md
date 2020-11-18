@@ -597,16 +597,16 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	https://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbb{Q} \equiv (\mathb{Q},E)]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
-[\mathbb{Q}]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
-[S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
-[\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
-[\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
-[N]: http://latex.codecogs.com/svg.latex?N
-[(E_n, S(\mathbf{Q}, E_n))]: http://latex.codecogs.com/svg.latex?%28E_n%2C%20S%28%5Cmathbf%7BQ%7D%2C%20E_n%29%29
-[(E_n, S(\mathbf{Q}, E_n), \gamma(\mathbf{Q}, E_n))]: http://latex.codecogs.com/svg.latex?%28E_n%2C%20S%28%5Cmathbf%7BQ%7D%2C%20E_n%29%2C%20%5Cgamma%28%5Cmathbf%7BQ%7D%2C%20E_n%29%29
-[\gamma(\mathbf{Q}, E_n)]: http://latex.codecogs.com/svg.latex?%5Cgamma%28%5Cmathbf%7BQ%7D%2C%20E_n%29
-[(|Q|, E)]: http://latex.codecogs.com/svg.latex?%28%7CQ%7C%2C%20E%29
-[S(|Q|, E)]: http://latex.codecogs.com/svg.latex?S%28%7CQ%7C%2C%20E%29
-[E]: http://latex.codecogs.com/svg.latex?E
-[S(E)]: http://latex.codecogs.com/svg.latex?S%28E%29
+[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/_bbQequiv_bQE.svg
+[\mathbb{Q}]:svg/_bbQ.svg
+[S(\mathbb{Q})]: svg/S_bbQ.svg
+[\mathbf{Q}]: svg/_bfQ.svg
+[\mathbb{Q}]: svg/_bbQ.svg
+[N]: svg/N.svg
+[(E_n, S(\mathbf{Q}, E_n))]: svg/E_nS_bfQE_n.svg
+[(E_n, S(\mathbf{Q}, E_n), \gamma(\mathbf{Q}, E_n))]: svg/E_nS_bfQE_ngamma_bfQE_n.svg
+[\gamma(\mathbf{Q}, E_n)]: svg/gamma_bfQE_n.svg
+[(|Q|, E)]: svg/QE.svg
+[S(|Q|, E)]: svg/SQE.svg
+[E]: svg/E.svg
+[S(E)]: svg/SE.svg

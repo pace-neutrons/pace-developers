@@ -311,41 +311,41 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	http://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbf{Q}]: svg/mathbfQ.svg
+[\mathbf{Q}]: svg/_bfQ.svg
 [E]: svg/E.svg
-[X_i]: svg/Xi.svg
-[X_j]: svg/Xj.svg
+[X_i]: svg/X_i.svg
+[X_j]: svg/X_j.svg
 [\omega]: svg/omega.svg
-[\mathbf{p}]: svg/mathbfp.svg
-[\mathbb{Q}]: svg/mathbbQ.svg
-[\mathbb{X}]: svg/mathbbX.svg
-[\mathbb{Q}_0]: svg/mathbbQ0.svg
-[\mathbb{Q}_i]: svg/mathbbQi.svg
-[S_i(\mathbb{Q}_i)]: svg/SimathbbQi.svg
-[S(\mathbb{Q})]: svg/SmathbbQ.svg
-[S(\mathbb{Q};\mathbf{p})]: svg/SmathbbQmathbfp.svg
-[\mathbb{p}]: svg/mathbbp.svg
-[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/SmathbfQEproptofracp.svg
-[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/mathbbQequivmathbQE.svg
+[\mathbf{p}]: svg/_bfp.svg
+[\mathbb{Q}]: svg/_bbQ.svg
+[\mathbb{X}]: svg/_bbX.svg
+[\mathbb{Q}_0]: svg/_bbQ_0.svg
+[\mathbb{Q}_i]: svg/_bbQ_i.svg
+[S_i(\mathbb{Q}_i)]: svg/S_i_bbQ_i.svg
+[S(\mathbb{Q})]: svg/S_bbQ.svg
+[S(\mathbb{Q};\mathbf{p})]: svg/S_bbQ_bfp.svg
+[\mathbb{p}]: svg/_bbp.svg
+[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/S_bfQEproptofracd2sigmad_bfQdE.svg
+[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/_bbQequiv_bQE.svg
 [m]: svg/m.svg
 [m,n,o,\ldots,p]: svg/mnoldotsp.svg
 [N]: svg/N.svg
-[p_3 = 1 - p_2]: svg/p31p2.svg
+[p_3 = 1 - p_2]: svg/p_3_eq_1_mns_p_2.svg
 
-[\mathbf{Q} = \mathbf{k}_\text{i} - \mathbf{k}_\text{f}]: svg/mathbfQmathbfktextim.svg
-[E = \frac{\hbar^2}{2m_\text{n}}(k_\text{i}^2 - k_\text{f}^2)]: svg/Efrachbar22mtextnkte.svg
-[\delta\mathbf{k}_\text{i}]: svg/deltamathbfktexti.svg
-[\delta\mathbf{k}_\text{f}]: svg/deltamathbfktextf.svg
-[\mathbf{k}_\text{i}]: svg/mathbfktexti.svg
-[\mathbf{k}_\text{f}]: svg/mathbfktextf.svg
-[\delta\mathbf{Q}]: svg/deltamathbfQ.svg
+[\mathbf{Q} = \mathbf{k}_\text{i} - \mathbf{k}_\text{f}]: svg/_bfQ_eq__bfk_texti_mns__bfk_textf.svg
+[E = \frac{\hbar^2}{2m_\text{n}}(k_\text{i}^2 - k_\text{f}^2)]: svg/E_eq_frachbar22m_textnk_texti2_mns_k_textf2.svg
+[\delta\mathbf{k}_\text{i}]: svg/delta_bfk_texti.svg
+[\delta\mathbf{k}_\text{f}]: svg/delta_bfk_textf.svg
+[\mathbf{k}_\text{i}]: svg/_bfk_texti.svg
+[\mathbf{k}_\text{f}]: svg/_bfk_textf.svg
+[\delta\mathbf{Q}]: svg/delta_bfQ.svg
 [\delta E]: svg/deltaE.svg
-[\delta\mathbb{Q}]: svg/deltamathbbQ.svg
-[R(\mathbb{Q}) \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/RmathbbQproptodeltam.svg
-[R(\mathbb{Q};\mathbb{Q}_0)]: svg/RmathbbQmathbbQ0.svg
-[R(\mathbb{X};\mathbb{Q})]: svg/RmathbbXmathbbQ.svg
-[R\left\{S(\mathbb{Q};\mathbf{p})\right\}\equiv\int R(\mathbb{X};\mathbb{Q})S(\mathbb{X};\mathbf{p})d\mathbb{X}]: svg/RleftSmathbbQmathbfp.svg
-[\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/sqrtmathbbVmathbbQpr.svg
-[V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]: svg/VijmathbbQequivfraci.svg
-[\sqrt{\mathbb{V}_{ii}(\mathbb{Q})} \propto \delta\mathbb{Q}_i(\mathbb{Q})]: svg/sqrtmathbbViimathbbQ.svg
+[\delta\mathbb{Q}]: svg/delta_bbQ.svg
+[R(\mathbb{Q}) \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/R_bbQproptodelta_bbQ_bbQ.svg
+[R(\mathbb{Q};\mathbb{Q}_0)]: svg/R_bbQ_bbQ_0.svg
+[R(\mathbb{X};\mathbb{Q})]: svg/R_bbX_bbQ.svg
+[R\left\{S(\mathbb{Q};\mathbf{p})\right\}\equiv\int R(\mathbb{X};\mathbb{Q})S(\mathbb{X};\mathbf{p})d\mathbb{X}]: svg/RleftS_bbQ_bfprightequivintR_bbX_bbQS_bbX_bfpd_bbX.svg
+[\sqrt{\mathbb{V}(\mathbb{Q})} \propto \delta\mathbb{Q}(\mathbb{Q})]: svg/sqrt_bbV_bbQproptodelta_bbQ_bbQ.svg
+[V_{ij}(\mathbb{Q}) \equiv \frac{\int d\mathbb{X} X_i X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})} - \frac{\int d\mathbb{X} X_i R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}\frac{\int d\mathbb{X} X_j R(\mathbb{X};\mathbb{Q})}{\int d\mathbb{X} R(\mathbb{X};\mathbb{Q})}]: svg/V_ij_bbQequivfracintd_bbXX_iX_jR_bbX_bbQintd_bbXR_bbX_bbQ_mns_fracintd_bbXX_iR_bbX_bbQintd_bbXR_bbX_bbQfracintd_bbXX_jR_bbX_bbQintd_bbXR_bbX_bbQ.svg
+[\sqrt{\mathbb{V}_{ii}(\mathbb{Q})} \propto \delta\mathbb{Q}_i(\mathbb{Q})]: svg/sqrt_bbV_ii_bbQproptodelta_bbQ_i_bbQ.svg
 [4\times4]: svg/4times4.svg

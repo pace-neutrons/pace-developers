@@ -10,30 +10,30 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	http://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbf{p}]: svg/mathbfp.svg
-[\mathbf{p}_0]: svg/mathbfp0.svg
-[\mathbf{x}]: svg/mathbfx.svg
-[\mathbf{Q}]: svg/mathbfQ.svg
+[\mathbf{p}]: svg/_bfp.svg
+[\mathbf{p}_0]: svg/_bfp_0.svg
+[\mathbf{x}]: svg/_bfx.svg
+[\mathbf{Q}]: svg/_bfQ.svg
 [E]: svg/E.svg
 [\omega]: svg/omega.svg
-[\mathbb{Q}]: svg/mathbbQ.svg
-[\mathbb{Q}_i]: svg/mathbbQi.svg
-[S_i(\mathbb{Q}_i)]: svg/SimathbbQi.svg
-[S(\mathbb{Q})]: svg/SmathbbQ.svg
-[S(\mathbb{Q};\mathbf{p})]: svg/SmathbbQmathbfp.svg
-[r(\mathbf{p})]: svg/rmathbfp.svg
-[f(\mathbf{p})]: svg/fmathbfp.svg
-[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/SmathbfQEproptofracp.svg
-[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/mathbbQequivmathbQE.svg
-[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: svg/rmathbfpsumileftfrac.svg
-[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: svg/mathbfJmathbfpfracpa.svg
-[\mathbf{J}(\mathbf{p})]: svg/mathbfJmathbfp.svg
-[f_i(\mathbf{p})]: svg/fimathbfp.svg
-[\mathbf{J}_i(\mathbf{p})]: svg/mathbfJimathbfp.svg
+[\mathbb{Q}]: svg/_bbQ.svg
+[\mathbb{Q}_i]: svg/_bbQ_i.svg
+[S_i(\mathbb{Q}_i)]: svg/S_i_bbQ_i.svg
+[S(\mathbb{Q})]: svg/S_bbQ.svg
+[S(\mathbb{Q};\mathbf{p})]: svg/S_bbQ_bfp.svg
+[r(\mathbf{p})]: svg/r_bfp.svg
+[f(\mathbf{p})]: svg/f_bfp.svg
+[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/S_bfQEproptofracd2sigmad_bfQdE.svg
+[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/_bbQequiv_bQE.svg
+[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: svg/r_bfp_eq_sum_ileftfracS_i_bbQ_i_mns_S_bbQ_i_bfpw_iright2.svg
+[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: svg/_bfJ_bfp_eq_fracdf_bfpdp_1ldotsfracdf_bfpdp_n.svg
+[\mathbf{J}(\mathbf{p})]: svg/_bfJ_bfp.svg
+[f_i(\mathbf{p})]: svg/f_i_bfp.svg
+[\mathbf{J}_i(\mathbf{p})]: svg/_bfJ_i_bfp.svg
 [m]: svg/m.svg
 [m,n,o,\ldots,p]: svg/mnoldotsp.svg
 [N]: svg/N.svg
-[p_3 = 1 - p_2]: svg/p31p2.svg
+[p_3 = 1 - p_2]: svg/p_3_eq_1_mns_p_2.svg
 
 # Overview
 
@@ -55,13 +55,13 @@ For a set of model parameters one can define a *weighted residual*
 
 ![r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]
 
-where the per-observation weights, ![w_i](svg/wi.svg), could be constant or some function of the variance,
+where the per-observation weights, ![w_i](svg/w_i.svg), could be constant or some function of the variance,
 and the goal of any **Model Optimisation** scheme is then to find
-![\mathbf{p} \in \mathbb{R}^n](svg/mathbfpinmathbbRn.svg)
+![\mathbf{p} \in \mathbb{R}^n](svg/_bfpin_bbRn.svg)
 which minimises ![r(\mathbf{p})] or some other
-![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](svg/fmathbfpmathbbRnrigh.svg).
+![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](svg/f_bfp_bbRnrightarrow_bbR.svg).
 *Alternatively, the goal could be to find the ![\mathbf{p}] which maximises ![f(\mathbf{p})] but this is equivalent to minimising 
-![-f(\mathbf{p})](svg/minus_fmathbfp.svg)
+![-f(\mathbf{p})](svg/_mns_f_bfp.svg)
 and so is a simple extension.*
 
 # Context
@@ -75,7 +75,7 @@ to use a PACE-provided ![r(\mathbf{p})].
 Different **Model Optimisation** schemes may require additional information.
 Local-minima optimisers need an initial guess for the model parameters, ![\mathbf{p}_0].
 Global-minima optimisers may need lower- and upper-bounds in 
-![\mathbb{R}^n](svg/mathbbRn.svg) for ![\mathbf{p}].
+![\mathbb{R}^n](svg/_bbRn.svg) for ![\mathbf{p}].
 Most optimisers require the Jacobian of the function to be minimised, e.g.,
 
 ![\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]
@@ -149,7 +149,7 @@ of the Levenberg-Marquardt algorithm and interally constructs ![r(\mathbf{p})] a
 
 `multifit` has the ability to fix parameters and to bind select (overparametrised) model parameters with linear equalities,
 e.g.,
-![p_2 = 2p_1 - 1](svg/p22p11.svg),
+![p_2 = 2p_1 - 1](svg/p_2_eq_2p_1_mns_1.svg),
 both of which reduce the effective parameter space dimensionality and should be maintained.
 
 Another nice feature of the current implementation that should be retained is the ability to simultaneously
@@ -172,7 +172,7 @@ As a MATLAB value class `multifit` objects have immutable properties, so any met
 the syntax `obj = obj.method()` is a workaround to this issue.
 Note that the foreground and background functions have been provided independent initial parameter vectors
 these are combined into
-![\mathbf{p}_\text{fit}](svg/mathbfptextfit.svg).
+![\mathbf{p}_\text{fit}](svg/_bfp_textfit.svg) as a cell array of vectors (?).
  
 # Proposed Solution
 
@@ -205,7 +205,7 @@ or a background function may account for a sample-angle or scattering-angle depe
 At a minimum `OptFunction` must support user defined functions which require
 
 - ![\mathbb{Q}_i], and therefore take four equal-shape arrays of floating point numbers returning a single intensity vector `S_of_Q_E_i`
-- ![\mathbf{Q}_i](svg/mathbfQi.svg)` S_j_of_Q_i` an equal number of mode energies `omega_j_of_Q_i` and, optionally, an equal number of mode intrinsic energy widths `gamma_j_of_Q_i`
+- ![\mathbf{Q}_i](svg/_bfQ_i.svg) and return one or more intensity vectors (as a matrix)` S_j_of_Q_i` an equal number of mode energies `omega_j_of_Q_i` and, optionally, an equal number of mode intrinsic energy widths `gamma_j_of_Q_i`
 - one or more projection axes over which the binned data in a `sqw` object varies, returning a single intensity vector `S_of_axes_i`
 - the `sqw` object directly
 
@@ -253,8 +253,8 @@ In MATLAB it *may* be possible to obtain the input information from a function d
 Determining the number of output arrays that a function will produce in MATLAB and Python is relatively straightforward.
 In C++ the function 'output' might not be its return value and some further design work would be needed to define *how* a user defined C++ function should return ![S(\mathbb{Q}_i)] or ![\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)].
 
-[S(\mathbb{Q}_i)]: svg/SmathbbQi.svg
-[\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: svg/leftSjmathbfQiomegaj.svg
+[S(\mathbb{Q}_i)]: svg/S_bbQ_i.svg
+[\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: svg/leftS_j_bfQ_iomega_j_bfQ_igamma_j_bfQ_iright.svg
 
 The `OptFunction` object must  contain methods to:
 
@@ -274,15 +274,15 @@ The `OptFunction` object must  contain methods to:
 As an example of the independent parameter access method, if there are ![N]
 parameters but the first parameter is fixed and
 the third parameter is bound to the second via 
-![p_3 = 1 - p_2](svg/p31p2.svg)
+![p_3 = 1 - p_2](svg/p_3_eq_1_mns_p_2.svg)
 then the reduced query method should return 
-![{p_2, p_4, \ldots, p_N}](svg/p2p4ldotspN.svg)
+![{p_2, p_4, \ldots, p_N}](svg/p_2p_4ldotsp_N.svg)
 and the reduced update method should take a 
-![N-2](svg/N2.svg)
+![N-2](svg/N_mns_2.svg)
 length vector, 
-![\mathbf{d}](svg/mathbfd.svg)
+![\mathbf{d}](svg/_bfd.svg)
 and update the parameter vector to be
-![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](svg/mathbfpp1d11d1d2ldot.svg)
+![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](svg/_bfp_eq_p_1d_11_mns_d_1d_2ldotsd_N_mns_2.svg)
 
 ### Calling the function inside `OptFunction`
 Each `OptFunction` object knows how many and of what type its containing function requires as input before its parameter vector.
@@ -380,7 +380,7 @@ Such bounding functions are flexible enough to cover any conceivable parameter s
 each `OptFunction` as anonymous functions.
 
 One option would be to combine the bounding functions with the binding functions cell array, and then index into
-that with a separate ![N \times 2](svg/Ntimes2.svg), with `0` reserved to indicate no-bounding.
+that with a separate ![N \times 2](svg/Ntimes2.svg) array (or two length-![N] vectors), with `0` reserved to indicate no-bounding.
 
 In a hypothetical case where the first parameter is free and unbounded,
 the second parameter is free and bound to be between constant values `lower_value`&le;`p(2)`&le;`upper_value`,
@@ -485,35 +485,35 @@ Keeping track of those `OptFunctionsArray` objects and interacting with the opti
 - foreground functions, ![F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]
 - background functions, ![B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]
 
-[M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]: svg/Maldotsmathbfmequivp.svg
-[F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]: svg/Faldotsmathbffequivs.svg
-[B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]: svg/Baldotsmathbfbequivs.svg
+[M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]: svg/Maldots_bfmequivprod_iM_ialdots_bfm_i.svg
+[F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]: svg/Faldots_bffequivsum_jF_jaldots_bff_j.svg
+[B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]: svg/Baldots_bfbequivsum_kB_kaldots_bfb_k.svg
 
-[M_i(a, \ldots; \mathbf{p}_i)]: svg/Mialdotsmathbfpi.svg
-[F_j(a, \ldots; \mathbf{p}_j)]: svg/Fjaldotsmathbfpj.svg
-[B_k(a, \ldots; \mathbf{p}_k)]: svg/Bkaldotsmathbfpk.svg
-[\mathbf{p}_i]: svg/mathbfpi.svg
-[\mathbf{p}_j]: svg/mathbfpj.svg
-[\mathbf{p}_k]: svg/mathbfpk.svg
+[M_i(a, \ldots; \mathbf{p}_i)]: svg/M_ialdots_bfp_i.svg
+[F_j(a, \ldots; \mathbf{p}_j)]: svg/F_jaldots_bfp_j.svg
+[B_k(a, \ldots; \mathbf{p}_k)]: svg/B_kaldots_bfp_k.svg
+[\mathbf{p}_i]: svg/_bfp_i.svg
+[\mathbf{p}_j]: svg/_bfp_j.svg
+[\mathbf{p}_k]: svg/_bfp_k.svg
 
 such that they collectively describe a real valued function
 
 ![\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]
 
-[\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]: svg/rhoaldotsmathbfpMald.svg
+[\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]: svg/rhoaldots_bfp_eq_Maldots_bfmtimesFaldots_bffBaldots_bfb.svg
 
 
 which is consistent with the shape of the input,
 the parameter vector ![\mathbf{p}] is the concatenation of the independent multiplier, foreground, and background parameters, ![\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}],
 and the multiplication and addition are
 performed element-wise -- unless if all 
-![M_i](svg/Mi.svg) or all 
-![B_k](svg/Bk.svg) return scalar values then the multiplication or addition,
+![M_i](svg/M_i.svg) or all 
+![B_k](svg/B_k.svg) return scalar values then the multiplication or addition,
 respectively, can be performed using shape promotion rules.
 
-[\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:svg/leftmathbfmmathbffma.svg
+[\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:svg/left_bfm_bff_bfbright.svg
 
-The distinction between scaling, foreground, and background functions is overkill for simple cases but will enable efficient handling of resolution effects (where only the ![F_j](svg/Fj.svg).
+The distinction between scaling, foreground, and background functions is overkill for simple cases but will enable efficient handling of resolution effects (where only the ![F_j](svg/F_j.svg) are convoluted with the instrumental resolution).
 
 The `OptModel` object must contain the following properties:
 
@@ -537,8 +537,8 @@ and must have methods which query and update its properties, plus:
 - distribute a modified reduced parameter vector to all `OptFunctionsArray` objects
 - run the chosen optimisation back-end
 
-[\rho(a, \ldots,\mathbf{p})]: svg/rhoaldotsmathbfp.svg
-[f_\eta(\mathbf{p})]: svg/fetamathbfp.svg
+[\rho(a, \ldots,\mathbf{p})]: svg/rhoaldots_bfp.svg
+[f_\eta(\mathbf{p})]: svg/f_eta_bfp.svg
 [\eta \in 1,\ldots,M]: svg/etain1ldotsM.svg
 [M \ge N+1]: svg/MgeN1.svg
 [\eta]: svg/eta.svg
