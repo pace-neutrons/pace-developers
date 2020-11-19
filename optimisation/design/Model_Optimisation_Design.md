@@ -10,30 +10,30 @@ will still contain the raw LaTeX equation which is often intelligible
 Constructing the %-encoded link can be done at, e.g., the codecogs website
 	http://www.codecogs.com/eqnedit.php?latex=latex_equation
 --->
-[\mathbf{p}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D
-[\mathbf{p}_0]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_0
-[\mathbf{x}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bx%7D
-[\mathbf{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D
-[E]: http://latex.codecogs.com/svg.latex?E
-[\omega]: http://latex.codecogs.com/svg.latex?%5Comega
-[\mathbb{Q}]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D
-[\mathbb{Q}_i]: http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D_i
-[S_i(\mathbb{Q}_i)]: http://latex.codecogs.com/svg.latex?S_i%28%5Cmathbb%7BQ%7D_i%29
-[S(\mathbb{Q})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%29
-[S(\mathbb{Q};\mathbf{p})]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D%3B%5Cmathbf%7Bp%7D%29
-[r(\mathbf{p})]: http://latex.codecogs.com/svg.latex?r%28%5Cmathbf%7Bp%7D%29
-[f(\mathbf{p})]: http://latex.codecogs.com/svg.latex?f%28%5Cmathbf%7Bp%7D%29
-[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbf%7BQ%7D%2C%20E%29%20%5Cpropto%20%5Cfrac%7B%5Cpartial%5E2%20%5Csigma%7D%7B%5Cpartial%20%5Cmathbf%7BQ%7D%20%5Cpartial%20E%7D
-[\mathbb{Q} \equiv (\mathb{Q},E)]:http://latex.codecogs.com/svg.latex?%5Cmathbb%7BQ%7D%5Cequiv%28%5Cmathbf%7BQ%7D%2CE%29
-[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: http://latex.codecogs.com/svg.latex?r%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Csum_i%20%5Cleft%7C%20%5Cfrac%7BS_i%28%5Cmathbb%7BQ%7D_i%29%20-%20S%28%5Cmathbb%7BQ%7D_i%3B%20%5Cmathbf%7Bp%7D%29%7D%7Bw_i%7D%20%5Cright%7C%5E2
-[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29%20%3D%20%5Cleft%5B%20%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_1%7D%5C%2C%5Cldots%5C%2C%5Cfrac%7B%5Cpartial%20f%28%5Cmathbf%7Bp%7D%29%7D%7B%5Cpartial%20p_n%7D%20%5Cright%5D
-[\mathbf{J}(\mathbf{p})]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D%28%5Cmathbf%7Bp%7D%29
-[f_i(\mathbf{p})]: http://latex.codecogs.com/svg.latex?f_i%28%5Cmathbf%7Bp%7D%29
-[\mathbf{J}_i(\mathbf{p})]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7BJ%7D_i%28%5Cmathbf%7Bp%7D%29
-[m]: http://latex.codecogs.com/svg.latex?m
-[m,n,o,\ldots,p]: http://latex.codecogs.com/svg.latex?%5C%5Bm%2Cn%2Co%2C%5Cldots%2Cp%5C%5D
-[N]: http://latex.codecogs.com/svg.latex?N
-[p_3 = 1 - p_2]: http://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2
+[\mathbf{p}]: svg/_bfp.svg
+[\mathbf{p}_0]: svg/_bfp_0.svg
+[\mathbf{x}]: svg/_bfx.svg
+[\mathbf{Q}]: svg/_bfQ.svg
+[E]: svg/E.svg
+[\omega]: svg/omega.svg
+[\mathbb{Q}]: svg/_bbQ.svg
+[\mathbb{Q}_i]: svg/_bbQ_i.svg
+[S_i(\mathbb{Q}_i)]: svg/S_i_bbQ_i.svg
+[S(\mathbb{Q})]: svg/S_bbQ.svg
+[S(\mathbb{Q};\mathbf{p})]: svg/S_bbQ_bfp.svg
+[r(\mathbf{p})]: svg/r_bfp.svg
+[f(\mathbf{p})]: svg/f_bfp.svg
+[S(\mathbf{Q},E) \propto \frac{\partial^2\sigma}{\partial \mathbf{Q} \partial E}]: svg/S_bfQEproptofracd2sigmad_bfQdE.svg
+[\mathbb{Q} \equiv (\mathb{Q},E)]:svg/_bbQequiv_bQE.svg
+[r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]: svg/r_bfp_eq_sum_ileftfracS_i_bbQ_i_mns_S_bbQ_i_bfpw_iright2.svg
+[\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]: svg/_bfJ_bfp_eq_fracdf_bfpdp_1ldotsfracdf_bfpdp_n.svg
+[\mathbf{J}(\mathbf{p})]: svg/_bfJ_bfp.svg
+[f_i(\mathbf{p})]: svg/f_i_bfp.svg
+[\mathbf{J}_i(\mathbf{p})]: svg/_bfJ_i_bfp.svg
+[m]: svg/m.svg
+[m,n,o,\ldots,p]: svg/mnoldotsp.svg
+[N]: svg/N.svg
+[p_3 = 1 - p_2]: svg/p_3_eq_1_mns_p_2.svg
 
 # Overview
 
@@ -55,13 +55,13 @@ For a set of model parameters one can define a *weighted residual*
 
 ![r(\mathbf{p}) = \sum_i \left|\frac{S_i(\mathbb{Q}_i) - S(\mathbb{Q}_i;\mathbf{p})}{w_i}\right|^2]
 
-where the per-observation weights, ![w_i](http://latex.codecogs.com/svg.latex?w_i), could be constant or some function of the variance,
+where the per-observation weights, ![w_i](svg/w_i.svg), could be constant or some function of the variance,
 and the goal of any **Model Optimisation** scheme is then to find
-![\mathbf{p} \in \mathbb{R}^n](http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D%5Cin%5Cmathbb%7BR%7D%5En )
+![\mathbf{p} \in \mathbb{R}^n](svg/_bfpin_bbRn.svg)
 which minimises ![r(\mathbf{p})] or some other
-![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](http://latex.codecogs.com/svg.latex?f%28%5Cmathbf%7Bp%7D%29%3A%5Cmathbb%7BR%7D%5En%5Crightarrow%5Cmathbb%7BR%7D).
+![f(\mathbf{p}): \mathbb{R}^n \rightarrow \mathbb{R}](svg/f_bfp_bbRnrightarrow_bbR.svg).
 *Alternatively, the goal could be to find the ![\mathbf{p}] which maximises ![f(\mathbf{p})] but this is equivalent to minimising 
-![-f(\mathbf{p})](http://latex.codecogs.com/svg.latex?-f%28%5Cmathbf%7Bp%7D%29)
+![-f(\mathbf{p})](svg/_mns_f_bfp.svg)
 and so is a simple extension.*
 
 # Context
@@ -75,14 +75,14 @@ to use a PACE-provided ![r(\mathbf{p})].
 Different **Model Optimisation** schemes may require additional information.
 Local-minima optimisers need an initial guess for the model parameters, ![\mathbf{p}_0].
 Global-minima optimisers may need lower- and upper-bounds in 
-![\mathbb{R}^n](http://latex.codecogs.com/svg.latex?%5Cmathbb%7BR%7D%5En) for ![\mathbf{p}].
+![\mathbb{R}^n](svg/_bbRn.svg) for ![\mathbf{p}].
 Most optimisers require the Jacobian of the function to be minimised, e.g.,
 
 ![\mathbf{J}(\mathbf{p}) = \frac{\partial f(\mathbf{p})}{\partial p_1} \ldots \frac{\partial f(\mathbf{p})}{\partial p_n}]
 
 which depends on the user-provided scattering function, the measured data, and the choice of ![f(\mathbf{p})].
 Some optimisation algorithms require ![f_i(\mathbf{p})] and ![\mathbf{J}_i(\mathbf{p})] for each ![\mathbb{Q}_i], and perform the sum over
-![i](http://latex.codecogs.com/svg.latex?i) internally.
+![i](svg/i.svg) internally.
 
 Since PACE is responsible for ![S_i(\mathbb{Q}_i)] and ![r(\mathbf{p})] it must also calculate ![\mathbf{J}(\mathbf{p})] for arbitrary (user-provided) ![S(\mathbb{Q};\mathbf{p})].
 Doing so in a way which simplifies calculating the Jacobian for advanced users who provide their own ![f(\mathbf{p})]
@@ -149,7 +149,7 @@ of the Levenberg-Marquardt algorithm and interally constructs ![r(\mathbf{p})] a
 
 `multifit` has the ability to fix parameters and to bind select (overparametrised) model parameters with linear equalities,
 e.g.,
-![p_2 = 2p_1 - 1](http://latex.codecogs.com/svg.latex?p_2%20%3D%202p_1%20-1),
+![p_2 = 2p_1 - 1](svg/p_2_eq_2p_1_mns_1.svg),
 both of which reduce the effective parameter space dimensionality and should be maintained.
 
 Another nice feature of the current implementation that should be retained is the ability to simultaneously
@@ -172,7 +172,7 @@ As a MATLAB value class `multifit` objects have immutable properties, so any met
 the syntax `obj = obj.method()` is a workaround to this issue.
 Note that the foreground and background functions have been provided independent initial parameter vectors
 these are combined into
-![\mathbf{p}_\text{fit}](http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_%5Ctext%7Bfit%7D) as a cell array of vectors (?).
+![\mathbf{p}_\text{fit}](svg/_bfp_textfit.svg) as a cell array of vectors (?).
  
 # Proposed Solution
 
@@ -205,7 +205,7 @@ or a background function may account for a sample-angle or scattering-angle depe
 At a minimum `OptFunction` must support user defined functions which require
 
 - ![\mathbb{Q}_i], and therefore take four equal-shape arrays of floating point numbers returning a single intensity vector `S_of_Q_E_i`
-- ![\mathbf{Q}_i](http://latex.codecogs.com/svg.latex?%5Cmathbf%7BQ%7D_i) and return one or more intensity vectors (as a matrix)` S_j_of_Q_i` an equal number of mode energies `omega_j_of_Q_i` and, optionally, an equal number of mode intrinsic energy widths `gamma_j_of_Q_i`
+- ![\mathbf{Q}_i](svg/_bfQ_i.svg) and return one or more intensity vectors (as a matrix)` S_j_of_Q_i` an equal number of mode energies `omega_j_of_Q_i` and, optionally, an equal number of mode intrinsic energy widths `gamma_j_of_Q_i`
 - one or more projection axes over which the binned data in a `sqw` object varies, returning a single intensity vector `S_of_axes_i`
 - the `sqw` object directly
 
@@ -253,12 +253,12 @@ In MATLAB it *may* be possible to obtain the input information from a function d
 Determining the number of output arrays that a function will produce in MATLAB and Python is relatively straightforward.
 In C++ the function 'output' might not be its return value and some further design work would be needed to define *how* a user defined C++ function should return ![S(\mathbb{Q}_i)] or ![\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)].
 
-[S(\mathbb{Q}_i)]: http://latex.codecogs.com/svg.latex?S%28%5Cmathbb%7BQ%7D_i%29
-[\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: http://latex.codecogs.com/svg.latex?%5Cleft%5C%7BS_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Comega_j%28%5Cmathbf%7BQ%7D_i%29%2C%20%5Cgamma_j%28%5Cmathbf%7BQ%7D_i%29%5Cright%5C%7D
+[S(\mathbb{Q}_i)]: svg/S_bbQ_i.svg
+[\left(S_j(\mathbf{Q}_i), \omega_j(\mathbf{Q}_i), \gamma_j(\mathbf{Q}_i)\right)]: svg/leftS_j_bfQ_iomega_j_bfQ_igamma_j_bfQ_iright.svg
 
 The `OptFunction` object must  contain methods to:
 
-- evaluate the function when given appropriate input, e.g., ![(a,\ldots)](http://latex.codecogs.com/svg.latex?%28a%2C%5Cldots%29).
+- evaluate the function when given appropriate input, e.g., ![(a,\ldots)](svg/aldots.svg).
 - query all properties
 	+ There should be two variants of the parameter vector accessors.
 	The first should directly access the stored parameter while the second should
@@ -274,15 +274,15 @@ The `OptFunction` object must  contain methods to:
 As an example of the independent parameter access method, if there are ![N]
 parameters but the first parameter is fixed and
 the third parameter is bound to the second via 
-![p_3 = 1 - p_2](http://latex.codecogs.com/svg.latex?p_3%20%3D%201%20-%20p_2)
+![p_3 = 1 - p_2](svg/p_3_eq_1_mns_p_2.svg)
 then the reduced query method should return 
-![{p_2, p_4, \ldots, p_N}](http://latex.codecogs.com/svg.latex?%5C%7Bp_2%2C%20p_4%2C%20%5Cldots%2C%20p_N%5C%7D)
+![{p_2, p_4, \ldots, p_N}](svg/p_2p_4ldotsp_N.svg)
 and the reduced update method should take a 
-![N-2](http://latex.codecogs.com/svg.latex?N-2)
+![N-2](svg/N_mns_2.svg)
 length vector, 
-![\mathbf{d}](http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bd%7D)
+![\mathbf{d}](svg/_bfd.svg)
 and update the parameter vector to be
-![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D%20%3D%20%5C%7Bp_1%2C%20d_1%2C%201-d_1%2C%20d_2%2C%20%5Cldots%2C%20d_%7BN-2%7D%5C%7D)
+![\mathbf{p} = {p_1, d_1, 1-d_1, d_2, \ldots, d_{N-2}}](svg/_bfp_eq_p_1d_11_mns_d_1d_2ldotsd_N_mns_2.svg)
 
 ### Calling the function inside `OptFunction`
 Each `OptFunction` object knows how many and of what type its containing function requires as input before its parameter vector.
@@ -380,7 +380,7 @@ Such bounding functions are flexible enough to cover any conceivable parameter s
 each `OptFunction` as anonymous functions.
 
 One option would be to combine the bounding functions with the binding functions cell array, and then index into
-that with a separate ![N \times 2](http://latex.codecogs.com/svg.latex?N%20%5Ctimes%202) array (or two length-![N] vectors), with `0` reserved to indicate no-bounding.
+that with a separate ![N \times 2](svg/Ntimes2.svg) array (or two length-![N] vectors), with `0` reserved to indicate no-bounding.
 
 In a hypothetical case where the first parameter is free and unbounded,
 the second parameter is free and bound to be between constant values `lower_value`&le;`p(2)`&le;`upper_value`,
@@ -440,7 +440,7 @@ The `OptFunctionsArray` object will require access methods for all properties pl
 Binding parameters *between* functions can still be accomplished by the use of binding functions.
 The best solution to accomplish this task is unclear, but may consist of
 
-- a ![N \times 3](http://latex.codecogs.com/svg.latex?N%20%5Ctimes%203) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
+- a ![N \times 3](svg/Ntimes3.svg) `status` array containing function number, parameters number, and binding function number, plus a length-![N] cellarray of the binding functions
 - a length-![N] cellarray of 3-vectors each with the function number, parameter number, and binding function number, and the same cellarray of binding functions as before
 - a length-![N] cellarray of length-3 cellarrays each consisting of `{function_no, parameter_no, binding_fun_handle}`
 - or a length-![N] array of binding objects containing the same information in a more-concrete form
@@ -485,35 +485,35 @@ Keeping track of those `OptFunctionsArray` objects and interacting with the opti
 - foreground functions, ![F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]
 - background functions, ![B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]
 
-[M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]: http://latex.codecogs.com/svg.latex?M%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D%29%20%5Cequiv%20%5Cprod_i%20M_i%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D_i%29
-[F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]: http://latex.codecogs.com/svg.latex?F%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D%29%20%5Cequiv%20%5Csum_j%20F_j%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D_j%29
-[B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]: http://latex.codecogs.com/svg.latex?B%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D%29%20%5Cequiv%20%5Csum_k%20B_k%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D_k%29
+[M(a,\ldots;\mathbf{m}) \equiv \prod_i M_i(a,\ldots;\mathbf{m}_i)]: svg/Maldots_bfmequivprod_iM_ialdots_bfm_i.svg
+[F(a,\ldots;\mathbf{f}) \equiv \sum_j F_j(a,\ldots;\mathbf{f}_j)]: svg/Faldots_bffequivsum_jF_jaldots_bff_j.svg
+[B(a,\ldots;\mathbf{b}) \equiv \sum_k B_k(a,\ldots;\mathbf{b}_k)]: svg/Baldots_bfbequivsum_kB_kaldots_bfb_k.svg
 
-[M_i(a, \ldots; \mathbf{p}_i)]: http://latex.codecogs.com/svg.latex?M_i%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_i%29
-[F_j(a, \ldots; \mathbf{p}_j)]: http://latex.codecogs.com/svg.latex?F_j%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_j%29
-[B_k(a, \ldots; \mathbf{p}_k)]: http://latex.codecogs.com/svg.latex?B_k%28a%2C%20%5Cldots%3B%20%5Cmathbf%7Bp%7D_k%29
-[\mathbf{p}_i]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_i
-[\mathbf{p}_j]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_j
-[\mathbf{p}_k]: http://latex.codecogs.com/svg.latex?%5Cmathbf%7Bp%7D_k
+[M_i(a, \ldots; \mathbf{p}_i)]: svg/M_ialdots_bfp_i.svg
+[F_j(a, \ldots; \mathbf{p}_j)]: svg/F_jaldots_bfp_j.svg
+[B_k(a, \ldots; \mathbf{p}_k)]: svg/B_kaldots_bfp_k.svg
+[\mathbf{p}_i]: svg/_bfp_i.svg
+[\mathbf{p}_j]: svg/_bfp_j.svg
+[\mathbf{p}_k]: svg/_bfp_k.svg
 
 such that they collectively describe a real valued function
 
 ![\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]
 
-[\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]: http://latex.codecogs.com/svg.latex?%5Crho%28a%2C%5Cldots%3B%5Cmathbf%7Bp%7D%29%20%3D%20M%28a%2C%5Cldots%3B%5Cmathbf%7Bm%7D%29%20%5Ctimes%20F%28a%2C%5Cldots%3B%5Cmathbf%7Bf%7D%29%20&plus;%20B%28a%2C%5Cldots%3B%5Cmathbf%7Bb%7D%29
+[\rho(a,\ldots;\mathbf{p}) = M(a,\ldots;\mathbf{m}) \times F(a,\ldots;\mathbf{f}) + B(a,\ldots;\mathbf{b})]: svg/rhoaldots_bfp_eq_Maldots_bfmtimesFaldots_bffBaldots_bfb.svg
 
 
 which is consistent with the shape of the input,
 the parameter vector ![\mathbf{p}] is the concatenation of the independent multiplier, foreground, and background parameters, ![\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}],
 and the multiplication and addition are
 performed element-wise -- unless if all 
-![M_i](http://latex.codecogs.com/svg.latex?M_i) or all 
-![B_k](http://latex.codecogs.com/svg.latex?B_k) return scalar values then the multiplication or addition,
+![M_i](svg/M_i.svg) or all 
+![B_k](svg/B_k.svg) return scalar values then the multiplication or addition,
 respectively, can be performed using shape promotion rules.
 
-[\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:http://latex.codecogs.com/svg.latex?%5Cleft%5C%7B%5Cmathbf%7Bm%7D%2C%5Cmathbf%7Bf%7D%2C%5Cmathbf%7Bb%7D%5Cright%5C%7D
+[\left{\mathbf{m},\mathbf{f},\mathbf{b}\right}]:svg/left_bfm_bff_bfbright.svg
 
-The distinction between scaling, foreground, and background functions is overkill for simple cases but will enable efficient handling of resolution effects (where only the ![F_j](http://latex.codecogs.com/svg.latex?F_j) are convoluted with the instrumental resolution).
+The distinction between scaling, foreground, and background functions is overkill for simple cases but will enable efficient handling of resolution effects (where only the ![F_j](svg/F_j.svg) are convoluted with the instrumental resolution).
 
 The `OptModel` object must contain the following properties:
 
@@ -537,11 +537,11 @@ and must have methods which query and update its properties, plus:
 - distribute a modified reduced parameter vector to all `OptFunctionsArray` objects
 - run the chosen optimisation back-end
 
-[\rho(a, \ldots,\mathbf{p})]: http://latex.codecogs.com/svg.latex?%5Crho%28a%2C%20%5Cldots%2C%5Cmathbf%7Bp%7D%29
-[f_\eta(\mathbf{p})]: http://latex.codecogs.com/svg.latex?f_%5Ceta%28%5Cmathbf%7Bp%7D%29
-[\eta \in 1,\ldots,M]: http://latex.codecogs.com/svg.latex?%5Ceta%20%5Cin%201%2C%5Cldots%2CM
-[M \ge N+1]: http://latex.codecogs.com/svg.latex?M%20%5Cge%20N&plus;1
-[\eta]: http://latex.codecogs.com/svg.latex?%5Ceta
+[\rho(a, \ldots,\mathbf{p})]: svg/rhoaldots_bfp.svg
+[f_\eta(\mathbf{p})]: svg/f_eta_bfp.svg
+[\eta \in 1,\ldots,M]: svg/etain1ldotsM.svg
+[M \ge N+1]: svg/MgeN1.svg
+[\eta]: svg/eta.svg
 
 Storing the optimisation back-end as an `enum` or similar restricts the supported back-ends to a predefined set.
 This restriction may be unnecessary and should be lifted if a clear general back-end interfacing scheme becomes evident
