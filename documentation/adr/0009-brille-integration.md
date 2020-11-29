@@ -1,4 +1,4 @@
-[<-previous](0008-pace-syntax-guiding-principles.md) | next->
+[<-previous](0008-pace-syntax-guiding-principles.md) | [next->](0010-use-compiled-matlab-for-python.md)
 
 # 9. Integration of Brille within PACE projects
 
