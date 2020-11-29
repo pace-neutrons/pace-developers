@@ -44,6 +44,9 @@ Specifically the same method and keyword names should be used.
 reasonable defaults for as many input arguments as practicable);
 This applies to both Matlab and Python interfaces,
 since the end goal is to migrate entirely to Python.
+* Since the Matlab and Python *languages*'s argument syntax are not a superset,
+exactly what (sub-set) of syntax PACE should use should be clearly defined
+in a separate architectural decisions record.
 * In the mean time, there should be both Matlab and Python interfaces for 
 all functionalities (including handling polycrystalline/powder data).
 * There should be uniform API for interactions between the different programs
