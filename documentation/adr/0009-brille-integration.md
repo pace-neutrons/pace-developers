@@ -15,8 +15,9 @@ Accepted
 and linear interpolation within an irreducible part of the first Brillouin zone.
 Whilst its symmetry operations functionality can be used stand-alone,
 the interpolation functionality should be integrated with codes
+which compute quantities in reciprocal space
 (such as [euphonic](https://github.com/pace-neutrons/euphonic) and [spinW](https://github.com/spinw/spinw))
-which compute quantities in reciprocal space to be user friendly.
+to make these programs more user friendly.
 
 At present there are separate projects, [brilleu](https://github.com/brille/brilleu/)
 and [brillem](https://github.com/brille/brillem/) to achieve this integration.
