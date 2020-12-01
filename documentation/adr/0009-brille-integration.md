@@ -39,4 +39,4 @@ construct is own brille object and then use this to perform the interpolation.
 * Code in `brilleu` will either be merged into `euphonic` or `brilleu` will be a dependency of `euphonic`
 * This will allow `euphonic` to use `brille` to compute the density of states, the Debye-Waller factor or powder averaging.
 * Code specific to `spinW` in `brillem` will be moved to `spinW` itself,
-leaving a minimal `brillem` for Matlab users to access the symmetry operations functionality of `brille`.
+leaving a minimal `brillem` for Matlab users to access the functionality of `brille`.
