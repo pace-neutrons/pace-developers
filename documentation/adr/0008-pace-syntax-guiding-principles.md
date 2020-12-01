@@ -1,4 +1,4 @@
-[<-previous](0007-developer-scripts-storage-location.md) | next->
+[<-previous](0007-developer-scripts-storage-location.md) | [next->](0009-brille-integration.md)
 
 # 8. PACE Syntax Guiding Principles
 
