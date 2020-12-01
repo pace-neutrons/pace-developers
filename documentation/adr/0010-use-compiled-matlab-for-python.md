@@ -1,6 +1,6 @@
-[<-previous](0008-pace-syntax-guiding-principles.md) | next->
+[<-previous](0009-brille-integration.md) | next->
 
-# 9. Use Compiled Matlab library for Python users to run PACE
+# 10. Use Compiled Matlab library for Python users to run PACE
 
 Date: 2020-Nov-29
 
@@ -25,6 +25,8 @@ it should either be translated to Python or C++ and a wrapper to Python and Matl
 or the Matlab Compiler Runtime (MCR) toolbox should be used to "compile" 
 `horace`/`herbert` for distribution as a Python package, as detailed
 [here](../../python_interface/design/01_pace_python_high_level_discussion.md).
+Using the MCR would also allow users to use Horace without a Matlab license,
+whilst enabling us to leave the Horace code mainly in the Matlab language.
 
 
 ## Decision
