@@ -1,0 +1,54 @@
+@startuml euphonic_context_with_api
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+HIDE_STEREOTYPE()
+
+'Example of how to change colours
+/'skinparam rectangle<<person>> {
+    StereotypeFontColor $ELEMENT_FONT_COLOR
+    FontColor $ELEMENT_FONT_COLOR
+    BackgroundColor $PERSON_BG_COLOR
+    BorderColor #073B6F
+}'/
+
+skinparam rectangle<<file_system>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+!unquoted procedure System_File($alias, $label, $descr="", $sprite="")
+rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
+!endprocedure
+
+Person(horace_user, "Horace User", "")
+Person(abins_user, "Abins User", "")
+Person(euphonic_user, "Euphonic User", "")
+
+'System(euphonic, "Euphonic", "Software for efficient calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
+Boundary(euphonic, "Euphonic"){
+    System(euphonic_api, "Python API", "Library for efficient calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
+    System(euphonic_cli, "Command Line Tools", "Convenient, easy-to-use tools for quick plotting of bandstructures, DOS and neutron spectra")
+}
+System_Ext(horace, "Horace", "Software for visualisation, analysis and simulation of direct inelastic neutron scattering instrument data")
+'System_Ext(mantid_core, "Mantid", "Software to support high-performance computing and visualisation of materials science data")
+Boundary(mantid, "Mantid"){
+    System_Ext(abins, "Abins", "Mantid plugin for comparison of experimental and simulated indirect inelastic neutron scattering instrument data")
+}
+System_File(force_constants, "Force Constants", "File(s) containing force constants")
+System_File(phonons, "Phonon Modes", "File(s) containing phonon frequencies and eigenvectors")
+
+Rel_D(euphonic_user, euphonic_api, "Uses")
+Rel_D(euphonic_user, euphonic_cli, "Uses")
+Rel_R(euphonic_cli, euphonic_api, "Uses")
+Rel_D(horace, euphonic_api, "Uses to simulate coherent phonon spectra")
+Rel_D(abins, euphonic_api, "Uses to ???")
+Rel_U(force_constants, euphonic_api, "Is read by")
+Rel_U(phonons, euphonic_api, "Is read by")
+Rel_D(horace_user, horace, "Uses")
+Rel_D(abins_user, mantid, "Uses")
+
+Lay_R(horace_user, horace)
+Lay_L(abins_user, mantid)
+@enduml

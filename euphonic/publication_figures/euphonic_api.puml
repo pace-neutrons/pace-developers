@@ -1,0 +1,45 @@
+@startuml euphonic_api
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+HIDE_STEREOTYPE()
+
+skinparam rectangle<<file_system>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+!unquoted procedure System_File($alias, $label, $descr="", $sprite="")
+rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
+!endprocedure
+
+!unquoted procedure RelNoLabel($alias1, $alias2, $direction="-->>")
+$alias1 $direction $alias2
+!endprocedure
+
+Boundary(euphonic, "Euphonic") {
+    System(force_constants, "ForceConstants", "Object containing force constants")
+    System(phonons, "QpointPhononModes", "Object containing frequencies and eigenvectors at q-points")
+    System(crystal_sf, "StructureFactor","Coherent crystal structure factor at q-points (discrete energies)")
+    System(2d_spectrum, "Spectrum2D", "Contains generic 2D data e.g. S(Q,w)")
+    System(1d_spectrum, "Spectrum1D", "Contains generic 1D data e.g. density of states")
+    System(debye_waller, "DebyeWaller", "Debye-Waller exponent")
+    System(1d_plotter, "1D Plotter")
+    System(2d_plotter, "2D Plotter")
+}
+System_File(fc_file, "Force constants", "File(s) containing force constants")
+System_File(phonon_file, "Phonon Modes", "File(s) containing frequencies and eigenvectors")
+
+Rel(fc_file, force_constants, "Is read by")
+Rel(phonon_file, phonons, "Is read by")
+RelNoLabel(force_constants, phonons)
+RelNoLabel(phonons, crystal_sf)
+Rel(phonons, 1d_spectrum, "Calculate DOS")
+RelNoLabel(phonons, debye_waller)
+Rel(crystal_sf, 2d_spectrum, "Calculate S(Q,w)")
+Rel(crystal_sf, 1d_spectrum, "Calculate S(w)")
+Rel(1d_spectrum, 1d_plotter, "Is plotted by")
+Rel(2d_spectrum, 2d_plotter, "Is plotted by")
+
+
+@enduml
