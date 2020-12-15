@@ -17,7 +17,7 @@ rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
 $alias1 $direction $alias2
 !endprocedure
 
-Boundary(euphonic, "Euphonic") {
+Boundary(euphonic, "Euphonic Python API") {
     System(force_constants, "ForceConstants", "Object containing force constants")
     System(phonons, "QpointPhononModes", "Object containing frequencies and eigenvectors at q-points")
     System(crystal_sf, "StructureFactor","Coherent crystal structure factor at q-points (discrete energies)")
@@ -27,7 +27,7 @@ Boundary(euphonic, "Euphonic") {
     System(1d_plotter, "1D Plotter")
     System(2d_plotter, "2D Plotter")
 }
-System_File(fc_file, "Force constants", "File(s) containing force constants")
+System_File(fc_file, "Force Constants", "File(s) containing force constants")
 System_File(phonon_file, "Phonon Modes", "File(s) containing frequencies and eigenvectors")
 
 Rel(fc_file, force_constants, "Is read by")
