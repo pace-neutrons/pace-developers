@@ -45,7 +45,8 @@ But, as it uses a `mex` file, unhandled exceptions in the `mex` file can lead to
 In addition, `mex` functions _cannot_ use non-Matlab (non-`Array` types) data as input or outputs.
 Thus all data must be converted to Matlab format from Python, and vice versa which involves at least one data copy.
 This restriction means that not all Python functions can be supported by this method 
-(e.g. those which return non-convertible types such as Python classes).
+(e.g. those which return non-convertible types such as Python classes) 
+except with special work-arounds as in the case of Brille.
 This also means that the reference to the Python function cannot be passed directly to the `mex` function.
 Rather, the Python code stores it in a global dictionary and the (string) key is passed to the `mex`.
 
@@ -53,15 +54,21 @@ Rather, the Python code stores it in a global dictionary and the (string) key is
 ## Decision
 
 The decision was taken to use the `mex` method for compiled Matlab code to call Python functions.
+This is because using the RCI approach would require extensive changes to the `multifit` and `SpinW` Matlab code to
+handle the pyHorace use case.
+Futhermore these changes would be incompatible with the Matlab interface which would result in two different versions
+of the multifit `mfclass` and SpinW `spinw` classes.
+On the other hand, using the `mex` approach, the current Matlab code can be used "as-is" in pyHorace.
 
 
 ## Consequences
 
 User model functions written in Python (which includes Euphonic and Brille) cannot return non-convertible data.
 That is, scalar values and standard containers (lists, tuples, dicts, numpy arrays) can be returned but Python objects cannot.
-The current [mex implementation](https://github.com/mducle/hugo/blob/master/src/call_python.cpp) does not
-handle `dict`s and string types but this can be implemented.
-It may be possible to handle arbitrary Python objects using a global dictionary similarly to how function references are handled.
+Instead, arbitrary Python objects may be handled using a global dictionary similarly to how function references are handled.
+The current [minimum viable implementation](https://github.com/mducle/hugo/blob/master/src/call_python.cpp) can handle the
+needs of the SpinW-Brille interface where Brille (Python) objects are passed to the (Matlab) SpinW methods, but would have to
+be improved for more general usage.
 
 
 ## <a name="rci"></a> Reverse Communications Interface
@@ -78,3 +85,5 @@ Thus, the Python code always calls the Matlab code and only data is exchanged bi
 which satisfies the standard Python-Matlab interface.
 However, this also means that a Python wrapper and changes to the Matlab code is needed for this method to work.
 
+These changes to the Matlab code may be quite extensive, especially in the two specific use cases where we need
+Matlab to call Python: that of `multifit` and the SpinW-Brille interface.
