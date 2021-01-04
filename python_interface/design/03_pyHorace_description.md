@@ -107,7 +107,8 @@ Because the wrapper to `call_method` is through the `__getattr__` overload of a 
 I.e., `from pyHorace.Matlab import *; cut_sqw('sqw_file', [], [], [], [-1,1])` will not work because `pyHorace.Matlab` is not a Python module but a class.
 In addition `help(pyHorace.Matlab.cut_sqw)` will also not work because this actually refers to a (dynamically constructed) Python wrapper function.
 Thus if we want the above two functionalities (accessing Matlab "included" functions/classes and help)
-we will need to write explicit Python wrappers for *every* Matlab function we want to expose this way.
+we will need to write explicit Python wrappers for *every* Matlab function (including class methods) we want to expose this way.
+Alternatively if we don't need to provide help/documentation, we can wrap only those functions whose syntax we want to extend to make more "Pythonic".
 
 The other major feature of `pyHorace` is a Python [`MatlabProxyObject`](https://github.com/mducle/hugo/blob/master/pyHorace/MatlabProxyObject.py) class
 which wraps a Matlab class so that it appears transparent to Python users.
@@ -212,23 +213,46 @@ This is because (after [ADR #9](../../documentation/adr/0009-brille-integration.
 Furthermore SpinW requires access to the Brille (Python) `BZGrid*` objects, which is possible with the built-in Matlab-Python (`py.*`) interface
 but not allowed when using `call_python` because `mex` files can only return Matlab types.
 
-Therefore for the PACE Python interface, a wrapping mechanism and an architectural design is needed.
-First, as described in [ADR #12](../../documentation/adr/0012-matlab-python-wrapper.md), calls to Python from Matlab need to be abstracted into
-a separate library which would have different implementations for the Matlab interface (using `py.*`) and for `pyHorace` (without `py.*`).
-This means that the Matlab code to be compiled does not include any reference to `py.*` which would otherwise cause a crash in `pyHorace`.
-The `py.*` namespace, nonetheless, can be used in the interface library for the Matlab interface, and an 
-[implementation](https://github.com/mducle/horace-euphonic-interface/blob/light_wrapper/%2Beuphonic/light_python_wrapper.m)
-suited to the needs of Euphonic and Brillem is currently in review.
+The prototyped solution (subject to a ADR ([#12](../../documentation/adr/0012-matlab-python-wrapper.md))),
+is to use two separate mechanisms for Matlab code to access Python.
+One mechanism uses the built-in `py.*` namespace and is intended to be used from Matlab only (e.g. for users with a Matlab license).
+The second mechanism will use `call_python` with Matlab-side and Python-side wrappers, and is intended to be used by `pyHorace`.
+The key to ensuring interoperability is that both mechanisms present the same "API" to the Matlab code calling them
+(SpinW in this particular case).
+This would allow a single implementation of the Matlab code of SpinW, which will use one of the two different "back-ends",
+depending on whether it is called from Matlab directly or from `pyHorace` in Python.
 
-The `pyHorace` implementation, on the other hand will rely on `call_python` with Matlab-side and Python-side wrappers.
-On the Python side, a [`WrappedPythonClass`](https://github.com/mducle/hugo/blob/master/pyHorace/FunctionWrapper.py#L27)
-is used to wrap any Python class such that its objects are stored in a module-global dictionary and only a string reference is passed to Matlab.
-Additional functions, `get_obj_prop` and `call_obj_method` as well as wrapped constructors are defined
-and stored in a module-global dictionary for access by `call_python`.
-On the Matlab side, a [`pyclasswrapper`](https://github.com/mducle/hugo/blob/master/src/pyclasswrapper.m) 
-is used to wrap the these constructors and property access functions so as to present the same interface to the Matlab code as the pure Matlab case.
-The point of these indirections is that only string references rather than objects are passed between Matlab and Python
-but the behaviour is similar to creating objects and accessing their properties and methods directly.
+The "API" chosen is to present the Python classes / objects as if they are Matlab ones, with the same properties and methods.
+For example, the Euphonic Python `ForceConstants` class is wrapped in a Matlab
+[`force_constants`](https://github.com/mducle/horace-euphonic-interface/blob/da5e86fbd896e671a7380a14d494c6cdded2e718/%2Beuphonic/force_constants.m)
+class which transparently passes through method calls and properties such that users can use the same syntax is Matlab as in Python.
+E.g. `fc = ForceConstants.from_castep('quartz.castep_bin'); ph = fc.calculate_qpoint_phonon_modes([[1,1,1]])` in Python
+and `fc = force_constants.from_castep('quartz.castep_bin'); ph = fc.calculate_qpoint_phonon_modes([1 1 1])` in Matlab.
+This approach ensures that no instances of `py.` are present in the Matlab calling code which is compiled to produce `pyHorace`.
+Hence, Matlab should never launch a second conflicting Python interpreter which could cause a crash in `pyHorace`.
+
+An [implementation](https://github.com/mducle/horace-euphonic-interface/blob/light_wrapper/%2Beuphonic/light_python_wrapper.m)
+of the first mechanism (using `py.*` intended to be used from the Matlab interpreter directly)
+suited to the needs of Euphonic and Brillem, is currently in review.
+In this case the Matlab `light_python_wrapper` class is used to wrap Python classes.
+It works by overloading the `subsref` operator to intercept all "dot" and parenthese notation and passes these to Python.
+In addition, it provides a `help` method which prints the Python documentation for the classes.
+
+The equivalent class in the second mechanism (to be used by `pyHorace`) is
+[`pyclasswrapper`](https://github.com/mducle/hugo/blob/master/src/pyclasswrapper.m).
+This is a much lighter class which also overloads `subsref` but uses `call_python` instead of `py.*`
+and does not provide as much functionality as `light_python_wrapper` (no `help` method for example).
+Because `call_python` is a `mex` function and cannot return a Python object directly (unlike the `py.*` interface),
+additional wrappings are needed on the Python side.
+Firstly each Python class to be exposed to Matlab needs to have a 
+[constructor function](https://github.com/mducle/hugo/blob/master/pyHorace/FunctionWrapper.py#L27) reference
+stored in the module-global dictionary which `call_python` accesses.
+This would create the desired (Python) object and store it in another module-global dictionary, returning the string key to `call_python`.
+This key is then stored by `pyclasswrapper` (in contrast `light_python_wrapper` stores the actual Python object).
+Two additional functions (`get_obj_prop` and `call_obj_method`) are defined and their references stored in the `call_python` dictionary.
+They are called by `pyclasswrapper` to access properties and call methods of the Python object. 
+`pyclasswrapper` passes the string key and method/property name to the object to these functions
+and they then look up the objects in the module-global dictionary and use `getattr` to access the method/property of the Python object.
 
 
 # Limitations and future work
