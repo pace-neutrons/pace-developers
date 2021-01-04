@@ -14,13 +14,25 @@ Proposed
 Both Euphonic and Brille are PACE projects with primarily a Python interface.
 PACE, however, aims to provide both a Python and a Matlab interface to users,
 and also to foster inter-operability between projects which are written both in Matlab and Python.
-In particular, `pyHorace` ([prototype](https://github.com/mducle/hugo)), cannot use the standard
-method for Matlab to run Python code, using the `py.*` namespace.
+In particular, `pyHorace` ([prototype](https://github.com/mducle/hugo)) cannot use the 
+[standard method](https://uk.mathworks.com/help/matlab/call-python-libraries.html) for Matlab to run Python code, 
+where calls to Python from Matlab are prefixed with `py.` followed by the full module specification.
+For example, `r = py.numpy.random.rand(3)` uses `numpy` to generate a random number.
+This is because such a call causes Matlab to 
+[automatically spawn](https://uk.mathworks.com/help/matlab/ref/pyenv.html) a dependent Python interpreter,
+which can be either created within the same process as the Matlab interpreter (`InProcess`)
+or in an external process (`OutOfProcess`).
+`pyHorace` already runs within a Python interpreter and the compiled Matlab library *must* be loaded in-process.
+Thus, if Matlab spawns a second Python intepreter with the default `InProcess` execution mode,
+the two Python interpreters will conflict causing memory errors and a crash.
+We can force Matlab to launch the dependent Python interpreter `OutOfProcess`
+but this imposes a significant performance penalty
+(extensive testing was not done but Brille+SpinW runs about 10x slower than with `InProcess`). 
 
 
 ## Proposal
 
-Thus it is proposed that the Matlab interface to Euphonic and Brille would be through a Python wrapper class.
+So, we propose that the Matlab interface to Euphonic and Brille would be through a Python wrapper class.
 There would be two implementation of this class.
 One (used by Matlab users) would call to `py.*` internally, whilst the other
 (used by `pyHorace`) would use the mechanism described in the [python interface design](../../python_interface/design).
