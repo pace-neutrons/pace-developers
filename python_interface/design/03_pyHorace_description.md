@@ -14,6 +14,8 @@
 
 [Limitations and future work](#limitations-and-future-work)
 
+[Code Examples](#code-examples)
+
 
 # Background
 
@@ -27,8 +29,8 @@ It is relatively straightforward for Matlab users to access the Python component
 This document, however, focuses on the case of Python users accessing the Matlab components of PACE.
 
 As detailed in an [architectural decision record](../../0010-use-compiled-matlab-for-python.md)
-we chose to use the Matlab Compiler toolbox to "compile" the Matlab parts of PACE
-which allows our users to use PACE as a Python module 
+we chose to use the Matlab Compiler toolbox to "compile" the Matlab parts of PACE.
+This allows our users to use PACE as a Python module 
 (tentatively called `pyHorace`, but perhaps it should be `pyPace` or some such) 
 without needing a Matlab license.
 Instead they need to download and install a Matlab Components Runtime (MCR), a free but restricted distribution of Matlab,
@@ -61,14 +63,15 @@ As noted in [ADR #10](../../documentation/adr/0010-use-compiled-matlab-for-pytho
 to use "compiled" Matlab code for the Python interface to Horace/Herbert rather than to rewrite them in Python/C++.
 This imposes certain constraints on an "pyHorace" implementation:
 
-1. Only user written "gateway" m-file *functions* maybe directly accessed by Python (or executed on the commandline) in a compiled Matlab code.
+1. Only user written "gateway" m-file *functions* may be called directly from Python 
+(or executed on the commandline) when used from compiled Matlab code.
 2. Matlab is run as a loaded library within the Python process ("in-process" execution).
 3. The Matlab help system is not available to compiled Matlab code.
 4. The Matlab MCR requires the use of its own standard libraries which implies restrictions on which compilers/Python versions can be used.
 
 Point 1 means that Matlab classes and standard Matlab functions cannot be *directly* created or called from Python 
 (a specific gateway function which constructs the class must be used instead).
-However, any Matlab code (and indeed the entire standard Matlab built-in library of functions and classes) maybe in "included" in the compiled library.
+However, any Matlab code (and indeed the entire standard Matlab built-in library of functions and classes) may be in "included" in the compiled library.
 The restrictions is that this "included" code may only be accessed by the user-written m-file *function* (not class)
 and not by the user calling those functions/classes from Python.
 Given this major limitation, the approach taken by the "Hugo" prototype is to use a gateway function,
@@ -90,25 +93,29 @@ This and point 4 and other limitations are discussed in the [limitations section
 ["pyHorace"](https://github.com/mducle/hugo) is based on a framework (["pySpinW"](https://github.com/spinw/pyspinw)) written for SpinW by S. Ward.
 The core of this is a Matlab "gateway" function, [`call_method.m`](https://github.com/mducle/hugo/blob/master/src/call_method.m#L101)
 which takes the name of a Matlab function and its arguments and uses `feval` to evaluate it.
-When compiled using the Matlab Compiler SDK as a Python module, it maybe accessed in Python using `<module_name>.call_method('function_name', object, [<arg_list>])`.
-To make it easier to use, this core gateway function and the Matlab Python module (called `horace`) is wrapped in a Python class,
-[`pyHorace.Matlab`](https://github.com/mducle/hugo/blob/master/pyHorace/Matlab.py#L60) whose `__getattr__()` special method is overloaded to call `call_method`.
-That is, when the user does:
+When compiled using the Matlab Compiler SDK as a Python module,
+it maybe accessed in Python using `<module_name>.call_method('function_name', object, [<arg_list>])`.
+To make it easier to use, this core gateway function and the Python module (called `horace` and containing the compiled Matlab archive)
+is wrapped in a Python class, [`pyHorace.Matlab`](https://github.com/mducle/hugo/blob/master/pyHorace/Matlab.py#L60),
+whose `__getattr__()` special method is overloaded to call `call_method`.
+
+This allows a syntax like:
 
 ```
 from pyHorace import Matlab
-Matlab.<func_name>(*args)
+Matlab.cut_sqw('sqw_file', [], [], [], [-1,1])
 ```
 
-The `Matlab.<func_name>` part causes Python to call `Matlab.__getattr__('func_name')`. 
-This returns a Python function which wraps `horace.call_method('func_name', [], *args)`.
-Both these steps are chained by Python so that uses can do `Matlab.cut_sqw('sqw_file', [], [], [], [-1,1])` transparently.
-Because the wrapper to `call_method` is through the `__getattr__` overload of a class, users always have to use the "dot" method-access notation.
-I.e., `from pyHorace.Matlab import *; cut_sqw('sqw_file', [], [], [], [-1,1])` will not work because `pyHorace.Matlab` is not a Python module but a class.
-In addition `help(pyHorace.Matlab.cut_sqw)` will also not work because this actually refers to a (dynamically constructed) Python wrapper function.
+Where the `Matlab` class translates this to `horace.call_method('cut_sqw', [], ['sqw_file', [], [], [], [-1,1])` internally in `__getattr__()`.
+However, since this method requires overloading the `__getattr__` method of a class, users *always have* to use the "dot" method-access notation.
+I.e., `from pyHorace.Matlab import *; cut_sqw('sqw_file', [], [], [], [-1,1])` will not work
+because `pyHorace.Matlab` is not a Python module but a class.
+In addition `help(pyHorace.Matlab.cut_sqw)` will also not work
+because this actually refers to a (dynamically constructed) Python wrapper function.
 Thus if we want the above two functionalities (accessing Matlab "included" functions/classes and help)
 we will need to write explicit Python wrappers for *every* Matlab function (including class methods) we want to expose this way.
-Alternatively if we don't need to provide help/documentation, we can wrap only those functions whose syntax we want to extend to make more "Pythonic".
+Alternatively if we don't need to provide help/documentation,
+we can wrap only those functions whose syntax we want to extend to make more "Pythonic".
 
 The other major feature of `pyHorace` is a Python [`MatlabProxyObject`](https://github.com/mducle/hugo/blob/master/pyHorace/MatlabProxyObject.py) class
 which wraps a Matlab class so that it appears transparent to Python users.
@@ -118,15 +125,15 @@ to call the equivalent Matlab special functions `subsref` and `subassgn`
 to access the methods/properties of a class.
 In addition, the Python `__repr__`, `__str__`, `__dir__` and `__doc__` methods are also overloaded
 to provide a description of the object, its methods and help text (except that the Matlab help system is not accessible in a compiled application).
-
 This wrapper is needed because any new-style (defined by `classdef`) Matlab object returned by `call_method` and its wrappers
 is opaque to Python and cannot be handled by purely Python functions.
+
 Old-style Matlab objects are treated as plain `struct`s and are automatically converted to Python `dict`s,
 losing any connection with the methods defined in their `@` folders.
 To overcome this, `pyHorace` includes a [`thinwrapper`](https://github.com/mducle/hugo/blob/master/src/thinwrapper.m) class which wraps an old style class.
 Whenever an old-style class (or [struct with an old style member](https://github.com/mducle/hugo/blob/master/src/has_thin_members.m))
 is returned by a Matlab function to Python, [`call_method`](https://github.com/mducle/hugo/blob/master/src/call_method.m#L115)
-instead [wraps](https://github.com/mducle/hugo/blob/master/src/wrap_obj.m) it (recursively) by storing the actual old-style object in the Matlab base namespace
+instead [wraps](https://github.com/mducle/hugo/blob/master/src/wrap_obj.m) it by storing the actual old-style object in the Matlab base namespace
 and returning to Python a `thinwrapper` (new-style) object.
 The only property of this object is the string name of the actual (old-style) object in the base namespace.
 This is used by [Python side wrappers](https://github.com/mducle/hugo/blob/master/pyHorace/MatlabProxyObject.py#L79)
@@ -135,7 +142,7 @@ to allow users to transparently access the (old-style) Matlab objects as if they
 To facilitate all this wrapping, and to make the user syntax more natural, there is an automatic data conversion class,
 [`DataTypes`](https://github.com/mducle/hugo/blob/master/pyHorace/DataTypes.py),
 which converts data from Python to Matlab (`encode`) and vice versa (`decode`).
-Two particular use cases of this automatic conversion is to convert a Python list of numbers 
+Two particular use cases of this automatic conversion are to convert a Python list of numbers 
 [directly](https://github.com/mducle/hugo/blob/master/pyHorace/DataTypes.py#L42) into a Matlab numerical array
 (Matlab would otherwise convert any Python list into a *cell* array which would give an error if the Matlab function was not expecting this);
 and to [wrap `numpy` arrays](https://github.com/mducle/hugo/blob/master/pyHorace/TypeWrappers.py)
@@ -180,29 +187,38 @@ This is because `mex` functions may only take and return *Matlab* data types (Py
 Similarly the CPython `PyObject_Call` function requires that inputs to the called functions are all of the `PyObject` type.
 Thus `call_python` converts Matlab types to their Python equivalent and vice versa as per this table:
 
-|      Matlab    |      Python         | Note |
-| -------------- | ------------------- | ---- |
-| numeric array  | `numpy.ndarray`     |      |
-| numeric array  | `list` of numbers   | p2m  |
-| `char` array   | `str`               |      |
-| `string`       | `str`               |      |
-| `string` array | `list` of `str`     |      |
-| `struct`       | `dict`              |      |
-| `struct` array | `list` of `dict`    |      |
-| `cell` array   | `list`              |      |
-| `cell` array   | `tuple`             | p2m  |
+|      Python         |      |      Matlab      |
+| ------------------- | ---- | ---------------- |
+| `numpy.ndarray`     | <--> | numeric array    |
+| `list` of numbers   | ---> | numeric array    |
+| `str`               | <--> | `char` array     |
+| `str`               | <--- | `string`         |
+| `list` of `str`     | <--> | `string` array   |
+| `dict`              | <--> | `struct`         |
+| `list` of `dict`    | <--> | `struct` array   |
+| `list`              | <--> | `cell` array     |
+| `tuple`             | ---> | `cell` array     |
+| ------------------- | ---- | ---------------- |
 
-"p2m" indicates that conversion only applies from Python to Matlab 
-(from a Python `list` of numbers to a Matlab numeric array, and from a python `tuple` to a Matlab `cell` array).
-Other conversions apply in both directions (e.g. Matlab cell arrays are always converted to a Python `list` and vice versa).
+where "<-->" indicates the conversion is bi-directional, whilst "--->" a conversion from Python to Matlab only,
+and "<---" is a conversion from Matlab to Python only.
+That is, a Python `list` of numbers will be converted to a Matlab numeric array,
+but such an array would never be converted back to a Python `list` (it would be converted to a `numpy.ndarray` instead).
+And, both Matlab `string` and `char` arrays are converted to Python `str` but Python `str`s are always converted to `char` arrays.
+
 The conversion from a Matlab array to a Python array involves no data copies - the raw memory pointed to by Matlab is wrapped in a numpy `array` object.
 This is possible because that memory is only used in the Python function to be executed and not more widely.
 The reverse conversion (from a `numpy` array to a Matlab array) involves a data copy
 because Matlab `mex` does not support a shared data wrapping over memory which is not allocated by Matlab.
+That is, Matlab supports creating a Matlab array only with two sets of API functions, 
+`CreateArray` and the combination of `CreateArrayFromBuffer` and `CreateBuffer`.
+`CreateArray` takes a pointer or iterator and copies the memory referenced,
+whilst `CreateBuffer` allocates memory on the Matlab heap and returns a `unique_ptr` which is consumed by `CreateArrayFromBuffer`.
 
 Note that Matlab objects, enumerations and sparse data types are currently not converted and will give an "`Unrecognised input`" error.
 Likewise, Python objects or other data types not listed above returned by the Python functions will give an "`Unknown return type`" error.
-In principle both these objects can be wrapped using the mechanisms described above for Matlab objects (through a `MatlabProxyObject`)
+In principle the conversions between Matlab and Python objects and vice versa
+can be wrapped using the mechanisms described above for Matlab objects (through a `MatlabProxyObject`)
 and below (through a `pythonclasswrapper`) for Python objects but this has not been implemented.
 
 ## The SpinW-Brille interface
@@ -265,7 +281,7 @@ There are currently some limitations due to the architecture chosen for `pyHorac
 4. MPI routines don't work.
 
 Limitations 1 and 2 come from the choice, outlined in the [first section](#compiled-matlab) to use a gateway function which calls `feval`.
-This can be overcome by writing additional Python wrapper for each Matlab function or class we want to expose to Python.
+This can be overcome by writing an additional Python wrapper for each Matlab function or class we want to expose to Python.
 Alternatively the `Matlab` and `MatlabProxyObject` classes can be modified to automatically
 convert Python keyword arguments to `('name', value)` pairs to be passed to Matlab if the Matlab code is modified to accept them.
 
@@ -275,9 +291,12 @@ The only way to work around this is to save the help text for every Matlab funct
 and then to either generate wrappers for each (such as that used to overcome limitations 1 and 2)
 or to modify the `Matlab` and `MatlabProxyObject` classes to look up these help text.
 
-Limitation 4 is because the MPI routines needs to launch additional instances of the Matlab interpreter which is not possible from within Python.
-The most straight-forward way to overcome this limitation is to compile Horace as a stand-alone executable, with the `worker_v2.m` function as the gateway function. 
-This executable can then be launched and will communicate with the main process using files or MPI as usual. (This has not been tested).
+Limitation 4 is because the MPI routines need to launch additional instances of the Matlab interpreter which is not possible from within Python.
+This is just a limitation of the state of the current code rather than anything more fundamental,
+and will be resolved when "compiled" workers are implemented in the MPI framework.
+These compiled workers would be just like the compiled `horace` Python module except that instead of using `call_method`
+and other Python focused gateway functions, they would use just `worker_v2.m` as the gateway function.
+The MPI framework should then be able to launch these compiled worker executable and communicate as usual.
 
 In addition, however, there are also limitations imposed by Matlab which cannot be alleviated:
 
@@ -285,9 +304,85 @@ In addition, however, there are also limitations imposed by Matlab which cannot 
 6. Must use a specific C++ compiler for the `mex` files.
 
 Restriction 5 means for example that a package created with Matlab R2020a can only be used with the MCR 2020a version.
-(Note that users must download and install the MCR to run `pyHorace` even if they alread have a Matlab license and Matlab installed
+(Note that users must download and install the MCR to run `pyHorace` even if they already have a Matlab license and Matlab installed
 unless they also have the Matlab Compiler toolbox installed).
-Matlab also only support specific C++ compilers for `mex` files.
+Matlab also only supports specific C++ compilers for `mex` files.
 Using an older compiler will generate files which will work on a new Matlab version but the reverse is generally not true.
 This means that if we want to support the widest range of operating systems and Matlab versions,
-we need to use an older compiler which may not support new C++ features (e.g. from C++17 or C++20).
+we need to use an older compiler which may not support newer C++ features (e.g. from C++17 or C++20).
+
+
+# Code Examples
+
+Many examples are included in the root folder [prototype implementation](https://github.com/mducle/hugo).
+We reproduce here an example of generating a simulated phonon spectrum with resolution convolution,
+which uses a combination of Horace and Euphonic.
+
+```python
+from euphonic import ForceConstants
+from pyHorace import Matlab, EuphonicWrapper
+m = Matlab
+import numpy as np
+
+# Some parameters
+scalefac = 1e12
+effective_fwhm = 1
+intrinsic_fwhm = 0.1
+
+# Make a cut of a measured dataset using Horace
+wsc = m.cut_sqw('quartz/2ph_m4_0_ECut.sqw', [-3.02, -2.98], [5, 0.5, 38])
+
+# Set up instrument and sample information
+is_crystal = True; xgeom = [0,0,1]; ygeom = [0,1,0];
+shape = 'cuboid'; shape_pars = [0.01,0.05,0.01];
+wsc = m.set_sample(wsc, m.IX_sample(is_crystal, xgeom, ygeom, shape, shape_pars));
+ei = 40; freq = 400; chopper = 'g';
+wsc = m.set_instrument(wsc, m.merlin_instrument(ei, freq, chopper));
+
+# Loads a CASTEP DFT dataset and create an object to calculate the dispersion
+fc = ForceConstants.from_castep('quartz/quartz.castep_bin')
+euobj = EuphonicWrapper(fc, debye_waller_grid=[6, 6, 6], temperature=100,
+                        negative_e=True, asr=True, chunk=10000, use_c=True)
+
+# Calculates a simulated spectrum *without* resolution convolution
+wsim = m.disp2sqw_eval(wsc, euobj.horace_disp, (scalefac), effective_fwhm)
+
+# Explicitly create a Matlab function handle here,
+# since we can't use the "@" notation in the `set_fun` command below.
+disp2sqwfun = m.eval('@disp2sqw');
+
+# Calculate *with* resolution convolution
+kk = m.tobyfit(wsc);
+kk = kk.set_fun(disp2sqwfun, [euobj.horace_disp, [scalefac], intrinsic_fwhm]);
+wsimres = kk.simulate()
+
+# Plot
+hf = m.plot(wsc); m.pl(wsim); m.acolor('red'); m.pl(wsimres);
+m.uiwait(hf)
+```
+
+In the example, Matlab functions are called from Python using the `m.<func_name>` syntax
+which is described in the [second section](#gateway-functions-and-proxy-classes). 
+
+`fc` and `euobj` are purely Python objects and `euobj.horace_disp` is a Python function reference.
+This Python function reference can be used in place of a Matlab function handle in Matlab functions that need one.
+In the above example these are `disp2sqw_eval` and `set_fun`.
+In the first instance, `m.disp2sqw_eval` actually calls `Matlab.__getattr__()`
+as described in the [second section](#gateway-functions-and-proxy-classes).
+`__getattr__()` detects a Python function reference and converts it to a Matlab `pythonFunctionWrapper` object,
+storing the actual Python function reference in a module-global dictionary
+as described in [this section](#calling-python-from-compiled-matlab).
+It then calls the Matlab `call_method('disp2sqw_eval',...)` function.
+This detects a `pythonFunctionWrapper` object and rewraps this in a Matlab anonymous function around
+the `mex` function `call_python()` which knows to look in the module-global dictionary to call the true Python function.
+This anonymous function handle is then passed to the desired Matlab function (`disp2sqw_eval` in this case),
+which treats it just like any other Matlab function handle it is passed.
+
+In the example, we also need to pass the function handle to `disp2sqw_eval` to `set_fun`,
+but we used `disp2sqwfun = m.eval('@disp2sqw')` to do this.
+This is because we have chosen not to implement the Matlab "@" notation to create a function handle from a function name.
+It may be possible to implement this in Python, but the unary "@" symbol in Python is reserved for decorators and cannot be overloaded.
+It is also the binary matrix multiplication operator, and this operator can be overloaded using the `__matmul__` function. 
+However, this would mean that the syntax must be something like `0@m.disp2sqw` (requiring something on the LHS of the function name).
+Alternatively one of the Python unary arithmetic operator symbols (`~` inverse, `-` negative, or `+` positive) could be overloaded. 
+
