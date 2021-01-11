@@ -36,6 +36,8 @@ and [`brillem`](https://github.com/brille/brillem).
 * The continuous integration (CI) system would be updated to pull in the submodule for tests
 * The CI system would also be used to build a ["Matlab Toolbox"](https://uk.mathworks.com/help/matlab/creating-help.html)
 for distribution which would include `light_python_wrapper` (so users do not have to install it separately).
+* Using this Matlab Toolbox `mltbx` file and uploading it to the github release allows it to be
+[automatically published](https://www.mathworks.com/matlabcentral/about/fx/#Why_GitHub) by the File Exchange.
 
 
 ## Notes
