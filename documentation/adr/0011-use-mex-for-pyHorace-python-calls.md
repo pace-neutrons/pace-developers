@@ -1,6 +1,6 @@
-[<-previous](0009-brille-integration.md) | next->
+[<-previous](0010-use-compiled-matlab-for-python.md) | [next->](0012-matlab-python-wrapper.md)
 
-# 10. pyHorace Matlab code should use a mex interface to call Python functions
+# 11. pyHorace Matlab code should use a mex interface to call Python functions
 
 Date: 2020-Dec-02
 
