@@ -27,6 +27,13 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument('--dos', action='store_true',
                         help="Compute phonon DOS instead of coherent S")
     parser.add_argument('--npts', '-n', type=int, default=1000)
+    parser.add_argument('--npts-density', action='store_true',
+                        dest='npts_density',
+                        help=('npts specified as the number of points at '
+                              'surface of 1 recip. angstrom-radius sphere; '
+                              'otherwise scaled to equivalent density on '
+                              'sphere surface')
+                        )
     parser.add_argument('--sampling', type=str, default='golden',
                         choices=sampling_choices)
     parser.add_argument('--jitter', action='store_true')
@@ -51,12 +58,16 @@ def get_spectrum(force_constants: ForceConstants,
                  energy_bins: Quantity,
                  q: Quantity = (0.1 * ureg('1/angstrom')),
                  npts: int = 1000,
+                 npts_density: bool = False,
                  sampling: str = 'golden',
                  jitter: bool = True,
                  dos: bool = False,
                  smear_width: Optional[Quantity] = (1 * ureg('meV'))):
 
     assert isinstance(q, Quantity)
+
+    if npts_density:
+        npts = int(np.ceil(npts * (q.to('1/angstrom').magnitude**2)))
 
     if dos:
         sampling_function = sample_sphere_dos
@@ -164,7 +175,9 @@ def main():
                                             **options)
 
             print(f"Calculating spectrum: q={q.magnitude}")
-            spectrum = get_spectrum(force_constants, npts=args.npts, **options)
+            spectrum = get_spectrum(force_constants,
+                                    npts=args.npts, npts_density=args.npts_density,
+                                    **options)
 
             diff = diff_1d(spectrum, ref_spectrum)
             box_data.append(diff.magnitude)

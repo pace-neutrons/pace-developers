@@ -27,6 +27,13 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument('--dos', action='store_true',
                         help="Compute phonon DOS instead of coherent S")
     parser.add_argument('--npts', '-n', nargs='+', type=int, default=[1000])
+    parser.add_argument('--npts-density', action='store_true',
+                        dest='npts_density',
+                        help=('npts specified as the number of points at '
+                              'surface of 1 recip. angstrom-radius sphere; '
+                              'otherwise scaled to equivalent density on '
+                              'sphere surface')
+                        )
     parser.add_argument('--sampling', type=str, nargs='+',
                         default=['golden'], choices=sampling_choices)
     parser.add_argument('--jitter', type=str, nargs='+', default=['y'],
@@ -53,12 +60,16 @@ def get_spectrum(force_constants: ForceConstants,
                  max_energy: Quantity,
                  q: Quantity = (0.1 * ureg('1/angstrom')),
                  npts: int = 1000,
+                 npts_density: bool = False,
                  sampling: str = 'golden',
                  jitter: bool = True,
                  dos: bool = False,
                  smear_width: Optional[Quantity] = (1 * ureg('meV'))):
 
     assert isinstance(q, Quantity)
+
+    if npts_density:
+        npts = int(np.ceil(npts * (q.to('1/angstrom').magnitude**2)))
 
     energy_bins = np.arange(0,
                             (max_energy.to('meV').magnitude),
@@ -108,7 +119,8 @@ def str2bool(str_bool: str) -> bool:
 
 
 @functools.lru_cache()
-def get_ref_spectrum(force_constants, *, q, max_energy, npts, dos, bin_width):
+def get_ref_spectrum(force_constants, *, q, max_energy, npts, dos, bin_width,
+                     npts_density=False):
     print("Calculating reference spectrum: "
           f"q = {q}, npts = {npts}")
     return get_spectrum(force_constants,
@@ -116,7 +128,8 @@ def get_ref_spectrum(force_constants, *, q, max_energy, npts, dos, bin_width):
                         bin_width=bin_width,
                         npts=npts, q=q, dos=dos,
                         sampling='golden', jitter=False,
-                        smear_width=None)
+                        smear_width=None,
+                        npts_density=npts_density)
 
 
 spacing_data = {1: {'legend_bbox': (1.8, -0.2),
@@ -127,7 +140,12 @@ spacing_data = {1: {'legend_bbox': (1.8, -0.2),
                                         'top': 0.94}},
                 3: {'legend_bbox': (2, -0.45),
                     'subplots_kwargs': {'bottom': 0.3, 'hspace': 0.7,
-                                        'top': 0.95}}}
+                                        'top': 0.95}},
+                4: {'legend_bbox': (2, -0.45),
+                    'subplots_kwargs': {'bottom': 0.2, 'hspace': 1.1,
+                                        'top': 0.95}},
+
+}
 
 
 def main():
@@ -232,7 +250,8 @@ def main():
                             row_key: row_value,
                             'max_energy': max_energy,
                             'bin_width': bin_width,
-                            'dos': args.dos})
+                            'dos': args.dos,
+                            'npts_density': args.npts_density})
             if comparison_key == 'sampling':
                 options.update({'jitter': jitter_options[i]})
             elif row_key == 'sampling':
@@ -243,7 +262,8 @@ def main():
                                             npts=args.ref_npts,
                                             dos=args.dos,
                                             bin_width=bin_width,
-                                            q=options['q']
+                                            q=options['q'],
+                                            npts_density=args.npts_density,
                                             ).broaden(options['smear_width'],
                                                       shape='gauss')
 
@@ -312,8 +332,10 @@ def main():
             err_ax.set_xticks(err_x_vals)
             err_ax.set_xticklabels(box_labels, rotation=label_rotation, ha="right")
         err_ax.set_xlabel(comparison_key)
-        err_ax.set_ylabel('RMS error (relative)')
+        err_ax.set_ylabel('RMS error\n(relative)')
 
+        if comparison_key == 'npts' and args.npts_density:
+            err.set_xlabel('npts / |q|^2')
 
 
     if len(row_values) in spacing_data:
