@@ -5,12 +5,12 @@ top to bottom direction
 
 skinparam rectangle {
     roundCorner<<Distribution>> 10
-    roundCorner<<Python module>> 10
-    roundCorner<<Matlab toolbox>> 10
-    FontSize 10
+    roundCorner<<Python>> 10
+    roundCorner<<Matlab>> 10
+    FontSize 14
 }
 skinparam file {
-    FontSize 8
+    FontSize 12 
 }
 
 skinparam class {
@@ -21,15 +21,15 @@ BorderColor Black
 
 together {
     together {
-        rectangle "Horace distribution" <<Distribution>> as horaceDistribution {
+        rectangle "Horace" <<Distribution>> as horaceDistribution {
             file Horace
             file Herbert
         }
         together {
-            rectangle "SpinW toolbox" <<Matlab toolbox>> as spinwToolbox {
+            rectangle " " <<Matlab>> as spinwToolbox {
                 file SpinW 
             }
-            rectangle "euphonic_matlab toolbox" <<Matlab toolbox>> as euphonic_matlabToolbox {
+            rectangle " " <<Matlab>> as euphonic_matlabToolbox {
                 file euphonic_matlab
             }
         }
@@ -42,19 +42,19 @@ together {
     }
 }
 
-rectangle "brillem" <<Matlab toolbox>> as brillemToolbox {
+rectangle " " <<Matlab>> as brillemToolbox {
     file brillem
 }
 
-rectangle "euphonic_horace module" <<Python module>> as euphonic_horaceModule {
+rectangle " " <<Python>> as euphonic_horaceModule {
     file euphonic_horace
 }
 
-rectangle "brille module" <<Python module>> as brilleModule {
+rectangle " " <<Python>> as brilleModule {
     file brille
 }
 
-rectangle "euphonic module" <<Python module>> as euphonicModule {
+rectangle " " <<Python>> as euphonicModule {
     file euphonic
 }
 

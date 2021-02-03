@@ -8,6 +8,8 @@
 
 [Naming](#naming)
 
+[Appendix: Project Descriptions](#appendix-project-descriptions)
+
 
 ## Introduction
 
@@ -27,22 +29,20 @@ Solid arrows indicate a required dependency, whilst dashed arrows are optional d
 Only projects which are publicly facing (where users can download a distributed package/toolbox/module) are shown.
 The two interface packages `euphonic_matlab` and `brillem` both depend on a separate library `light_python_wrapper`
 which they import as a git submodule.
+`light_python_wrapper` is a Matlab library which allows Matlab to access Python classes or objects
+as if they are Matlab objects or classes transparently.
 `light_python_wrapper` might be made a public Matlab toolbox at a later date.
 
-* The "Horace distribution" packages the `horace` and `herbert` repositories for Matlab users.
-  It is a program to visualise and analyse single crystal inelastic neutron spectra from time-of-flight spectrometers.
-* The `pace-python` distribution is the equivalent of the "Horace distribution" aimed at Python users.
-  It packages compiled versions of the `horace`, `herbert` and `spinw` repositories together with Python and `mex` glue/interface code.
-  Part of the interfacing code is a separate implementation of `euphonic_matlab` and `brillem`
-  which does not use `light_python_wrapper` and is not suitable for Matlab users
-  (it requires a `mex` file which only works for the "compiled Matlab as a Python module" set-up of `pace-python`).
-* `spinw` is a Matlab program to calculate spin-wave dispersions and spin-spin correlation functions.
-* `euphonic` is a Python program to calculate phonon dispersions and structure factors from DFT-calculated force constants.
-* Both SpinW and Euphonic may be used stand-alone without Horace.
-* `brille` is a C++/Python program to calculate symmetry operations and interpolation in the first Brillouin zone.
-    - It can be used as a standalone program for symmetry calculations and Brillouin zone plotting.
-    - But its major anticipated use is within Euphonic and SpinW for speeding up their calculation using Brillouin zone interpolation.
-* Both Euphonic and SpinW will have code internally to call Brille if it is installed and the user requests it.
+Horace, Euphonic, SpinW and Brille are separate projects / programs and highlighted in purple.
+Their descriptions are listed in the [appendix](#appendix-project-descriptions).
+
+`euphonic_matlab`, `euphonic_horace` and `brillem` are interfaces which connect the main programs.
+
+`pace_python` is a Python module which bundles the Matlab programs Horace and SpinW so Python users can use them.
+
+
+## Interfaces
+
 * `euphonic_matlab` is a Matlab toolbox which allows Matlab users to use Euphonic.
     - It has two anticipated uses:
         + To allow Matlab users to run Euphonic as a stand alone program (to calculate density of states, generate dispersion plots etc.)
@@ -95,3 +95,19 @@ Some suggested alternatives are:
 * For `euphonic_matlab`: `euphonic_horace_interface_matlab`, `euphonium`, `meuphonic`
 
 
+## Appendix: Project Descriptions
+
+* The "Horace distribution" packages the `horace` and `herbert` repositories for Matlab users.
+  It is a program to visualise and analyse single crystal inelastic neutron spectra from time-of-flight spectrometers.
+* The `pace-python` distribution is the equivalent of the "Horace distribution" aimed at Python users.
+  It packages compiled versions of the `horace`, `herbert` and `spinw` repositories together with Python and `mex` glue/interface code.
+  Part of the interfacing code is a separate implementation of `euphonic_matlab` and `brillem`
+  which does not use `light_python_wrapper` and is not suitable for Matlab users
+  (it requires a `mex` file which only works for the "compiled Matlab as a Python module" set-up of `pace-python`).
+* `spinw` is a Matlab program to calculate spin-wave dispersions and spin-spin correlation functions.
+* `euphonic` is a Python program to calculate phonon dispersions and structure factors from DFT-calculated force constants.
+* Both SpinW and Euphonic may be used stand-alone without Horace.
+* `brille` is a C++/Python program to calculate symmetry operations and interpolation in the first Brillouin zone.
+    - It can be used as a standalone program for symmetry calculations and Brillouin zone plotting.
+    - But its major anticipated use is within Euphonic and SpinW for speeding up their calculation using Brillouin zone interpolation.
+* Both Euphonic and SpinW will have code internally to call Brille if it is installed and the user requests it.
