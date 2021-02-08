@@ -1,0 +1,74 @@
+@startuml pace_framework
+
+'skinparam linetype ortho
+top to bottom direction
+
+skinparam rectangle {
+    roundCorner<<Distribution>> 10
+    roundCorner<<Python>> 10
+    roundCorner<<Matlab>> 10
+    FontSize 14
+}
+skinparam file {
+    FontSize 12 
+}
+
+skinparam class {
+BackgroundColor White
+ArrowColor Black
+BorderColor Black
+}
+
+together {
+    together {
+        rectangle "Horace" <<Distribution>> as horaceDistribution {
+            file Horace
+            file Herbert
+        }
+        together {
+            rectangle " " <<Matlab>> as spinwToolbox {
+                file SpinW 
+            }
+            rectangle " " <<Matlab>> as euphonic_matlabToolbox {
+                file euphonic_matlab
+            }
+        }
+    }
+    rectangle pace-python <<Distribution>> as pacePython {
+        file "Compiled Horace"
+        file "Compiled Herbert"
+        file "Compiled SpinW"
+        file "Interface code"
+    }
+}
+
+rectangle " " <<Matlab>> as brillemToolbox {
+    file brillem
+}
+
+rectangle " " <<Python>> as euphonic_horaceModule {
+    file euphonic_horace
+}
+
+rectangle " " <<Python>> as brilleModule {
+    file brille
+}
+
+rectangle " " <<Python>> as euphonicModule {
+    file euphonic
+}
+
+
+horaceDistribution . pacePython
+pacePython --> euphonic_horaceModule
+horaceDistribution --> euphonic_matlabToolbox
+euphonic_matlabToolbox --> euphonic_horaceModule
+euphonic_matlabToolbox --> euphonicModule
+euphonic_horaceModule --> euphonicModule
+horaceDistribution --> spinwToolbox
+euphonicModule -down-> brilleModule
+spinwToolbox --> brillemToolbox
+brillemToolbox --> brilleModule
+pacePython --> brilleModule
+
+@enduml
