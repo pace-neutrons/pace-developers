@@ -1,66 +1,114 @@
 # PACE framework
 
-[Introduction](#introduction)
-
-[Dependencies](#dependencies)
-
-[`euphonic_horace`](#euphonic_horace)
-
-[Naming](#naming)
-
-[Appendix: Project Descriptions](#appendix-project-descriptions)
-
 
 ## Introduction
 
 PACE comprises several independent programs which may interact with each other.
 This document defines how each program is expected to call the others, and especially the interfacing layers between the programs.
 
+The main PACE programs considered here are:
 
-## Dependencies
+* [Horace](https://github.com/pace-neutrons/Horace)
+    - This is the combined Horace and Herbert distribution
+* [Euphonic](https://github.com/pace-neutrons/euphonic)
+* [Brille](https://github.com/brille/brille)
+* [SpinW](https://github.com/spinw/spinw)
 
-![PACE project dependencies](diagrams/pace_framework.svg)
+These programs are generally not dependent on each other, except for some limited functionalities, which are:
 
-The above diagram shows the dependencies of the various PACE projects.
-Arrows point from the dependent package to its dependency (e.g. `brillem` is dependent on `brille`).
-Solid arrows indicate a required dependency, whilst dashed arrows are optional dependencies
-(e.g. `pace-python` is only dependent on `euphonic_horace` for phonon calculations using Euphonic).
+1. Horace calling Euphonic or SpinW to calculate INS spectra.
+    - This uses the Horace [third-party API](../../optimisation/design/Third_Party_API_Design.md)
+2. Euphonic or SpinW calling Brille.
+    - This is done internally within Euphonic or SpinW to call Brille directly.
 
-Only projects which are publicly facing (where users can download a distributed package/toolbox/module) are shown.
-The two interface packages `euphonic_matlab` and `brillem` both depend on a separate library `light_python_wrapper`
-which they import as a git submodule.
-`light_python_wrapper` is a Matlab library which allows Matlab to access Python classes or objects
-as if they are Matlab objects or classes transparently.
-`light_python_wrapper` might be made a public Matlab toolbox at a later date.
+An additional complication is that Horace and SpinW are Matlab programs whilst Euphonic and Brille are Python modules.
+Despite this, amongst the core aims of the PACE project are that:
 
-Horace, Euphonic, SpinW and Brille are separate projects / programs and highlighted in purple.
-Their descriptions are listed in the [appendix](#appendix-project-descriptions).
-
-`euphonic_matlab`, `euphonic_horace` and `brillem` are interfaces which connect the main programs.
-
-`pace_python` is a Python module which bundles the Matlab programs Horace and SpinW so Python users can use them.
+* Users must be able to run all these programs from *either* Matlab *or* Python. 
+* Users must be able to model spectra in Horace using the following as computation engines:
+    - Euphonic, alone or in conjunction with Brille.
+    - SpinW, alone or in conjunction with Brille.
 
 
-## Interfaces
+## Horace calling Euphonic or SpinW
 
-* `euphonic_matlab` is a Matlab toolbox which allows Matlab users to use Euphonic.
-    - It has two anticipated uses:
-        + To allow Matlab users to run Euphonic as a stand alone program (to calculate density of states, generate dispersion plots etc.)
-        + To allow Horace to use Euphonic to simulate phonon spectra
-* `euphonic_horace` is a Python module which translates the output of Euphonic into the form specified by the 
-  [Horace third part simulation code API](../../optimisation/design/Third_Party_API_Design.md)
-  and also packages together different functionalities of Euphonic to make it easier for Horace users to use.
-    - `euphonic_horace` is need by `euphonic_matlab` in the second use case (use by Horace) but not the first (use stand-alone).
-    - `euphonic_horace` is also needed by `pace-python` for this use case (use by Horace).
-* `brillem` is a Matlab toolbox which allows Matlab users to use Brille.
-* It has two anticipated uses:
-    - To allow Matlab users to run Brille stand-alone for symmetry calculations and Brillouin zone plotting
-    - To allow SpinW to use Brille for Brillouin zone interpolation.
-* `brillem` currently has both Matlab and Python code, and is equivalent to a combination of `euphonic_matlab` and `euphonic_horace`.
-* This combination of `euphonic_matlab` and `euphonic_horace` is the current `horace-euphonic-interface` repository
-  which is proposed to be split due to versioning issues between the Matlab and Python code.
-* `pace-python` requires the Python part of `brillem` but not the Matlab part and currently pulls the `brillem` repository to obtain it.
-* It is hoped that the Python parts of `brillem` could be merged into the main `brille` codebase instead.
+The [Horace third-party API](../../optimisation/design/Third_Party_API_Design.md)
+essentially requires a model *function* that accepts the q-vector (`hkl`) coordinates as input
+and returns either a list (cell array) of mode energies and intensities or intensity at a give q-vector and energy.
+That is either one of:
+
+```matlab
+[energies, intensities] = disp_fun(qh, qk, ql, parameters, args);
+sqw = sqw_fun(qh, qk, ql, energy, parameters, args);
+```
+
+where `qh`, `qk`, `ql` and `energy` are vectors of equal length, `parameters` is a vector, and `args` is a cell array.
+`energies` and `intensities` are cell arrays with `n_mode` elements, each element is a vector the same size as `qh` etc.
+`sqw` is a vector the same size as `qh`.
+
+**The sole purpose of the `euphonic_horace` program is to provide this model function for Horace to use Euphonic.**
+It must be written in Python in order to allow both Python and Matlab users to run the combination of Horace + Euphonic.
+This is due to restrictions on calling Python from Matlab using a compiled Matlab module.
+`euphonic_horace` provides a class `CoherentCrystal` which wraps the necessary Euphonic classes
+(`ForceConstants`, `DebyeWaller` and `QPointPhononModes`) and provides a `horace_disp` function as a class method.
+There is [debate](#euphonic_horace) as to whether this is necessary as a separate program (see below).
+
+The equivalent functionality for SpinW is included in the SpinW codebase itself, in the form of the `horace_sqw` method.
+
+
+## SpinW or Euphonic calling Brille
+
+[ADR #9](../adr/0009-brille-integration.md) decided that integration of Euphonic or SpinW with Brille
+should be done within the Euphonic or SpinW codebase themselves rather than through an interface program.
+In both cases it involves constructing a `BrillouinZone` object and then a q-point interpolation grid from this.
+The `interpolate_at()` or `ir_interpolate_at()` methods of the grid are then used for interpolation.
+The `create_bz()` and `create_grid()` Python functions which are part of `brillem`
+makes the `BrillouinZone` and grid construction easier.
+
+
+## Interface layers for Matlab users to run Python
+
+Matlab has a built-in facility to run Python programs.
+Thus users can run Euphonic or Brille (which are Python modules) directly as long as they have those and Python installed.
+The syntax is quite longwinded, however,
+so the aim of the `euphonic_matlab` and `brillem` programs is to provide an *easy* interface
+for Matlab users to run Euphonic and Brille.
+
+Both programs use the `light_python_wrapper` library which is an abstract base class
+providing a Matlab object-oriented ("dot-notation") syntax to Python classes.
+
+In addition to generic class wrapping, `euphonic_matlab` explicitly defines wrappers
+for the `ForceConstants` and `CoherentCrystal` Python classes (with the same Matlab name).
+
+`brillem` serves the same functionality for Matlab users to run Brille,
+and also for SpinW to run Brille.
+`brillem` includes both Python and Matlab code.
+The Python code wraps the different grid classes and constructors into a single Python class
+[as described above](#spinw-or-euphonic-calling-brille).
+The Matlab code is a light wrapper providing a more Matlab-like syntax.
+**The SpinW-Brille interface explicitly uses `brillem` and will not work without it installed.**
+
+
+## Interface layers for Python users to run Matlab
+
+The `pace-python` distribution is a Python module of compiled Matlab versions of Horace, Herbert and SpinW
+together with interface code which allows a very similar syntax to Matlab for Python users.
+In addition, `pace-python` currently also packages the Python part of `brillem`
+(it cannot use the Matlab part of `brillem`).
+
+
+## Call-graph
+
+![PACE project call-graph](diagrams/pace_framework.svg)
+
+The above diagram shows the call graphs between the PACE and interface programs.
+Arrows point from the caller to the callee (e.g. Horace calls `euphonic_matlab`),
+and the text beside the lines indicate the called function or method.
+Purple background indicates major PACE packages.
+
+The code is organised such that each (yellow-background) file in the graph is a separate git repository,
+except for the "compiled" versions included in `pace-python` which are all in a single
+[repository](https://github.com/pace-neutrons/pace-python/).
 
 
 ## `euphonic_horace`
@@ -95,19 +143,3 @@ Some suggested alternatives are:
 * For `euphonic_matlab`: `euphonic_horace_interface_matlab`, `euphonium`, `meuphonic`
 
 
-## Appendix: Project Descriptions
-
-* The "Horace distribution" packages the `horace` and `herbert` repositories for Matlab users.
-  It is a program to visualise and analyse single crystal inelastic neutron spectra from time-of-flight spectrometers.
-* The `pace-python` distribution is the equivalent of the "Horace distribution" aimed at Python users.
-  It packages compiled versions of the `horace`, `herbert` and `spinw` repositories together with Python and `mex` glue/interface code.
-  Part of the interfacing code is a separate implementation of `euphonic_matlab` and `brillem`
-  which does not use `light_python_wrapper` and is not suitable for Matlab users
-  (it requires a `mex` file which only works for the "compiled Matlab as a Python module" set-up of `pace-python`).
-* `spinw` is a Matlab program to calculate spin-wave dispersions and spin-spin correlation functions.
-* `euphonic` is a Python program to calculate phonon dispersions and structure factors from DFT-calculated force constants.
-* Both SpinW and Euphonic may be used stand-alone without Horace.
-* `brille` is a C++/Python program to calculate symmetry operations and interpolation in the first Brillouin zone.
-    - It can be used as a standalone program for symmetry calculations and Brillouin zone plotting.
-    - But its major anticipated use is within Euphonic and SpinW for speeding up their calculation using Brillouin zone interpolation.
-* Both Euphonic and SpinW will have code internally to call Brille if it is installed and the user requests it.
