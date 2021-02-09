@@ -150,6 +150,7 @@ Keith Refson, David Voneshen
 ## High-priority
    - Profile powder-averaging script to identify sources of
      poor performance (AJJ & RF)
+   - Investigate possibility of limiting memory usage by sampling in batches of q-points. (AJJ & RF)
    - Examine impact of jitter in r-direction; does this clear up outliers? (AJJ)
    - Implement user API and scripts to make use of proposed 3-parameter powder-averaging scheme.
      - Try min/max instead of geometric mean
@@ -161,4 +162,4 @@ Keith Refson, David Voneshen
      (Euphonic-Brille team)
    - Look into fully volumetric sampling (AJJ)
    - Consider interactions between powder-averaging and instrumental
-     resolution functions (?)
+     resolution functions in overall design (TP)
