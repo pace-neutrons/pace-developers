@@ -13,7 +13,7 @@ Keith Refson, David Voneshen
         grid-based, random and quasirandom sampling schemes.
 
      - Optional parameters include the number of q-point samples,
-       Gaussian/Lorentian broadening width, and addition of
+       Gaussian/Lorentzian broadening width, and addition of
        jitter in phi/theta directions
 
    - Currently no tool is provided to apply such average over a sweep
@@ -45,7 +45,7 @@ Keith Refson, David Voneshen
      - Regular grids alias and are inefficient
      - Quasirandom "golden" sampling cannot be systematically subsampled
 
-   - TP suggests investigation of Sobel sampling method, which allows
+   - TP suggests investigation of Sobol sampling method, which allows
      progressive quasirandom sampling with blue noise-like distribution.
 
 ## Sampling parameter sensitivity tests
@@ -115,11 +115,16 @@ Keith Refson, David Voneshen
        agreement that such assumptions should be theoretically
        justified and backed-up empirically.
 
-     - Another cost-saver would be the use of Brille to map qpts to BZ
-       and interpolate the spectrum.
-       - This requires _periodic_ contributions to spectrum to be
-         separated from terms that depend on absolute _q_.
-       - Hopefully that is just the Debye-Waller term and it will work.
+     - Another cost-saver would be the use of Brille for Brillouin zone (BZ)
+        interpolation.
+       - In this case, Euphonic would be used to calculate the phonon eigenvalues
+         and eigenvectors on a grid in the first (or first irreducible) BZ.
+       - An arbitrary qpt is transformed by the symmetry operations of the space group
+         into the equivalent point in the first BZ, and the phonon eigenvalue/vector
+         at the qpt can be obtained by linear interpolation in the first BZ.
+       - The structure factor is calculated as normal from the eigenvalues/vectors
+       - There is the overhead of first computing the grid in the first BZ, and the
+         optimum grid size or point density should also be tested for convergence.
 
 # Incidental observations
   - The calculations were quite slow to run (even with
@@ -150,7 +155,7 @@ Keith Refson, David Voneshen
      - Try min/max instead of geometric mean
 
 ## Longer-term
-   - Look into Sobel sampling (AJJ)
+   - Look into Sobol sampling (AJJ)
    - Consider powder-averaging at large q as a good
      application/demonstration of Brille-Euphonic interface
      (Euphonic-Brille team)

@@ -19,7 +19,7 @@ def diff_1d(spectrum: Spectrum1D,
 
     Returns:
         array Quantity:
-            Average difference between spectra
+            Difference between spectra
     """
 
     assert spectrum.x_data_unit == reference.x_data_unit
