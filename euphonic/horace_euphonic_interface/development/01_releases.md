@@ -168,6 +168,11 @@ toolbox as an asset. To authenticate, it uses a Github
 Set it as the `GITHUB_TOKEN` envronment variable and it will be used to
 authenticate.
 
+Note that if there is a delay between creating the Github
+release and uploading the .mltbx, the MATLAB File Exchange may only
+pick up the source code .zip, and not the .mltbx, see
+[here](https://www.mathworks.com/matlabcentral/answers/614428-file-exchange-not-using-mltbx-file-from-github-release)
+
 ## 8. Test Github release
 Check a release has actually been done on Github and looks sensible. Try
 downloading the .zip and installing and running tests.
