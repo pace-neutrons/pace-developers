@@ -61,7 +61,7 @@ becomes:
 
 * Add a new `Unreleased` line e.g.
 ```
-`Unreleased <https://github.com/pace-neutrons/Euphonic/euphonic_sqw_models/v0.2.0...HEAD>`_
+`Unreleased <https://github.com/pace-neutrons/euphonic_sqw_models/v0.2.0...HEAD>`_
 ----------
 ```
 Note the compare in `Unreleased` now compares with the latest version v0.2.0
@@ -127,7 +127,7 @@ becomes:
 
 * Add a new `Unreleased` line e.g.
 ```
-`Unreleased <https://github.com/pace-neutrons/Euphonic/horace-euphonic-interface/v0.2.0...HEAD>`_
+`Unreleased <https://github.com/pace-neutrons/horace-euphonic-interface/v0.2.0...HEAD>`_
 ----------
 ```
 Note the compare in `Unreleased` now compares with the latest version v0.2.0
