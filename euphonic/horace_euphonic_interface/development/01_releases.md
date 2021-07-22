@@ -31,7 +31,7 @@ and add any important updates in the release body.
 
 # euphonic_sqw_models Release Process
 
-## 1. Update min_requirements.txt and push the commit
+## 1. Update min_requirements.txt and CHANGELOG.rst and push the commit
 Update the euphonic line to be compatible with a specific Euphonic release, this
 should probably be the latest Euphonic release e.g.
 ```
@@ -41,6 +41,9 @@ becomes:
 ```
 euphonic>=0.5.0
 ```
+
+CHANGELOG.rst should also be updated (if it hasn't been already) to specify the
+new euphonic dependency
 
 ## 2. Ensure tests pass
 The above commit should trigger tests to run against the newly defined Euphonic version,
