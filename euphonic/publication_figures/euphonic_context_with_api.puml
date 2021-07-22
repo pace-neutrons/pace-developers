@@ -24,31 +24,41 @@ rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
 
 Person(horace_user, "Horace User", "")
 Person(abins_user, "Abins User", "")
-Person(euphonic_user, "Euphonic User", "")
+Person(euphonic_cl_user, "Euphonic Command Line Tool User", "")
+Person(euphonic_api_user, "Euphonic API User", "")
 
-'System(euphonic, "Euphonic", "Software for efficient calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
 Boundary(euphonic, "Euphonic"){
-    System(euphonic_api, "Python API", "Library for efficient calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
-    System(euphonic_cli, "Command Line Tools", "Convenient, easy-to-use tools for quick plotting of bandstructures, DOS and neutron spectra")
+    System(euphonic_api, "Python API", "Calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
+    System(euphonic_cli, "Command Line Tools", "Quick plotting of bandstructures, DOS and neutron spectra")
 }
 System_Ext(horace, "Horace", "Software for visualisation, analysis and simulation of direct inelastic neutron scattering instrument data")
-'System_Ext(mantid_core, "Mantid", "Software to support high-performance computing and visualisation of materials science data")
+System_Ext(hor_eu_interface, "Horace-Euphonic-Interface", "Matlab add-on to allow use of Euphonic in Horace simulation functions")
 Boundary(mantid, "Mantid"){
     System_Ext(abins, "Abins", "Mantid plugin for comparison of experimental and simulated indirect inelastic neutron scattering instrument data")
 }
-System_File(force_constants, "Force Constants", "File(s) containing force constants")
-System_File(phonons, "Phonon Modes", "File(s) containing phonon frequencies and eigenvectors")
+System_File(force_constants, "Force Constants File")
+System_File(phonons, "Phonon Frequencies and Eigenvectors File")
 
-Rel_D(euphonic_user, euphonic_api, "Uses")
-Rel_D(euphonic_user, euphonic_cli, "Uses")
+AddRelTag("dashed", $lineStyle = DashedLine())
+
+Rel_D(euphonic_api_user, euphonic_api, "Uses")
+Rel_D(euphonic_cl_user, euphonic_cli, "Uses")
 Rel_R(euphonic_cli, euphonic_api, "Uses")
-Rel_D(horace, euphonic_api, "Uses to simulate coherent phonon spectra")
-Rel_D(abins, euphonic_api, "Uses to ???")
+
+Rel_D(horace_user, horace, "Uses")
+Rel_D(horace_user, hor_eu_interface, "Uses")
+Rel_R(horace, hor_eu_interface, "Gives experimental q-points")
+Rel_L(hor_eu_interface, horace, "Returns structure factors and frequencies")
+Rel_D(hor_eu_interface, euphonic_api, "Uses")
+
+Rel_D(abins_user, mantid, "Uses")
+Rel_D(abins, euphonic_api, "Has potential to use", $tags="dashed")
+
 Rel_U(force_constants, euphonic_api, "Is read by")
 Rel_U(phonons, euphonic_api, "Is read by")
-Rel_D(horace_user, horace, "Uses")
-Rel_D(abins_user, mantid, "Uses")
 
-Lay_R(horace_user, horace)
-Lay_L(abins_user, mantid)
+Lay_U(euphonic_api_user, horace)
+Lay_U(euphonic_cl_user, horace)
+Lay_D(hor_eu_interface, abins)
+
 @enduml
