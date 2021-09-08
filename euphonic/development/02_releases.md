@@ -1,12 +1,12 @@
 # Releases and Versioning
 
 Euphonic follows [semantic versioning](https://semver.org/) and releases on
-Github and PyPI should be synchronised.
+Github, PyPI and Conda (via the conda-forge channel).
 
-There is a script in the main Euphonic repo,`release.py` for releasing on Github
-and PyPI. Releases should **always** be compiled, tagged and uploaded through
-`release.py` and **never** manually. If the release process needs to be changed,
-changes should be made to this script and committed so there is a record.
+There is a script in the main Euphonic repo,`release.py` for releasing on Github,
+new releases should automatically trigger a workflow to release on PyPI, which
+will trigger a new PR for the Conda release in
+https://github.com/conda-forge/euphonic-feedstock.
 
 Currently releases are done from `master` rather than having a release branch.
 This may change in the future as the project evolves.
@@ -73,34 +73,47 @@ version/body etc. are all what you expect. If it's not what you expect, now
 is the time to make any changes, as the commit/tag haven't been pushed yet,
 the tag can still be deleted and reapplied once any fixes have been made.
 
-## 7. Test PyPI release.py
-Running `release.py` with the `--pypi` flag will build and package Euphonic in
-the `dist` directory (see script for specific commands). Check this runs with no
-errors and Euphonic can be installed correctly from what is inside `dist` and any
-tests pass. Again, as the commit/tag haven't been pushed yet, if anything is wrong
-with the dist it can be fixed at this stage.
+## 7. Push the commit
+If you're happy with the Github test release, push the commit/tag to master.
 
-## 8. Push the commit
-If you're happy with the Github/PyPI test releases, push the commit/tag to master.
+## 8. Actually release on Github
+To actually post to Github run
+`python release.py --github --notest`
 
-## 9. Actually release on Github and PyPI
-To actually post to Github/upload to PyPI run
-`python release.py --github --pypi --notest`
-
-For Github, this will create a release. To authenticate, it uses a Github 
+This will create a release. To authenticate, it uses a Github 
 [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line).
 Set it as the `GITHUB_TOKEN` envronment variable and it will be used to
 authenticate.
 
-For PyPI, it will then ask for a username and password with permission for the
-Euphonic project on PyPI
+This should start a Github actions workflow `build_upload_pypi_wheels.yml`
+which will build and upload a source and various wheels to PyPI. It
+should also start a workflow `create-landing-page.yml` which should
+publish a new version page to the `gh-pages` branch
 
-## 10. Test Github/PyPI releases
-Check a release has actually been done on Github and looks sensible. Try
-downloading the .zip and installing and running tests.
+## 9. Test PyPI releases
+There is a `test_release.yml` workflow that must be triggered manually with
+a workflow dispatch. Run the workflow with the release version to check all
+the PyPI builds succeed. The Conda builds may fail if a Conda release hasn't
+been made yet
 
-Check the PyPI release using `pip`. Download and install from `pip` and run all
-tests to ensure the install works. Do this on both Linux and Windows if
-possible.
+## 10. Test versioned landing page
+The above mentioned  `create-landing-page.yml` workflow should have created
+a versioned page e.g. https://pace-neutrons.github.io/Euphonic/versions/v0.6.2.html,
+check it looks sensible
 
-Check that the tag has run and been tested successfully on the Windows, Linux and Mac Jenkins pipelines.
+## 11. Update conda-forge package
+Wait for the conda-forge bot to open a PR in https://github.com/conda-forge/euphonic-feedstock,
+this may take a few hours. Make sure all the tests pass, and merge the PR.
+
+## 12. Test conda-forge package
+Once the PR has been merged and the triggered jobs have completed, Euphonic
+should be available on the conda-forge channel. Run the `test_release.yml`
+workflow in the Euphonic repo to check that the PyPI and conda packages
+pass tests
+
+## 13. Request DOI
+A DOI will need to be requested for the new version (from SEG), of the form
+10.5286/SOFTWARE/EUPHONIC/{version} which points to
+https://pace-neutrons.github.io/Euphonic/versions/v{version}.html
+
+
