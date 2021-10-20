@@ -12,6 +12,7 @@ HIDE_STEREOTYPE()
     BorderColor #073B6F
 }'/
 
+skinparam dpi 600
 skinparam rectangle<<file_system>> {
     StereotypeFontColor #000000
     FontColor #000000

@@ -3,6 +3,7 @@
 
 HIDE_STEREOTYPE()
 
+skinparam dpi 600
 skinparam rectangle<<file_system>> {
     StereotypeFontColor #000000
     FontColor #000000
