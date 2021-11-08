@@ -1,0 +1,1654 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   contentScriptType="application/ecmascript"
+   contentStyleType="text/css"
+   height="802.06128"
+   preserveAspectRatio="none"
+   version="1.1"
+   viewBox="0 0 896.854 802.06128"
+   width="896.854"
+   zoomAndPan="magnify"
+   id="svg166"
+   sodipodi:docname="pace_framework.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata170">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     id="namedview168"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="0.6466403"
+     inkscape:cx="538.26582"
+     inkscape:cy="330.03483"
+     inkscape:window-x="0"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg166"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0">
+    <sodipodi:guide
+       position="386.29864,382.91375"
+       orientation="1,0"
+       id="guide4949"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="549.14593,502.99307"
+       orientation="1,0"
+       id="guide4951"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-217.38777,589.35148"
+       orientation="1,0"
+       id="guide5363"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="739.21186,514.49583"
+       orientation="1,0"
+       id="guide7231"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <defs
+     id="defs11">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker2425"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         inkscape:connector-curvature="0"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2423" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker6785"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6783"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker6605"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6603"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker6077"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path6075"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker5669"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5667"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5435"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path5433"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker5375"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:collect="always">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5373"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5319"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path5317"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker5277"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:collect="always">
+      <path
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path5275"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker5241"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path5239"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4958"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.00000003pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <filter
+       height="3"
+       id="ff4igimv05uq0"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur2" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix4" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset6" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend8" />
+    </filter>
+    <filter
+       height="3"
+       id="f7i1kajp5a9u5"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur2-3" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix4-6" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset6-7" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend8-5" />
+    </filter>
+    <filter
+       height="3"
+       id="filter998"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur990" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix992" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset994" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend996" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1008"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1000" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1002" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1004" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1006" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1018"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1010" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1012" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1014" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1016" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1028"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1020" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1022" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1024" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1026" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1038"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1030" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1032" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1034" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1036" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1048"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1040" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1042" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1044" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1046" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1058"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1050" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1052" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1054" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1056" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1068"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1060" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1062" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1064" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1066" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1078"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1070" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1072" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1074" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1076" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1088"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1080" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1082" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1084" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1086" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1098"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1090" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1092" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1094" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1096" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1108"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1100" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1102" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1104" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1106" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1118"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1110" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1112" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1114" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1116" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1128"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1120" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1122" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1124" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1126" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1138"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1130" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1132" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1134" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1136" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1148"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1140" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1142" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1144" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1146" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1158"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1150" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1152" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1154" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1156" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1168"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1160" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1162" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1164" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1166" />
+    </filter>
+    <filter
+       height="3"
+       id="filter1178"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur1170" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix1172" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset1174" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend1176" />
+    </filter>
+    <filter
+       height="3"
+       id="f7i1kajp5a9u5-3"
+       width="3"
+       x="-1"
+       y="-1">
+      <feGaussianBlur
+         result="blurOut"
+         stdDeviation="2.0"
+         id="feGaussianBlur2-3-6" />
+      <feColorMatrix
+         in="blurOut"
+         result="blurOut2"
+         type="matrix"
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"
+         id="feColorMatrix4-6-7" />
+      <feOffset
+         dx="4.0"
+         dy="4.0"
+         in="blurOut2"
+         result="blurOut3"
+         id="feOffset6-7-5" />
+      <feBlend
+         in="SourceGraphic"
+         in2="blurOut3"
+         mode="normal"
+         id="feBlend8-5-3" />
+    </filter>
+  </defs>
+  <g
+     id="g2219"
+     transform="translate(-1445.2663,121.82426)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+       width="179"
+       x="1740.8951"
+       y="315.48624"
+       id="rect43-6" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="66"
+       x="629.5"
+       y="321.96231"
+       id="text45-1">«Python»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-525.36853,-124.32715)"
+       id="g1575">
+      <polygon
+         id="polygon115-3"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="709,359.9672 699,349.9672 581,349.9672 581,383.936 709,383.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path117-2"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1866.8951,358.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text119-0"
+         y="371.1059"
+         x="591"
+         textLength="108"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">euphonic_horace</text>
+    </g>
+  </g>
+  <g
+     id="g1945"
+     transform="translate(-1209.9249,90.44576)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+       width="179"
+       x="1669.8951"
+       y="198.48624"
+       id="rect25-2" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="63"
+       x="560"
+       y="204.9623"
+       id="text27-7">«Matlab»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-505.36853,-86.32715)"
+       id="g1580">
+      <polygon
+         id="polygon79-6"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="510.5,266.936 637.5,266.936 637.5,242.9672 627.5,232.9672 510.5,232.9672 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path81-1"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1795.3951,241.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text83-2"
+         y="254.1059"
+         x="520.5"
+         textLength="107"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">euphonic_matlab</text>
+    </g>
+  </g>
+  <g
+     id="g1929"
+     transform="translate(-1004.9299,-68.372966)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#f3c5f6;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5);fill-opacity:1"
+       width="220"
+       x="1536.8951"
+       y="97.486237"
+       id="rect13-3" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="96"
+       x="431"
+       y="103.9623"
+       id="text15-5">«Distribution»</text>
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-weight="bold"
+       lengthAdjust="spacing"
+       textLength="56"
+       x="451"
+       y="120.2592"
+       id="text17-6">Horace</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-487.36853,-50.32715)"
+       id="g1540">
+      <polygon
+         id="polygon61-7"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="545.5,165.936 545.5,141.9672 535.5,131.9672 480.5,131.9672 480.5,165.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path63-5"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1703.3951,140.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text65-9"
+         y="153.1059"
+         x="490.5"
+         textLength="45"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">Horace</text>
+    </g>
+    <g
+       transform="matrix(1.3,0,0,1.3,-457.36853,-50.32715)"
+       id="g1535">
+      <polygon
+         id="polygon67-2"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="445,141.9672 435,131.9672 377,131.9672 377,165.936 445,165.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path69-2"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1602.8951,140.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text71-8"
+         y="153.1059"
+         x="387"
+         textLength="48"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">Herbert</text>
+    </g>
+  </g>
+  <g
+     id="g1620"
+     transform="translate(-1164.4024,-56.532406)">
+    <rect
+       transform="matrix(1.0262754,0,0,1,-40.09343,0)"
+       height="246.14297"
+       rx="5"
+       ry="5"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+       width="343.06552"
+       x="1183.8951"
+       y="97.486237"
+       id="rect31-9" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="96"
+       x="131"
+       y="103.9623"
+       id="text33-3">«Distribution»</text>
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-weight="bold"
+       lengthAdjust="spacing"
+       textLength="99"
+       x="129.5"
+       y="120.2592"
+       id="text35-6">pace-python</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-357.36853,-24.32715)"
+       id="g1530">
+      <polygon
+         id="polygon85-9"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="16,131.9672 16,165.936 142,165.936 142,141.9672 132,131.9672 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path87-3"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1299.8951,140.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text89-1"
+         y="153.1059"
+         x="26"
+         textLength="106"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">Compiled Horace</text>
+    </g>
+    <g
+       transform="matrix(1.3,0,0,1.3,-397.36853,-24.32715)"
+       id="g1525">
+      <polygon
+         id="polygon91-9"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="306.5,165.936 306.5,141.9672 296.5,131.9672 177.5,131.9672 177.5,165.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path93-4"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1464.3951,140.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text95-7"
+         y="153.1059"
+         x="187.5"
+         textLength="109"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">Compiled Herbert</text>
+    </g>
+    <g
+       transform="matrix(1.3,0,0,1.3,-357.36853,-92.32715)"
+       id="g1515">
+      <polygon
+         id="polygon97-8"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="138.5,242.9672 128.5,232.9672 19.5,232.9672 19.5,266.936 138.5,266.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <g
+         id="g1509">
+        <path
+           inkscape:connector-curvature="0"
+           d="m 1296.3951,241.48624 v 10 h 10"
+           style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+           id="path99-4" />
+        <text
+           transform="translate(1167.8951,8.5190376)"
+           style="font-size:12px;font-family:sans-serif;fill:#000000"
+           font-size="12"
+           lengthAdjust="spacing"
+           textLength="99"
+           x="29.5"
+           y="254.1059"
+           id="text101-5">Compiled SpinW</text>
+      </g>
+    </g>
+    <g
+       transform="matrix(1.3,0,0,1.3,-397.36853,-92.32715)"
+       id="g1520">
+      <polygon
+         id="polygon103-0"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="173.5,232.9672 173.5,266.936 284.5,266.936 284.5,242.9672 274.5,232.9672 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path105-3"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1442.3951,241.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text107-6"
+         y="254.1059"
+         x="183.5"
+         textLength="91"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">Interface code</text>
+    </g>
+    <g
+       id="g1282">
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="polygon109-1-5"
+         d="m 531.80769,359.9672 -10,-10 H 378.5 v 33.9688 h 153.30769 z"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5-3)"
+         transform="matrix(1.3,0,0,1.3,770.48445,-169.57177)" />
+      <path
+         sodipodi:nodetypes="ccc"
+         inkscape:connector-curvature="0"
+         d="m 1448.8345,285.38559 v 13 h 13"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.95000005"
+         id="path111-0-6" />
+      <text
+         id="text1209"
+         y="312.79086"
+         x="1275.4088"
+         style="font-style:normal;font-weight:normal;font-size:33.18762207px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.82969058px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         xml:space="preserve"><tspan
+           style="font-size:15.48755646px;stroke-width:0.82969058px"
+           y="312.79086"
+           x="1275.4088"
+           id="tspan1207"
+           sodipodi:role="line">brillem (Python part)</tspan></text>
+    </g>
+  </g>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker5435)"
+     d="m 547.65278,374.49522 c -68.86767,17.06057 -22.02926,83.13399 -72.20185,106.1847"
+     id="path5425"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     sodipodi:nodetypes="cc"
+     inkscape:connector-curvature="0"
+     id="path6781"
+     d="M 549.14593,374.32064 C 482.72634,394.306 536.39882,571.8907 451.80404,618.49326"
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6785)" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 6;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker5375)"
+     d="m 739.14593,248.07563 0.0659,39.48982"
+     id="path5365"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 6;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
+     d="M 187.2427,286.23809 386.29864,435.55016"
+     id="path4953"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 6;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker5241)"
+     d="m 187.2427,286.23809 c 58.12058,174.91005 16.37647,388.63012 147.7364,470.65125"
+     id="path5237"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 6;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker5277)"
+     d="M 643.72895,115.6594 549.14593,288.4065"
+     id="path5267"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker5319);stroke-miterlimit:4;stroke-dasharray:6,6;stroke-dashoffset:0"
+     d="m 643.72895,115.6594 106.91997,54.28243"
+     id="path5309"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#marker5669)"
+     d="M 739.29272,373.75516 C 711.72801,507.00065 537.34582,747.78242 437.88265,755.59771"
+     id="path5659"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     inkscape:connector-curvature="0"
+     id="path6073"
+     d="m 386.29864,522.58431 0,49.15213"
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#marker6077)"
+     sodipodi:nodetypes="cc" />
+  <rect
+     style="opacity:1;fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect6769"
+     width="451.26779"
+     height="414.91156"
+     x="435.90802"
+     y="7.7225218"
+     ry="5.4495316" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="808.09692"
+     y="31.542858"
+     id="text6773"><tspan
+       sodipodi:role="line"
+       id="tspan6771"
+       x="808.09692"
+       y="31.542858"
+       style="font-size:21.33333397px;fill:#ff0000;fill-opacity:1">Matlab</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     id="text11172"
+     x="591.92078"
+     y="412.64761"><tspan
+       id="tspan11170"
+       style="font-size:10.66666698px">light_python_wrapper</tspan></text>
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2, 2;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 580.90156,372.22287 c 38.31172,40.57086 98.23636,41.05341 129.87555,0.98554"
+     id="path2058"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6,6;stroke-opacity:1;marker-end:url(#marker2425);stroke-dashoffset:0"
+     d="m 386.29864,648.36244 v 60.3195"
+     id="path2421"
+     inkscape:connector-curvature="0" />
+  <text
+     id="text23-1"
+     y="221.2592"
+     x="431"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <text
+     id="text29-0"
+     y="221.2592"
+     x="594"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <text
+     id="text41-2"
+     y="338.25919"
+     x="429"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <text
+     id="text47-8"
+     y="338.25919"
+     x="665"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <text
+     id="text53-2"
+     y="526.25922"
+     x="678"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <text
+     id="text59-3"
+     y="432.25919"
+     x="664"
+     textLength="0"
+     lengthAdjust="spacing"
+     font-weight="bold"
+     font-size="14"
+     style="font-weight:bold;font-size:14px;font-family:sans-serif;fill:#000000"
+     transform="translate(1167.8951,8.5190376)" />
+  <g
+     id="g1937"
+     transform="translate(-855.20238,-27.832406)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#f3c5f6;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5);fill-opacity:1"
+       width="109"
+       x="1541.8951"
+       y="198.48624"
+       id="rect19-2" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="63"
+       x="397"
+       y="204.9623"
+       id="text21-9">«Matlab»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-457.36853,-86.32715)"
+       id="g1545">
+      <polygon
+         id="polygon73-9"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="440,266.936 440,242.9672 430,232.9672 382,232.9672 382,266.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path75-7"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1597.8951,241.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text77-3"
+         y="254.1059"
+         x="392"
+         textLength="38"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">SpinW</text>
+    </g>
+  </g>
+  <g
+     id="g2145"
+     transform="translate(-854.9249,-26.55424)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#ffffff;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+       width="113"
+       x="1537.8951"
+       y="315.48624"
+       id="rect37-0" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="63"
+       x="395"
+       y="321.96231"
+       id="text39-6">«Matlab»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-457.36853,-124.32715)"
+       id="g1550">
+      <polygon
+         id="polygon109-1"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="439.5,359.9672 429.5,349.9672 378.5,349.9672 378.5,383.936 439.5,383.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path111-0"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1597.3951,358.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text113-6"
+         y="371.1059"
+         x="388.5"
+         textLength="41"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">brillem</text>
+    </g>
+  </g>
+  <g
+     id="g2809"
+     transform="translate(-1442.946,163.60332)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#f4caf6;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5);fill-opacity:1"
+       width="129"
+       x="1764.8951"
+       y="409.48624"
+       id="rect55-0" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="66"
+       x="628.5"
+       y="415.96231"
+       id="text57-2">«Python»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-525.36853,-152.32715)"
+       id="g1570">
+      <polygon
+         id="polygon127-5"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="683,453.9672 673,443.9672 605,443.9672 605,477.936 683,477.936 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path129-4"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1840.8951,452.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text131-7"
+         y="465.1059"
+         x="615"
+         textLength="58"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">euphonic</text>
+    </g>
+  </g>
+  <g
+     id="g2817"
+     transform="translate(-1457.0097,205.60977)">
+    <rect
+       height="85"
+       rx="5"
+       ry="5"
+       style="fill:#f3c5f6;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5);fill-opacity:1"
+       width="101"
+       x="1792.8951"
+       y="503.48624"
+       id="rect49-7" />
+    <text
+       transform="translate(1167.8951,8.5190376)"
+       style="font-style:italic;font-size:14px;font-family:sans-serif;fill:#000000"
+       font-size="14"
+       font-style="italic"
+       lengthAdjust="spacing"
+       textLength="66"
+       x="642.5"
+       y="509.96231"
+       id="text51-9">«Python»</text>
+    <g
+       transform="matrix(1.3,0,0,1.3,-531.36853,-182.32715)"
+       id="g1565">
+      <polygon
+         id="polygon121-6"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5;filter:url(#f7i1kajp5a9u5)"
+         points="673,537.9672 633,537.9672 633,571.936 683,571.936 683,547.9672 "
+         transform="translate(1167.8951,8.5190376)" />
+      <path
+         id="path123-1"
+         style="fill:#fefece;stroke:#000000;stroke-width:1.5"
+         d="m 1840.8951,546.48624 v 10 h 10"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text125-5"
+         y="559.1059"
+         x="643"
+         textLength="30"
+         lengthAdjust="spacing"
+         font-size="12"
+         style="font-size:12px;font-family:sans-serif;fill:#000000"
+         transform="translate(1167.8951,8.5190376)">brille</text>
+    </g>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:10.66666698px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="42.092934"
+     y="603.00458"
+     id="text1117"
+     transform="rotate(-59.39856)"><tspan
+       sodipodi:role="line"
+       id="tspan1115"
+       x="42.092934"
+       y="603.00458"
+       style="font-size:10.66666698px">CoherentCrystal.horace_disp()</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="703.6369"
+     y="137.85893"
+     id="text1187"><tspan
+       sodipodi:role="line"
+       id="tspan1185"
+       x="703.6369"
+       y="137.85893"
+       style="font-size:13.33333302px">spinw/horace_sqw()</tspan></text>
+  <text
+     transform="rotate(36.849662)"
+     id="text1191"
+     y="109.50504"
+     x="370.8511"
+     style="font-style:normal;font-weight:normal;font-size:10.66666698px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     xml:space="preserve"><tspan
+       style="font-size:10.66666698px"
+       y="109.50504"
+       x="370.8511"
+       id="tspan1189"
+       sodipodi:role="line">CoherentCrystal.horace_disp()</tspan></text>
+  <g
+     id="g1213"
+     transform="rotate(83.082542,194.06431,525.13198)">
+    <text
+       id="text1195"
+       y="507.46164"
+       x="86.601471"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         id="tspan1201"
+         style="font-size:13.33333302px"
+         y="507.46164"
+         x="86.601471"
+         sodipodi:role="line">brillem.create_bz()</tspan></text>
+    <text
+       id="text1207"
+       y="527.69946"
+       x="86.601471"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"><tspan
+         style="font-size:13.33333302px"
+         y="527.69946"
+         x="86.601471"
+         id="tspan1205"
+         sodipodi:role="line">brillem.create_grid()</tspan></text>
+  </g>
+  <g
+     transform="rotate(-54.711302,485.5166,69.6028)"
+     id="g1223">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="86.601471"
+       y="507.46164"
+       id="text1217"><tspan
+         sodipodi:role="line"
+         x="86.601471"
+         y="507.46164"
+         style="font-size:13.33333302px"
+         id="tspan1215">brillem.create_bz()</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="86.601471"
+       y="527.69946"
+       id="text1221"><tspan
+         sodipodi:role="line"
+         id="tspan1219"
+         x="86.601471"
+         y="527.69946"
+         style="font-size:13.33333302px">brillem.create_grid()</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:13.33333302px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="-396.5278"
+     y="692.82611"
+     id="text1305"
+     transform="rotate(-67.068111)"><tspan
+       sodipodi:role="line"
+       id="tspan1303"
+       x="-396.5278"
+       y="692.82611">ForceConstants.from_*</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="739.21185"
+     y="610.3009"
+     id="text1309"><tspan
+       sodipodi:role="line"
+       id="tspan1307"
+       x="739.21185"
+       y="645.69153" /></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="-285.01254"
+     y="607.48639"
+     id="text1313"
+     transform="rotate(-71.487891)"><tspan
+       sodipodi:role="line"
+       id="tspan1311"
+       x="-285.01254"
+       y="607.48639"
+       style="font-size:10.66666698px">CoherentCrystal</tspan></text>
+</svg>
