@@ -29,6 +29,11 @@ This is because PyPI has a limit of 100MB per package and Anaconda has a limit o
 An alternative to bundling the MCR is to include a step to automatically download and install an MCR during installation or on first use.
 Doing this during installation limits the options to 1 or possibly 3 
 (PyPI/`pip` does not allow to execute a custom script during installation, whilst it _may_ be possible with `conda`).
+Alternatively, the Python package can provide a installation commandline tool.
+On import, if `pyHorace` detects that the MCR is not install it will fail with a `RuntimeError`
+which will tell the user to run the commandline tool to install the MCR,
+or to provide the path to where they installed it (if non-standard location)
+ in the `LD_LIBRARY_PATH` (Linux) or `PATH` (Windows) environment variable.
 
 Finally, because `pyHorace` is Python package it requires a version of Python to be installed.
 However, there are many possible Python distributions which users can install, depending on their OS.
