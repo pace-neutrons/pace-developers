@@ -142,4 +142,10 @@ Some suggested alternatives are:
 * For `euphonic_horace`: `euphonic_horace_interface_python`, `euphonic_sqw`, `euphonic_horace_driver`
 * For `euphonic_matlab`: `euphonic_horace_interface_matlab`, `euphonium`, `meuphonic`
 
+Added Nov 2021: It was decided to leave the naming unchanged. That is
 
+* `euphonic_matlab` is still [`horace-euphonic-interface`](https://github.com/pace-neutrons/horace-euphonic-interface/).
+  This is because it is registered in the
+  [Matlab File Exchange](https://uk.mathworks.com/matlabcentral/fileexchange/83758-horace-euphonic-interface) under that name.
+* `euphonic_horace` is named [`euphonic_sqw_models`](https://github.com/pace-neutrons/euphonic_sqw_models/) with the
+  intention that a powder S(Q,w) model will be added in future to the existing `CoherentCrystal` model.
