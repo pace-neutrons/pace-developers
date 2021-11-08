@@ -26,6 +26,8 @@ The MCR is a very large archive (~2.8GB for R2020b) because it basically contain
 If we want to distribute the MCR with the package, we are restricted to option 1 and self-hosting.
 This is because PyPI has a limit of 100MB per package and Anaconda has a limit of 1GB per package.
 
+Recently (since R2020a), Matlab introduced a command, [`compiler.package.installer`](https://uk.mathworks.com/help/compiler/compiler.package.installer.html) which can create an installer executable which will only download the components / toolboxes needed by the application. For `pyHorace` this reduces the download size to ~500MB, since we only need the core computation and Python components. It is not possible to bundle this reduced sized MCR with our application however - it seems the only way is to create an installer using `compiler.package.installer`.
+
 An alternative to bundling the MCR is to include a step to automatically download and install an MCR during installation or on first use.
 Doing this during installation limits the options to 1 or possibly 3 
 (PyPI/`pip` does not allow to execute a custom script during installation, whilst it _may_ be possible with `conda`).
