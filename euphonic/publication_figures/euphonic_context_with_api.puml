@@ -32,7 +32,7 @@ Boundary(euphonic, "Euphonic"){
     System(euphonic_api, "Python API", "Calculation and plotting of phonon bandstructures, DOS and neutron spectra from force constants")
     System(euphonic_cli, "Command Line Tools", "Quick plotting of bandstructures, DOS and neutron spectra")
 }
-System_Ext(horace, "Horace", "Software for visualisation, analysis and simulation of direct inelastic neutron scattering instrument data")
+System_Ext(horace, "Horace", "Visualisation, analysis and simulation of direct inelastic neutron scattering instrument data")
 System_Ext(hor_eu_interface, "Horace-Euphonic-Interface", "Matlab add-on to allow use of Euphonic in Horace simulation functions")
 Boundary(mantid, "Mantid"){
     System_Ext(abins, "Abins", "Mantid plugin for comparison of experimental and simulated indirect inelastic neutron scattering instrument data")
@@ -53,7 +53,7 @@ Rel_L(hor_eu_interface, horace, "Returns structure factors and frequencies")
 Rel_D(hor_eu_interface, euphonic_api, "Uses")
 
 Rel_D(abins_user, mantid, "Uses")
-Rel_D(abins, euphonic_api, "Has potential to use", $tags="dashed")
+Rel_L(abins, euphonic_api, "Uses")
 
 Rel_U(force_constants, euphonic_api, "Is read by")
 Rel_U(phonons, euphonic_api, "Is read by")
