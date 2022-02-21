@@ -68,3 +68,5 @@ plot_quartz_dos_band(['-s', f'{dirname}\quartz_dos_band.{fmt}'] + styling)
 plot_quartz_neutron_band(['-s', f'{dirname}\quartz_neutron_band.{fmt}'] + styling)
 plot_lzo_pdos(['-s', f'{dirname}\lzo_pdos.{fmt}'] + styling
               + ['--fig-size', '8.85', '6.5', '--fig-size-unit', 'cm'])
+# Size below for creating 1/2 column width figures
+#              + ['--fig-size', '4.3', '3.1', '--fig-size-unit', 'cm'])
