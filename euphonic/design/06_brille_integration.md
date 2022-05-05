@@ -23,7 +23,7 @@ Horace users if they were somewhat similar.
 ### General Note on Syntax
 
 There are two options for the syntax, one is to  try to keep the commands as
-specific as possible so each command has fewer arguments and its clearer what
+specific as possible so each command has fewer arguments and it is clearer what
 they do. This has the benefit of reducing the chance of name clashes, making
 arguments easier to manage and easier for the user to input. However, this will
 generally lead to the user having to write more code as they will need one line
@@ -52,7 +52,7 @@ current Horace simulation functions the syntax splits arguments up into 'model
 parameters' for fitting and 'extra parameters' for constant arguments. For now
 I've made an example with the scaling factor as a fitting parameter.
 
-```
+```matlab
 brille_init_args = {'grid', 'mesh'
                     'max_points', 10000,
                     'parallel', true};
@@ -125,7 +125,7 @@ doesn't need to find it itself).
 
 From Python:
 
-```
+```python
 from euphonic import ureg, ForceConstants
 from euphonic.util import mp_grid
 
@@ -152,7 +152,7 @@ functions to make it easier to simulate cuts, or whether it should more closely
 mirror Euphonic's Python interface. The following example is somewhere
 inbetween and assumes a Matlab wrapper has been written (named 'meuphonic').
 
-```
+```matlab
 % Create ForceConstants and BrilleForceConstants using Euphonic-like syntax
 fc = meuphonic.ForceConstants.from_castep('quartz.castep_bin');
 kwargs = {'use_c', true, 'n_threads', 4};
@@ -197,3 +197,14 @@ by Brille?
 **Disadvantages:**
 - Would it be worth adding a dependency on Brille for what could be a small
   gain?
+
+## Decision
+
+Largely motivated by the ability to use Brille to improve the performance of
+powder simulations from Python, it has been decided to call Brille from Euphonic.
+(As of 05/05/22) Brille has been specified as an optional dependency, so it
+would not affect other Euphonic users. Also, the `BrilleForceConstants` (now
+named `BrilleInterpolator`) can be instead created with
+`BrilleInterpolator.from_force_constants` syntax, so no changes to the current
+`ForceConstants` class are required. The relevant PR for Euphonic is
+[PR#104](https://github.com/pace-neutrons/Euphonic/pull/104).
