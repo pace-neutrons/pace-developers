@@ -183,3 +183,8 @@ downloading the .zip and installing and running tests.
 ## 9. Test MATLAB File Exchange release
 The release may take around an hour to appear on the file exchange. Check
 that the version has updated, it will install and tests pass.
+
+## 10. Request DOI
+A DOI will need to be requested for the new version (from the Software Engineering Group in SCD), of the form
+10.5286/SOFTWARE/HORACEEUPHONICINTERFACE/{version} which points to
+https://pace-neutrons.github.io/horace-euphonic-interface/versions/v{version}.html
