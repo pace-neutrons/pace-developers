@@ -11,7 +11,8 @@ HIDE_STEREOTYPE()
     BackgroundColor $PERSON_BG_COLOR
     BorderColor #073B6F
 }'/
-
+skinparam ArrowFontSize 18
+skinparam DefaultFontSize 18
 skinparam dpi 600
 skinparam rectangle<<file_system>> {
     StereotypeFontColor #000000

@@ -3,6 +3,8 @@
 
 HIDE_STEREOTYPE()
 
+skinparam ArrowFontSize 18
+skinparam DefaultFontSize 18
 skinparam dpi 600
 skinparam rectangle<<file_system>> {
     StereotypeFontColor #000000
@@ -10,6 +12,7 @@ skinparam rectangle<<file_system>> {
     BackgroundColor #85BBF0
     BorderColor #78A8D8
 }
+
 !unquoted procedure System_File($alias, $label, $descr="", $sprite="")
 rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
 !endprocedure
