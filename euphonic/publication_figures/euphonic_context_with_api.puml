@@ -25,7 +25,7 @@ rectangle "$getSystem($label, $descr, $sprite)" <<file_system>> as $alias
 !endprocedure
 
 Person(horace_user, "Horace User", "")
-Person(abins_user, "Abins User", "")
+Person(abins_user, "AbINS User", "")
 Person(euphonic_cl_user, "Euphonic Command Line Tool User", "")
 Person(euphonic_api_user, "Euphonic API User", "")
 
@@ -36,7 +36,7 @@ Boundary(euphonic, "Euphonic"){
 System_Ext(horace, "Horace", "Visualisation, analysis and simulation of direct inelastic neutron scattering instrument data")
 System_Ext(hor_eu_interface, "Horace-Euphonic-Interface", "Matlab add-on to allow use of Euphonic in Horace simulation functions")
 Boundary(mantid, "Mantid"){
-    System_Ext(abins, "Abins", "Mantid plugin for comparison of experimental and simulated indirect inelastic neutron scattering instrument data")
+    System_Ext(abins, "AbINS", "Mantid plugin for comparison of experimental and simulated indirect inelastic neutron scattering instrument data")
 }
 System_File(force_constants, "Force Constants File")
 System_File(phonons, "Phonon Frequencies and Eigenvectors File")
