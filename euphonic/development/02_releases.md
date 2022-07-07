@@ -12,9 +12,15 @@ Currently releases are done from `master` rather than having a release branch.
 This may change in the future as the project evolves.
 
 # Release process
-## 1. Ensure tests pass
-Hopefully this should be obvious, make sure all CI tests are passing for all
-architectures on master
+## 1. Ensure tests pass on all Python versions
+By default Euphonic tests only run on the lowest and highest supported Python
+versions (e.g. 3.7 and 3.10) for each commit. Before a release, all
+intermediate versions should also be tested (e.g. 3.8, 3.9). To run tests on
+the intermediate versions, a
+[workflow dispatch](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch)
+can be used to manually run the tests on the master branch, this will run for
+all supported Python verisons. Make sure these all pass before moving on to
+the next step.
 
 ## 2. Update the changelog
 * Update the `Unreleased` title in `CHANGELOG.rst` and the associated Github
