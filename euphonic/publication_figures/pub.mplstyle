@@ -1,9 +1,14 @@
 # See https://journals.iucr.org/j/services/help/artwork/guide.html
 
 # For single column plots:
+#font.size: 6
+#figure.figsize: 3.48, 2.09 # 8.85 cm
+#lines.linewidth: 1 # Should be 0.35 - 1.5 pt
+
+# For 0.75 col plots:
 font.size: 6
-figure.figsize: 3.48, 2.09 # 8.85 cm
-lines.linewidth: 1 # Should be 0.35 - 1.5 pt
+figure.figsize: 2.36, 1.42 # 6 cm
+lines.linewidth: 0.5 # Should be 0.35 - 1.5 pt
 
 # For half column plots:
 #font.size: 4
