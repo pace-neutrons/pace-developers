@@ -12,22 +12,47 @@ the submodules a .mltbx is also created as a release asset, which allows it
 to be published with its submodules on the
 [MATLAB File Exchange](https://www.mathworks.com/matlabcentral/about/fx/#Why_GitHub).
 
-## light_python_wrapper Release Process
+# light_python_wrapper Release Process
 
-## 1. Tag the latest commit
+## 1. Update the changelog
+
+* Update the `Unreleased` title in `CHANGELOG.rst` and the associated Github
+compare to the new version e.g.
+```
+`Unreleased <https://github.com/pace-neutrons/light_python_wrapper/compare/v0.2.2...HEAD>`_
+----------
+```
+becomes:
+```
+`v0.3.0 <https://github.com/pace-neutrons/light_python_wrapper/compare/v0.2.2...v0.3.0>`_
+------
+```
+
+* Add a new `Unreleased` line e.g.
+```
+`Unreleased <https://github.com/pace-neutrons/light_python_wrapper/compare/v0.3.0...HEAD>`_
+----------
+```
+Note the compare in `Unreleased` now compares with the latest version v0.3.0
+not v0.2.2
+
+## 2. Tag the latest commit
 e.g.:
 
 ```
-git tag v0.2.0
+git tag v0.3.0
 ```
 
-## 2. Push the tag
-Push the tag to master
+## 3. Push the tag to master
+e.g.:
+```
+git push origin v0.3.0
+```
 
-## 3. Publish release
+## 4. Publish release
 Go to https://github.com/pace-neutrons/light_python_wrapper/releases and
 click 'Draft a new release'. Choose the tag you just pushed as the version,
-and add any important updates in the release body.
+and add the updates from `CHANGELOG.rst` to the release body.
 
 # euphonic_sqw_models Release Process
 
