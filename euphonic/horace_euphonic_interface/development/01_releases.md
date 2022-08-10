@@ -56,25 +56,7 @@ and add the updates from `CHANGELOG.rst` to the release body.
 
 # euphonic_sqw_models Release Process
 
-## 1. Update min_requirements.txt and CHANGELOG.rst and push the commit
-Update the euphonic line to be compatible with a specific Euphonic release, this
-should probably be the latest Euphonic release e.g.
-```
-euphonic>0.4.0
-```
-becomes:
-```
-euphonic>=0.5.0
-```
-
-CHANGELOG.rst should also be updated (if it hasn't been already) to specify the
-new euphonic dependency
-
-## 2. Ensure tests pass
-The above commit should trigger tests to run against the newly defined Euphonic version,
-ensure they pass on all architectures
-
-## 3. Update the changelog
+## 1. Update the changelog
 * Update the `Unreleased` title in `CHANGELOG.rst` and the associated Github
 compare to the new version e.g.
 ```
@@ -95,7 +77,7 @@ becomes:
 Note the compare in `Unreleased` now compares with the latest version v0.2.0
 not v0.1.0
 
-## 4. Commit and tag changes (don't push yet)
+## 2. Commit and tag changes (don't push yet)
 Commit the changes made to `CHANGELOG.rst` and tag the commit with the new
 version e.g.:
 
@@ -107,7 +89,7 @@ Versioning is managed by
 commit has been tagged, this will update `__version__`
 automatically
 
-## 5. Test Github release.py
+## 3. Test Github release.py
 Running `release.py` with the `--github` flag will check the Euphonic version
 in `min_requirements.txt` and parse CHANGELOG.rst to generate a JSON payload that
 can be posted to Github's release API. By default it will just print the payload,
@@ -116,10 +98,10 @@ check the version/body etc. are all what you expect. If it's not what you expect
 now is the time to make any changes, as the commit/tag haven't been pushed yet,
 the tag can still be deleted and reapplied once any fixes have been made.
 
-## 6. Push the commit
+## 4. Push the commit
 If you're happy with the Github test release, push the commit/tag to main
 
-## 7. Actually release on Github
+## 5. Actually release on Github
 To actually post to Github run
 `python release.py --github --notest`
 
@@ -128,7 +110,7 @@ For Github, this will create a release. To authenticate, it uses a Github
 Set it as the `GITHUB_TOKEN` envronment variable and it will be used to
 authenticate.
 
-## 8. Test Github release
+## 6. Test Github release
 Check a release has actually been done on Github and looks sensible. Try
 downloading the .zip and running tests.
 
