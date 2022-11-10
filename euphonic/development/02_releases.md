@@ -118,8 +118,22 @@ workflow in the Euphonic repo to check that the PyPI and conda packages
 pass tests
 
 ## 13. Request DOI
-A DOI will need to be requested for the new version (from SEG), of the form
-10.5286/SOFTWARE/EUPHONIC/{version} which points to
-https://pace-neutrons.github.io/Euphonic/versions/v{version}.html
+A DOI will need to be requested for the new version, this can be obtained from
+the Software Engineering Group in the Scientific Computing Department (contact
+for this as of 10/11/22 is Antony Wilson). Alternatively, access can be
+requested to mint your own DOIs at https://doi.stfc.ac.uk/mint. The form
+should be filled in as follows:
 
-
+- **DOI** 10.5286/software/euphonic/{version}
+- **URL** https://pace-neutrons.github.io/Euphonic/versions/v{version}.html
+- **Title** Euphonic {version}
+- **Creator** Add authors and Orcids as in CITATION.cff
+- **Abstract** Euphonic is a Python package for efficient simulation of phonon bandstructures, density of states and inelastic neutron scattering intensities from force constants.
+- **Publisher** STFC
+- **Publication Year** YYYY
+- **Resource Type** Software
+- **Funder** None?
+- **Subject** None?
+- **Related Identifier** 10.5286/software/euphonic - DOI - IsVersionOf
+- **Version** {version}
+- **Date** YYYY-MM-DD Issued
