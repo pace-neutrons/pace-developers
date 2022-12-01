@@ -36,20 +36,22 @@ becomes:
 Note the compare in `Unreleased` now compares with the latest version v0.3.0
 not v0.2.2
 
-## 2. Tag the latest commit
+## 2. Commit changelog changes
+
+## 3. Tag the latest commit
 e.g.:
 
 ```
 git tag v0.3.0
 ```
 
-## 3. Push the tag to master
+## 4. Push the tag to master
 e.g.:
 ```
 git push origin v0.3.0
 ```
 
-## 4. Publish release
+## 5. Publish release
 Go to https://github.com/pace-neutrons/light_python_wrapper/releases and
 click 'Draft a new release'. Choose the tag you just pushed as the version,
 and add the updates from `CHANGELOG.rst` to the release body.
@@ -98,8 +100,8 @@ check the version/body etc. are all what you expect. If it's not what you expect
 now is the time to make any changes, as the commit/tag haven't been pushed yet,
 the tag can still be deleted and reapplied once any fixes have been made.
 
-## 4. Push the commit
-If you're happy with the Github test release, push the commit/tag to main
+## 4. Push the commit and tag
+If you're happy with the Github test release, push the commit and tag to main
 
 ## 5. Actually release on Github
 To actually post to Github run
@@ -118,9 +120,12 @@ downloading the .zip and running tests.
 # Horace-Euphonic-Interface Release Process
 
 ## 1. Update to release versions of submodules
-Use `git submodule` to check the submodule versions. If any are not release versions,
-create a new horace-euphonic-interface branch (e.g. `v0.3.0_release`) and update the
-submodules to release versions
+Use `git submodule` to check the submodule versions, check they are release versions.
+Then run `git status` to check that the release versions of the submodules have actually
+been commited to horace-euphonic-interface master (if any submodules say `new commits`,
+they have not been commited). If any are not release versions or git status says `new commits`, create a
+new horace-euphonic-interface branch (e.g. `v0.3.0_release`) and update the
+submodules to release versions. 
 
 ## 2. Update the changelog
 * On the same branch, update the `Unreleased` title in `CHANGELOG.rst` and the associated Github
@@ -144,7 +149,8 @@ Note the compare in `Unreleased` now compares with the latest version v0.2.0
 not v0.1.0
 
 ## 3. Ensure tests pass
-Make sure all CI tests are passing on the branch with the updated submodules
+Make sure all CI tests are passing on the branch with the updated submodules. You
+may have to create a PR for the tests to run.
 
 ## 4. Create a temporary tag to test release process (don't push the tag)
 Tag the latest commit on the branch with the changes made to `CHANGELOG.rst`
@@ -167,7 +173,15 @@ try again (as the tag hasn't been pushed yet).
 
 Once you're happy with the test release, delete the local tag,
 merge the branch into master, tag the latest master commit and
-push the tag.
+push the tag. e.g.:
+```
+git tag --delete v0.2.0
+git checkout master
+git merge v0.2.0_release
+git push origin master
+git tag v0.2.0
+git push origin v0.2.0
+```
 
 ## 7. Actually release on Github
 To actually post to Github run `python release.py --github --notest`
