@@ -206,6 +206,23 @@ The release may take around an hour to appear on the file exchange. Check
 that the version has updated, it will install and tests pass.
 
 ## 10. Request DOI
-A DOI will need to be requested for the new version (from the Software Engineering Group in SCD), of the form
-10.5286/SOFTWARE/HORACEEUPHONICINTERFACE/{version} which points to
-https://pace-neutrons.github.io/horace-euphonic-interface/versions/v{version}.html
+
+A DOI will need to be requested for the new version, this can be obtained from
+the Software Engineering Group in the Scientific Computing Department (contact
+for this as of 1/12/22 is Antony Wilson). Alternatively, access can be
+requested to mint your own DOIs at https://doi.stfc.ac.uk/mint. The form
+should be filled in as follows:
+
+- **DOI** 10.5286/software/horaceeuphonicinterface/{version}
+- **URL** https://pace-neutrons.github.io/horace-euphonic-interface/versions/v{version}.html
+- **Title** Horace-Euphonic-Interface {version}
+- **Creator** Add authors and Orcids as in CITATION.cff
+- **Abstract** Horace-Euphonic-Interface is a MATLAB Add-on to allow simulation of Horace cuts with Euphonic.
+- **Publisher** STFC
+- **Publication Year** YYYY
+- **Resource Type** Software
+- **Funder** None?
+- **Subject** None?
+- **Related Identifier** 10.5286/software/horaceeuphonicinterface - DOI - IsVersionOf
+- **Version** {version}
+- **Date** YYYY-MM-DD Issued
