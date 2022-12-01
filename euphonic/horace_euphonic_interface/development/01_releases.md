@@ -148,16 +148,21 @@ becomes:
 Note the compare in `Unreleased` now compares with the latest version v0.2.0
 not v0.1.0
 
-## 3. Ensure tests pass
+## 3. Update CITATION.cff
+
+The 'version' and 'date-released' fields should be updated to the new version
+and current date
+
+## 4. Ensure tests pass
 Make sure all CI tests are passing on the branch with the updated submodules. You
 may have to create a PR for the tests to run.
 
-## 4. Create a temporary tag to test release process (don't push the tag)
+## 5. Create a temporary tag to test release process (don't push the tag)
 Tag the latest commit on the branch with the changes made to `CHANGELOG.rst`
 and and update submodules, and tag the commit with the new
 version e.g. `git tag v0.2.0`
 
-## 5. Test Github release.py
+## 6. Test Github release.py
 Running `release.py` with the `--github` flag will create a .mltbx, and
 generate a JSON payload that can be posted to Github's release API.
 It will print the payload, make sure to check the version/body etc. are
@@ -169,7 +174,7 @@ as expected.
 If anything is not what you expect, delete the tag, make any updates and
 try again (as the tag hasn't been pushed yet).
 
-## 6. Delete tag, merge branch, push new tag
+## 7. Delete tag, merge branch, push new tag
 
 Once you're happy with the test release, delete the local tag,
 merge the branch into master, tag the latest master commit and
@@ -183,7 +188,7 @@ git tag v0.2.0
 git push origin v0.2.0
 ```
 
-## 7. Actually release on Github
+## 8. Actually release on Github
 To actually post to Github run `python release.py --github --notest`
 
 This will create a Matlab toolbox, create a release and upload the
@@ -197,15 +202,15 @@ release and uploading the .mltbx, the MATLAB File Exchange may only
 pick up the source code .zip, and not the .mltbx, see
 [here](https://www.mathworks.com/matlabcentral/answers/614428-file-exchange-not-using-mltbx-file-from-github-release)
 
-## 8. Test Github release
+## 9. Test Github release
 Check a release has actually been done on Github and looks sensible. Try
 downloading the .zip and installing and running tests.
 
-## 9. Test MATLAB File Exchange release
+## 10. Test MATLAB File Exchange release
 The release may take around an hour to appear on the file exchange. Check
 that the version has updated, it will install and tests pass.
 
-## 10. Request DOI
+## 11. Request DOI
 
 A DOI will need to be requested for the new version, this can be obtained from
 the Software Engineering Group in the Scientific Computing Department (contact
