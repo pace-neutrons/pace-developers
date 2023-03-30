@@ -263,7 +263,7 @@ fc_to_band_plot(fc)
 
 
     
-![png](output_17_1.png)
+![png](figures/output_17_1.png)
     
 
 
