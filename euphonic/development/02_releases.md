@@ -43,7 +43,7 @@ release after the deprecation
 
 Create a branch with "release" somewhere in the name and push to
 GitHub. This will trigger a "run-tests" workflow which can be
-monitored here[https://github.com/pace-neutrons/Euphonic/actions].
+monitored [here](https://github.com/pace-neutrons/Euphonic/actions).
 
 > **NOTE:** unlike the automatic PR tests, this will include all
 > supported platforms and python versions.
@@ -53,15 +53,15 @@ monitored here[https://github.com/pace-neutrons/Euphonic/actions].
 ## 3. Run the Release workflow
 
 In the [Github Actions](https://github.com/pace-neutrons/Euphonic/actions)
-sidebar choose "Create a release" (release.yml) workflow and run
+sidebar choose "Create a release" (`release.yml`) workflow and run
 specifying the release branch and proposed version number.
 
-- Pre-releases should have text after the semver number, such as "v1.4.1rc2".
+- Pre-releases should have text after the [semver number](https://packaging.python.org/en/latest/discussions/versioning/), such as "v1.4.1rc2".
 - It should generally be safe to enable "Make release and push to PyPI" without a dry-run: the workflow will exit early if a step fails.
 
 ### Fixing a failed release workflow
 
-- Small problems can be fixed on the release branch. Consider making a pull-request to master so these can be reviewed more easily; the branch can still be used to release.
+- Small problems can be fixed on the release branch. Consider making a pull-request to `master` so these can be reviewed more easily; the branch can still be used to release.
 - If something went wrong after the "Bump version number" step, you will need to delete the new git tag from https://github.com/pace-neutrons/Euphonic/tags
 - If something went wrong after making a Github release, you will need to delete the release from https://github.com/pace-neutrons/Euphonic/releases
 - If good packages were already uploaded to PyPI but something went wrong producing the landing page, you don't need to redo the release. Fix it directly on the gh-pages branch.
@@ -73,19 +73,21 @@ a versioned page e.g. https://pace-neutrons.github.io/Euphonic/versions/v0.6.2.h
 check it looks sensible.
 
 ## 5. Post-release testing: PyPI
-There is a "Test PyPI release" (_test_release_release.yml_) workflow
+There is a "Test PyPI release" (`test_release_release.yml`) workflow
 that must be triggered manually with a workflow dispatch. Run the
 workflow with the release version to check installation from PyPI
 works and tests pass.
 
-## 6. Update conda-forge package After the release hits PyPI, wait
+## 6. Update conda-forge package 
+After the release hits PyPI, wait
 for the conda-forge bot to open a PR in
 https://github.com/conda-forge/euphonic-feedstock : this may take a few
 hours. Make sure all the tests pass, and merge the PR.
 
 ## 7. Test conda-forge package
 Once the PR has been merged and the triggered jobs have completed, Euphonic
-should be available on the conda-forge channel. Run the "Test Conda-forge release" (_test_release.yml_) workflow in the Euphonic repo to check that the PyPI and conda packages
+should be available on the conda-forge channel. Run the "Test Conda-forge release"
+ (`test_release.yml`) workflow in the Euphonic repo to check that the PyPI and conda packages
 pass tests
 
 ## 8. Request DOI
